@@ -14,7 +14,7 @@ int main()
 		token_list = lexer(str);
 		while(token_list)
 		{
-			printf("TOKEN:  %s\n", token_list->token.content);
+			printf("TOKEN:  %s, %d\n", token_list->token.content, token_list->token.type);
 			token_list = token_list->next;
 		}
 		printf("you typed: %s\n", str);

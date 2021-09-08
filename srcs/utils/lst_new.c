@@ -8,6 +8,7 @@ t_node	*lst_new(t_token token)
 	if (!node)
 		return (NULL);
 	node->token = token;
+	node->previous = NULL;
 	node->next = NULL;
 	return (node);
 }

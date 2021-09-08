@@ -8,7 +8,10 @@ void	lst_add_back(t_node **list, t_node *new)
 	{
 		last = lst_last(*list);
 		if (last)
+		{
+			new->previous = last;
 			last->next = new;
+		}
 	}
 	else if (list)
 		*list= new;
