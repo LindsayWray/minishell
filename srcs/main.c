@@ -3,7 +3,7 @@
 int main()
 {
 	char *str;
-	t_node	*token_list;
+	t_node	*token;
 	while (true)
 	{
 		str = readline("our minishell prompt: ");
@@ -11,11 +11,11 @@ int main()
 			exit(EXIT_SUCCESS);	// when ctrl D is typed, the shell needs to exit
 		if (*str)
 			add_history(str); // an empty line should not be added to the history
-		token_list = lexer(str);
-		while(token_list)
+		token = lexer(str);
+		while(token)
 		{
-			printf("TOKEN:  %s, %d\n", token_list->token.content, token_list->token.type);
-			token_list = token_list->next;
+			printf("TOKEN:  %s, %d\n", token->content, token->type);
+			token = token->next;
 		}
 		printf("you typed: %s\n", str);
 		free (str);

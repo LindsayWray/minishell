@@ -3,7 +3,7 @@
 
 typedef enum s_type
 {
-	COMMAND,
+	WORD,
 	PIPE,
 	INPUT_REDIRECTION,
 	OUTPUT_REDIRECTION,
@@ -11,17 +11,19 @@ typedef enum s_type
 	APPEND
 }	t_type;
 
+// typedef struct s_token
+// {
+// 	t_type type;
+// 	char *content;
+// }	t_token;
+
 typedef struct s_token
 {
+	//t_token token;
 	t_type type;
 	char *content;
-}	t_token;
-
-typedef struct s_node
-{
-	t_token token;
-	struct s_node *next;
-	struct s_node *previous;
+	struct s_token *next;
+	struct s_token *previous;
 }	t_node;
 
 #endif
