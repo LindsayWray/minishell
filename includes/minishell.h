@@ -9,6 +9,7 @@
 #include "utils.h"
 #include "types.h"
 
-t_node	*lexer(char *str);
+t_token	*lexer(char *str);
+t_cmd_lst	*parser(t_token *token);
 
 #endif

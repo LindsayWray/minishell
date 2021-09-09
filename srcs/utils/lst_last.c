@@ -1,6 +1,15 @@
 #include "../../includes/minishell.h"
 
-t_node	*lst_last(t_node *last)
+t_token	*lst_last(t_token *last)
+{
+	if (last == NULL)
+		return (NULL);
+	while ((last->next) != NULL)
+		last = (last->next);
+	return (last);
+}
+
+t_cmd_lst	*cmd_lst_last(t_cmd_lst *last)
 {
 	if (last == NULL)
 		return (NULL);

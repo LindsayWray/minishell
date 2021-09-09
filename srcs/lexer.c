@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-void	new_token(char *str, int i, int start, t_node **token, t_type type)
+void	new_token(char *str, int i, int start, t_token **token, t_type type)
 {
 	char *content;
 
@@ -27,7 +27,7 @@ void	handle_quotes(char * str, int *i)
 	(*i)++;
 }
 
-void	handle_redirections(char *str, int *i, t_node **token)
+void	handle_redirections(char *str, int *i, t_token **token)
 {
 	t_type	type;
 	int		start;
@@ -41,7 +41,7 @@ void	handle_redirections(char *str, int *i, t_node **token)
 	}
 	if (str[*i] == '>')
 	{
-		if (str[(*i) + 1] != '>')
+		if (str[(*i) + 1] == '>')
 			type = APPEND;
 		else
 			type = OUTPUT_REDIRECTION;
@@ -57,11 +57,11 @@ void	handle_redirections(char *str, int *i, t_node **token)
 	new_token(str, *i, start, token, type);
 }
 
-t_node	*lexer(char *str)
+t_token	*lexer(char *str)
 {
 	int i;
 	int start;
-	t_node *token;
+	t_token *token;
 
 	token = NULL;
 	i = 0;

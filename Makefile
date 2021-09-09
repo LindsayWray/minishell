@@ -7,7 +7,8 @@ SRCS :=		srcs/main.c \
 			srcs/utils/lst_add_back.c \
 			srcs/utils/lst_last.c \
 			srcs/utils/lst_new.c \
-			srcs/utils/ft_strlen.c
+			srcs/utils/ft_strlen.c \
+			srcs/parser.c
 
 FLAGS := -Wall -Wextra -Werror
 OBJFILES := $(SRCS:srcs/%.c=obj/%.o)
