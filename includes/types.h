@@ -11,15 +11,8 @@ typedef enum s_type
 	APPEND
 }	t_type;
 
-// typedef struct s_token
-// {
-// 	t_type type;
-// 	char *content;
-// }	t_token;
-
 typedef struct s_token
 {
-	//t_token token;
 	t_type type;
 	char *content;
 	struct s_token *next;
