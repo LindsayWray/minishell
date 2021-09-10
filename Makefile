@@ -8,7 +8,11 @@ SRCS :=		srcs/main.c \
 			srcs/utils/lst_last.c \
 			srcs/utils/lst_new.c \
 			srcs/utils/ft_strlen.c \
-			srcs/parser.c
+			srcs/utils/ft_split.c \
+			srcs/utils/ft_strdup.c \
+			srcs/utils/ft_strjoin.c \
+			srcs/parser.c \
+			srcs/execute/exec.c
 
 FLAGS := -Wall -Wextra -Werror
 OBJFILES := $(SRCS:srcs/%.c=obj/%.o)

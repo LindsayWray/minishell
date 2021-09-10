@@ -12,5 +12,8 @@ t_cmd_lst	*cmd_lst_new(t_subcmd subcmd);
 t_token	*lst_last(t_token *last);
 t_cmd_lst	*cmd_lst_last(t_cmd_lst *last);
 int		ft_strlen(char *str);
+char	**ft_split(char const *s, char c);
+char	*ft_strdup(char *src);
+char	*ft_strjoin(char const *s1, char const *s2);
 
 #endif
