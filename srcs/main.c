@@ -30,7 +30,7 @@ int main()
 
 	while (true)
 	{
-		str = readline("our minishell prompt: ");
+		str = readline("$> ");
 		if (!str)
 			exit(EXIT_SUCCESS);	// when ctrl D is typed, the shell needs to exit
 		if (*str)

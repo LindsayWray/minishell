@@ -8,6 +8,7 @@
 #include <fcntl.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <sys/stat.h>
 #include "utils.h"
 #include "types.h"
 

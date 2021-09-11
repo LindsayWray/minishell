@@ -15,5 +15,6 @@ int		ft_strlen(char *str);
 char	**ft_split(char const *s, char c);
 char	*ft_strdup(char *src);
 char	*ft_strjoin(char const *s1, char const *s2);
+int	ft_strequal(char *s1, char *s2);
 
 #endif

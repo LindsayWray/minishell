@@ -11,6 +11,7 @@ SRCS :=		srcs/main.c \
 			srcs/utils/ft_split.c \
 			srcs/utils/ft_strdup.c \
 			srcs/utils/ft_strjoin.c \
+			srcs/utils/ft_streql.c \
 			srcs/parser.c \
 			srcs/execute/exec.c
 
