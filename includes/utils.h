@@ -2,6 +2,7 @@
 # define UTILS_H
 
 #include <stdlib.h>
+#include <unistd.h>
 #include "types.h"
 
 char	*ft_substr(char const *s, unsigned int start, size_t len);
@@ -16,5 +17,6 @@ char	**ft_split(char const *s, char c);
 char	*ft_strdup(char *src);
 char	*ft_strjoin(char const *s1, char const *s2);
 int	ft_strequal(char *s1, char *s2);
+void	ft_putstr_fd(char *str, int fd);
 
 #endif

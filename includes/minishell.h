@@ -12,8 +12,11 @@
 #include "utils.h"
 #include "types.h"
 
-t_token	*lexer(char *str);
+t_token		*lexer(char *str);
 t_cmd_lst	*parser(t_token *token);
-int	    exec(t_cmd_lst *cmd_lst);
+int			exec(t_cmd_lst *cmd_lst);
+char		*get_path(char *command);
+void		set_redirection(int input_fd, int output_fd, t_subcmd subcmd);
+void		run_command(char **cmd);
 
 #endif

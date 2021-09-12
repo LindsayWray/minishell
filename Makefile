@@ -12,8 +12,11 @@ SRCS :=		srcs/main.c \
 			srcs/utils/ft_strdup.c \
 			srcs/utils/ft_strjoin.c \
 			srcs/utils/ft_streql.c \
+			srcs/utils/ft_putstr_fd.c \
 			srcs/parser.c \
-			srcs/execute/exec.c
+			srcs/execute/exec.c \
+			srcs/execute/path.c \
+			srcs/execute/redirection.c
 
 FLAGS := -Wall -Wextra -Werror
 OBJFILES := $(SRCS:srcs/%.c=obj/%.o)
