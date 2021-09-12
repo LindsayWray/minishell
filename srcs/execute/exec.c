@@ -34,8 +34,11 @@ int	exec(t_cmd_lst *cmd_lst)
 	pid_t	pid;
 	int		p[2];
     int     read_pipe;
+	int		stat_loc;
+	int i;
 
     read_pipe = STDIN_FILENO;
+	i = 0;
 	while (cmd_lst)
 	{
 		if (pipe(p) == -1)
@@ -49,11 +52,18 @@ int	exec(t_cmd_lst *cmd_lst)
                 p[1] = STDOUT_FILENO;
 			set_redirection(read_pipe, p[1], cmd_lst->subcmd);
 			run_command(cmd_lst->subcmd.cmd);
-        }
-		wait(0); // will need to be moved. look into later
+        }	
 		close (p[1]);
 		read_pipe = p[0];
 		cmd_lst = cmd_lst->next;
+		i++;
+	}
+	while (i > 0)
+	{
+		wait(&stat_loc);
+		//printf("Exitstatus:  %d\n", WEXITSTATUS(stat_loc));
+		// for command not found error, perhaps hardcode error status
+		i--;
 	}
 	return (read_pipe);
 }

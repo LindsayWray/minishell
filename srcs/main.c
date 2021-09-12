@@ -28,11 +28,13 @@ int main()
 	t_token	*token;
 	t_cmd_lst	*cmd_lst;
 
+	if (isatty(STDIN_FILENO))
+		printf("\n\033[1m\033[36mWelcome to Isaac's and Lindsay's minishell!\n\033[0m");
 	while (true)
 	{
-		str = readline("$> ");
-		if (!str)
-			exit(EXIT_SUCCESS);	// when ctrl D is typed, the shell needs to exit
+		str = readline("=^..^= ");
+		if (!str || ft_strequal(str, "exit"))
+			break ;
 		if (*str)
 			add_history(str); // an empty line should not be added to the history
 		token = lexer(str);
@@ -44,8 +46,9 @@ int main()
 		// }
 		// printf("you typed: %s\n", str);
 		free (str);
-		print_cmd_lst(cmd_lst);
+		//print_cmd_lst(cmd_lst);
 		exec(cmd_lst);
 	}
+	//printf("\n\033[1m\033[36mBye, come again!\n\033[0m");
 	return (0);
 }
