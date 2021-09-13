@@ -35,8 +35,6 @@ void	print_env(t_env_lst *env_lst)
 	return ;
 }
 
-
-
 int main(int argc, char **argv, char **env)
 {
 	char *str;
@@ -71,7 +69,7 @@ int main(int argc, char **argv, char **env)
 		// printf("you typed: %s\n", str);
 		free (str);
 		print_cmd_lst(cmd_lst);
-		exec(cmd_lst);
+		exec(cmd_lst, env);
 	}
 	//printf("\n\033[1m\033[36mBye, come again!\n\033[0m");
 	return (0);

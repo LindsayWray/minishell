@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-void	run_command(char **cmd)
+void	run_command(char **cmd, char **env)
 {
 	char	*path;
 	
@@ -21,7 +21,7 @@ void	run_command(char **cmd)
 	// else
 	// {
 		path = get_path(*cmd);
-		if (execve(path, cmd, NULL) == -1)
+		if (execve(path, cmd, env) == -1)
 		{
 			free (path);
 			exit (EXIT_FAILURE);
@@ -29,14 +29,16 @@ void	run_command(char **cmd)
 	// }
 }
 
-int	exec(t_cmd_lst *cmd_lst)
+int	exec(t_cmd_lst *cmd_lst, char **env)
 {
 	pid_t	pid;
 	int		p[2];
     int     read_pipe;
 	int		stat_loc;
+	int		*pids;
 	int i;
 
+	pids = malloc(lst_size(cmd_lst) * sizeof(pid_t));
     read_pipe = STDIN_FILENO;
 	i = 0;
 	while (cmd_lst)
@@ -46,24 +48,28 @@ int	exec(t_cmd_lst *cmd_lst)
 		pid = fork();
 		if (pid == -1)
 			perror("fork error"); // temporary
+		pids[i] = pid;
 		if (pid == 0)
         {
             if (cmd_lst->next == NULL)
                 p[1] = STDOUT_FILENO;
 			set_redirection(read_pipe, p[1], cmd_lst->subcmd);
-			run_command(cmd_lst->subcmd.cmd);
+			run_command(cmd_lst->subcmd.cmd, env);
         }
 		close (p[1]);
 		read_pipe = p[0];
 		cmd_lst = cmd_lst->next;
 		i++;
 	}
-	while (i > 0)
+	int j = 0;
+	while (j < i)
 	{
-		wait(&stat_loc);
-		//printf("Exitstatus:  %d\n", WEXITSTATUS(stat_loc));
+		waitpid(pids[j], &stat_loc, 0);
+		printf("Exitstatus:  %d\n", WEXITSTATUS(stat_loc));
 		// for command not found error, perhaps hardcode error status
-		i--;
+		j++;
 	}
+	free (pids);
+	cmd_lst_clear(&cmd_lst);
 	return (read_pipe);
 }

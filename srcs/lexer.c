@@ -82,5 +82,5 @@ t_token	*lexer(char *str)
 			handle_redirections(str, &i, &token);
 		i++;
 	}
-	return (token); // instead of returning put it into the global
+	return (token);
 }

@@ -14,9 +14,9 @@
 
 t_token		*lexer(char *str);
 t_cmd_lst	*parser(t_token *token);
-int			exec(t_cmd_lst *cmd_lst);
+int	exec    (t_cmd_lst *cmd_lst, char **env);
 char		*get_path(char *command);
 void		set_redirection(int input_fd, int output_fd, t_subcmd subcmd);
-void		run_command(char **cmd);
+void	    run_command(char **cmd, char **env);
 
 #endif
