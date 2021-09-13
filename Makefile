@@ -13,6 +13,7 @@ SRCS :=		srcs/main.c \
 			srcs/utils/ft_strjoin.c \
 			srcs/utils/ft_streql.c \
 			srcs/utils/ft_putstr_fd.c \
+			srcs/utils/ft_getenv.c\
 			srcs/parser.c \
 			srcs/execute/exec.c \
 			srcs/execute/path.c \
