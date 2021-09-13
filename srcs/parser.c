@@ -55,5 +55,6 @@ t_cmd_lst	*parser(t_token *token)
 		if (token)
 			token = token->next;
 	}
+	lst_clear(&token); //add error message
 	return (cmd_lst); // put in global instead of return
 }

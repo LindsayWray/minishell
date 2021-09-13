@@ -7,6 +7,7 @@ SRCS :=		srcs/main.c \
 			srcs/utils/lst_add_back.c \
 			srcs/utils/lst_last.c \
 			srcs/utils/lst_new.c \
+			srcs/utils/lst_clear.c \
 			srcs/utils/ft_strlen.c \
 			srcs/utils/ft_split.c \
 			srcs/utils/ft_strdup.c \

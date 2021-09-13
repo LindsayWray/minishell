@@ -52,7 +52,7 @@ int	exec(t_cmd_lst *cmd_lst)
                 p[1] = STDOUT_FILENO;
 			set_redirection(read_pipe, p[1], cmd_lst->subcmd);
 			run_command(cmd_lst->subcmd.cmd);
-        }	
+        }
 		close (p[1]);
 		read_pipe = p[0];
 		cmd_lst = cmd_lst->next;

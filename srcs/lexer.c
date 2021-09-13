@@ -5,9 +5,10 @@ void	new_token(char *str, int i, int start, t_token **token, t_type type)
 	char *content;
 
 	content = ft_substr(str, start, i - start);
-	// if (!content)
-	// 	call to global to clean up
-	lst_add_back(token, lst_new(content, type));
+	if (!content)
+		lst_clear(token); //add error message
+	if (!lst_add_back(token, lst_new(content, type)))
+		lst_clear(token); //add error message
 }
 
 void	handle_quotes(char * str, int *i)
@@ -73,7 +74,10 @@ t_token	*lexer(char *str)
 		if (start != i) // this condition prevents empty tokens
 			new_token(str, i, start, &token, WORD);
 		if (str[i] == '|')
-			lst_add_back(&token, lst_new(NULL, PIPE));
+		{
+			if (!lst_add_back(&token, lst_new(NULL, PIPE)))
+				lst_clear(&token); //add error message
+		}
 		if (str[i] == '<' || str[i] == '>')
 			handle_redirections(str, &i, &token);
 		i++;

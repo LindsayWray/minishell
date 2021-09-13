@@ -24,7 +24,7 @@ char	*get_path(char *command)
 	while (paths[i])
 	{
 		path = ft_strjoin(paths[i], command);
-		if (stat(path, &buf) == 0)
+		if (lstat(path, &buf) == 0)
 		{
 			//free (command);
 			//free_array(paths);

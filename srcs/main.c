@@ -33,7 +33,7 @@ int main()
 	while (true)
 	{
 		str = readline("=^..^= ");
-		if (!str || ft_strequal(str, "exit"))
+		if (!str || ft_strequal(str, "exit")) // temporary for the tester
 			break ;
 		if (*str)
 			add_history(str); // an empty line should not be added to the history
@@ -46,7 +46,7 @@ int main()
 		// }
 		// printf("you typed: %s\n", str);
 		free (str);
-		//print_cmd_lst(cmd_lst);
+		print_cmd_lst(cmd_lst);
 		exec(cmd_lst);
 	}
 	//printf("\n\033[1m\033[36mBye, come again!\n\033[0m");
