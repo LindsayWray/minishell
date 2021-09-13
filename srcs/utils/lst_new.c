@@ -26,3 +26,29 @@ t_cmd_lst	*cmd_lst_new(t_subcmd subcmd)
 	node->next = NULL;
 	return (node);
 }
+
+t_env_lst	*env_lst_new(char *key, char *value)
+{
+	t_env_lst	*node;
+	char		*set_key;
+	char		*set_value;
+
+	node = (t_env_lst *)malloc(sizeof(t_env_lst));
+	if (!node)
+		return (NULL);
+	set_key = ft_strdup(key);
+	set_value = ft_strdup(value);
+	if (set_key == NULL || set_value == NULL)
+	{
+		if (set_key != NULL)
+			free(set_key);
+		if (set_value != NULL)
+			free(set_value);
+		free(node);
+		return (NULL);
+	}
+	node->key = set_key;
+	node->value = set_value;
+	node->next = NULL;
+	return (node);
+}

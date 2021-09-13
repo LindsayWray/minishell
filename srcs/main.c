@@ -22,14 +22,38 @@ void	print_cmd_lst(t_cmd_lst *cmd_lst)
 	}
 }
 
-int main()
+// You can delete this function.. 
+void	print_env(t_env_lst *env_lst)
+{
+	printf("*********ENV LIST *********\n");
+	while (env_lst)
+	{
+		printf("%s=%s\n", env_lst->key, env_lst->value);
+		env_lst = env_lst->next;
+	}
+	printf("***************************\n");
+	return ;
+}
+
+
+
+int main(int argc, char **argv, char **env)
 {
 	char *str;
 	t_token	*token;
 	t_cmd_lst	*cmd_lst;
+	t_env_lst	*env_lst;
 
 	if (isatty(STDIN_FILENO))
 		printf("\n\033[1m\033[36mWelcome to Isaac's and Lindsay's minishell!\n\033[0m");
+
+	// ** For testing environment list. 
+	(void)argc;
+	(void)argv;
+	env_lst = ft_getenv(env);
+	print_env(env_lst);
+	// ***
+
 	while (true)
 	{
 		str = readline("=^..^= ");
