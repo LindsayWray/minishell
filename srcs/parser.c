@@ -35,18 +35,18 @@ t_cmd_lst	*parser(t_token *token)
 		{
 			if (token->type == WORD)
 			{
-				subcmd.cmd[i] = token->content;
+				subcmd.cmd[i] = ft_strdup(token->content);
 				i++;
 			}
 			if (token->type == INPUT_REDIRECTION || token->type == HEREDOC)
 			{
 				subcmd.in_type = token->type;
-				subcmd.in_file = token->content;
+				subcmd.in_file = ft_strdup(token->content);
 			}
 			if (token->type == OUTPUT_REDIRECTION || token->type == APPEND)
 			{
 				subcmd.out_type = token->type;
-				subcmd.out_file = token->content;
+				subcmd.out_file = ft_strdup(token->content);
 			}	
 			token = token->next;	
 		}

@@ -35,7 +35,7 @@ int	read_input_heredoc(char *delimiter)
 	while (true)
 	{
 		line = readline("> ");
-		if (line == NULL || ft_strequal(line, delimiter))
+		if (line == NULL || ft_streql(line, delimiter))
 		{
 			free (line);
 			close (input_fd);
@@ -49,14 +49,19 @@ int	read_input_heredoc(char *delimiter)
 	}
 }
 
-void	set_redirection(int input_fd, int output_fd, t_subcmd subcmd)
+void	set_redirection(int *input_fd, int *output_fd, t_subcmd subcmd)
 {
 	if (subcmd.in_type == INPUT_REDIRECTION)
-		input_fd = get_input(subcmd.in_file);
+		*input_fd = get_input(subcmd.in_file);
 	if (subcmd.in_type == HEREDOC)
-		input_fd = read_input_heredoc(subcmd.in_file);
+		*input_fd = read_input_heredoc(subcmd.in_file);
     if (subcmd.out_type == OUTPUT_REDIRECTION || subcmd.out_type == APPEND)
-        output_fd = get_output(subcmd.out_file, subcmd.out_type);
+        *output_fd = get_output(subcmd.out_file, subcmd.out_type);
+
+}
+
+void	dup_fd(int input_fd, int output_fd)
+{
 	if (dup2(output_fd, STDOUT_FILENO) == -1)
 		perror("dup error"); // temporary 
 	if (output_fd != STDOUT_FILENO)

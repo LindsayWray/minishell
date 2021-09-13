@@ -1,32 +1,76 @@
 #include "../../includes/minishell.h"
 
+int	is_builtin(char *cmd)
+{
+	static char *str[7] = {"echo", "cd", "pwd", "export", "unset", "env", "exit"};
+	int i;
+	
+	i = 0;
+	while (i < 7)
+	{
+		if (ft_streql(cmd, str[i]))
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+// fake functions in order to compile 
+void	ft_echo(char **cmd, int fd_out)
+{
+	(void)cmd;
+	write (fd_out, "My echo\n", 8);
+}
+void	ft_cd(char **cmd, int fd_out)
+{
+	(void)cmd;
+	(void)fd_out;
+}
+void	ft_pwd(char **cmd, int fd_out)
+{
+	(void)cmd;
+	(void)fd_out;
+}
+void	ft_export(char **cmd, int fd_out)
+{
+	(void)cmd;
+	(void)fd_out;
+}
+void	ft_unset(char **cmd, int fd_out)
+{
+	(void)cmd;
+	(void)fd_out;
+}
+void	ft_env(char **cmd, int fd_out)
+{
+	(void)cmd;
+	(void)fd_out;
+}
+void	ft_exit(char **cmd, int fd_out)
+{
+	(void)cmd;
+	(void)fd_out;
+}
+
+void	run_builtin(char **cmd, int fd_out)
+{
+	static void (*func[7])(char **, int) = {ft_echo, ft_cd, ft_pwd, ft_export, ft_unset, ft_env, ft_exit};
+	int i;
+
+	i = is_builtin(*cmd);
+	func[i](cmd, fd_out);
+}
+
 void	run_command(char **cmd, char **env)
 {
 	char	*path;
 	
-	// if (str_eql(*cmd, "echo")
-	// 	ft_echo(cmd);
-	// else if (str_eql(*cmd, "cd")
-	// 	ft_cd(cmd);
-	// else if (str_eql(*cmd, "pwd")
-	// 	ft_pwd(cmd);
-	// else if (str_eql(*cmd, "export")
-	// 	ft_export(cmd);
-	// else if (str_eql(*cmd, "unset")
-	// 	ft_unset(cmd);
-	// else if (str_eql(*cmd, "env")
-	// 	ft_env(cmd);
-	// else if (str_eql(*cmd, "exit")
-	// 	ft_exit(cmd);
-	// else
-	// {
-		path = get_path(*cmd);
-		if (execve(path, cmd, env) == -1)
-		{
-			free (path);
-			exit (EXIT_FAILURE);
-		}
-	// }
+	path = get_path(*cmd);
+	if (execve(path, cmd, env) == -1)
+	{
+		free (path);
+		exit (EXIT_FAILURE);
+	}
 }
 
 int	exec(t_cmd_lst *cmd_lst, char **env)
@@ -45,17 +89,29 @@ int	exec(t_cmd_lst *cmd_lst, char **env)
 	{
 		if (pipe(p) == -1)
 			perror("pipe error"); // temporary 
-		pid = fork();
-		if (pid == -1)
-			perror("fork error"); // temporary
-		pids[i] = pid;
-		if (pid == 0)
-        {
-            if (cmd_lst->next == NULL)
-                p[1] = STDOUT_FILENO;
-			set_redirection(read_pipe, p[1], cmd_lst->subcmd);
+		if (is_builtin(*cmd_lst->subcmd.cmd) == -1)
+		{
+			pid = fork();
+			if (pid == -1)
+				perror("fork error"); // temporary
+			pids[i] = pid;
+			if (pid == 0)
+        	{
+            	if (cmd_lst->next == NULL)
+                	p[1] = STDOUT_FILENO;
+			set_redirection(&read_pipe, &p[1], cmd_lst->subcmd);
+			dup_fd(read_pipe, p[1]);
 			run_command(cmd_lst->subcmd.cmd, env);
-        }
+			}
+    	}
+		else
+		{
+			if (cmd_lst->next == NULL)
+                p[1] = STDOUT_FILENO;
+			set_redirection(&read_pipe, &p[1], cmd_lst->subcmd);
+			run_builtin(cmd_lst->subcmd.cmd, p[1]);
+			pids[i] = 0; // temporary fix. Needs different solution
+		}
 		close (p[1]);
 		read_pipe = p[0];
 		cmd_lst = cmd_lst->next;
@@ -64,9 +120,12 @@ int	exec(t_cmd_lst *cmd_lst, char **env)
 	int j = 0;
 	while (j < i)
 	{
-		waitpid(pids[j], &stat_loc, 0);
-		printf("Exitstatus:  %d\n", WEXITSTATUS(stat_loc));
-		// for command not found error, perhaps hardcode error status
+		if (pids[j])
+		{
+			waitpid(pids[j], &stat_loc, 0);
+			printf("Exitstatus:  %d\n", WEXITSTATUS(stat_loc));
+			// for command not found error, perhaps hardcode error status
+		}
 		j++;
 	}
 	free (pids);

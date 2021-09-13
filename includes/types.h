@@ -1,5 +1,12 @@
 #ifndef TYPES_H
-#define TYPES_H
+# define TYPES_H
+# define ECHO "echo"
+# define CD "cd"
+# define PWD "pwd"
+# define EXPORT "export"
+# define UNSET "unset"
+# define ENV "env"
+# define EXIT "exit"
 
 typedef enum s_type
 {

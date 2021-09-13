@@ -55,7 +55,7 @@ int main(int argc, char **argv, char **env)
 	while (true)
 	{
 		str = readline("=^..^= ");
-		if (!str || ft_strequal(str, "exit")) // temporary for the tester
+		if (!str || ft_streql(str, "exit")) // temporary for the tester
 			break ;
 		if (*str)
 			add_history(str); // an empty line should not be added to the history
