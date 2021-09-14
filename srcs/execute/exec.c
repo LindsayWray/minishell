@@ -44,6 +44,7 @@ int	ft_exit(char **cmd, int fd_out)
 void	wait_for_childprocesses(int *pids, int len)
 {
 	int		stat_loc;
+	char	*exit_status;
 	int j;
 
 	j = 0;
@@ -51,9 +52,11 @@ void	wait_for_childprocesses(int *pids, int len)
 	{
 		waitpid(pids[j], &stat_loc, 0);
 			// printf("Exitstatus:  %d\n", WEXITSTATUS(stat_loc));
-			// for command not found error, perhaps hardcode error status
 		j++;
 	}
+	exit_status = ft_itoa(WEXITSTATUS(stat_loc)); // does a %256 on statloc
+	if (!export_exists("?", exit_status))
+		ft_export_add("?", exit_status);
 	free (pids);
 }
 
@@ -83,7 +86,6 @@ pid_t	run_builtin(int in_fd, int out_fd, t_cmd_lst *cmd_lst)
 		out_fd = STDOUT_FILENO;
 	set_redirection(&in_fd, &out_fd, cmd_lst->subcmd);
 	i = is_builtin(*cmd_lst->subcmd.cmd);
-	exit_status = 0; // will be the return value of the builtin_func
 	exit_status = builtin_func[i](cmd_lst->subcmd.cmd, out_fd);
 	pid = fork();
 	if (pid == -1)

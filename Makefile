@@ -20,6 +20,7 @@ SRCS :=		srcs/main.c \
 			srcs/utils/ft_isdigit.c\
 			srcs/utils/ft_split_free.c\
 			srcs/utils/ft_getenv.c\
+			srcs/utils/ft_itoa.c \
 			srcs/parsing/lexer.c \
 			srcs/parsing/parser.c \
 			srcs/execute/exec.c \

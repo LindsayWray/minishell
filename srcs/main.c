@@ -24,6 +24,18 @@ void	print_cmd_lst(t_cmd_lst *cmd_lst)
 	}
 }
 
+void	print_env(t_env_lst *env_lst)
+{
+	printf("*********ENV LIST *********\n");
+	while (env_lst)
+	{
+		printf("%s=%s\n", env_lst->key, env_lst->value);
+		env_lst = env_lst->next;
+	}
+	printf("***************************\n");
+	return ;
+}
+
 int main(int argc, char **argv, char **env)
 {
 	char *str;
@@ -52,6 +64,7 @@ int main(int argc, char **argv, char **env)
 		//print_cmd_lst(cmd_lst);
 		exec(cmd_lst, env);
 	}
+	print_env(g_data.env_lst);
 	//printf("\n\033[1m\033[36mBye, come again!\n\033[0m");
 	return (0);
 }

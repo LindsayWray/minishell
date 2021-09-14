@@ -3,3 +3,5 @@ a.out
 .vscode
 minishell
 minishell.dSYM/
+*.o
+srcs/utils/dprintf/libftdprintf.a

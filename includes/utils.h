@@ -33,6 +33,7 @@ void	    ft_split_free(char **str);
 int	        ft_isalpha(int c);
 int         ft_isdigit(int c);
 int	        ft_isalnum_str(char *str);
+char		*ft_itoa(int n);
 int			ft_dprintf(int fd, const char *format, ...);
 
 #endif
