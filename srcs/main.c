@@ -1,5 +1,7 @@
 #include "../includes/minishell.h"
 
+t_data	g_data;
+
 void	print_cmd_lst(t_cmd_lst *cmd_lst)
 {
 	while (cmd_lst)
@@ -27,7 +29,6 @@ int main(int argc, char **argv, char **env)
 	char *str;
 	t_token	*token;
 	t_cmd_lst	*cmd_lst;
-	t_env_lst	*env_lst;
 
 	(void)argv;
 	if (argc != 1)
@@ -35,7 +36,7 @@ int main(int argc, char **argv, char **env)
 		printf("Minishell should be run without arguments\n"); // send to stderr
 		return (EXIT_FAILURE);
 	}
-	env_lst = ft_getenv(env);
+	g_data.env_lst = ft_getenv(env);
 	// if (isatty(STDIN_FILENO))
 	// 	printf("\n\033[1m\033[36mWelcome to Isaac's and Lindsay's minishell!\n\033[0m");
 	while (true)

@@ -19,4 +19,7 @@ char		*get_path(char *command);
 void		set_redirection(int *input_fd, int *output_fd, t_subcmd subcmd);
 void		dup_fd(int input_fd, int output_fd);
 
+//builtins
+int         ft_export(char **cmd, int fd_out);
+int         export_exists(char *key, char *value);
 #endif

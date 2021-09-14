@@ -1,40 +1,42 @@
 #include "../../includes/minishell.h"
 
 //************ fake functions in order to compile 
-void	ft_echo(char **cmd, int fd_out)
+int	ft_echo(char **cmd, int fd_out)
 {
 	(void)cmd;
 	write (fd_out, "My echo\n", 8);
+	return (0);
 }
-void	ft_cd(char **cmd, int fd_out)
+int	ft_cd(char **cmd, int fd_out)
 {
 	(void)cmd;
 	(void)fd_out;
+	return (0);
 }
-void	ft_pwd(char **cmd, int fd_out)
+int	ft_pwd(char **cmd, int fd_out)
 {
 	(void)cmd;
 	(void)fd_out;
+	return (0);
 }
-void	ft_export(char **cmd, int fd_out)
+
+int	ft_unset(char **cmd, int fd_out)
 {
 	(void)cmd;
 	(void)fd_out;
+	return (0);
 }
-void	ft_unset(char **cmd, int fd_out)
+int	ft_env(char **cmd, int fd_out)
 {
 	(void)cmd;
 	(void)fd_out;
+	return (0);
 }
-void	ft_env(char **cmd, int fd_out)
+int	ft_exit(char **cmd, int fd_out)
 {
 	(void)cmd;
 	(void)fd_out;
-}
-void	ft_exit(char **cmd, int fd_out)
-{
-	(void)cmd;
-	(void)fd_out;
+	return (0);
 }
 //*********** end of fake functions
 
@@ -74,7 +76,7 @@ pid_t	run_builtin(int in_fd, int out_fd, t_cmd_lst *cmd_lst)
 {
 	pid_t	pid;
 	int		exit_status;
-	static void (*builtin_func[7])(char **, int) = {ft_echo, ft_cd, ft_pwd, ft_export, ft_unset, ft_env, ft_exit};
+	static int (*builtin_func[7])(char **, int) = {ft_echo, ft_cd, ft_pwd, ft_export, ft_unset, ft_env, ft_exit};
 	int i;
 			
 	if (cmd_lst->next == NULL)
@@ -82,7 +84,7 @@ pid_t	run_builtin(int in_fd, int out_fd, t_cmd_lst *cmd_lst)
 	set_redirection(&in_fd, &out_fd, cmd_lst->subcmd);
 	i = is_builtin(*cmd_lst->subcmd.cmd);
 	exit_status = 0; // will be the return value of the builtin_func
-	builtin_func[i](cmd_lst->subcmd.cmd, out_fd);
+	exit_status = builtin_func[i](cmd_lst->subcmd.cmd, out_fd);
 	pid = fork();
 	if (pid == -1)
 		perror("fork error"); // temporary

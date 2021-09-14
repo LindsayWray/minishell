@@ -28,5 +28,11 @@ char	    *ft_strdup(char *src);
 char	    *ft_strjoin(char const *s1, char const *s2);
 int     	ft_streql(char *s1, char *s2);
 void	    ft_putstr_fd(char *str, int fd);
+int         ft_cinstr(const char *str, char c);
+void	    ft_split_free(char **str);
+int	        ft_isalpha(int c);
+int         ft_isdigit(int c);
+int	        ft_isalnum_str(char *str);
+int			ft_dprintf(int fd, const char *format, ...);
 
 #endif

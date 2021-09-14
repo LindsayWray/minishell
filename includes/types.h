@@ -44,4 +44,9 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env_lst;
 
+typedef struct s_data
+{
+	t_env_lst	*env_lst;
+}	t_data;
+
 #endif
