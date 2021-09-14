@@ -3,10 +3,10 @@
 RESET="\033[0m"
 BOLDGREEN="\033[1m\033[32m"
 BOLDRED="\033[1m\033[31m"
-RED="\033[31m"
+LPURPLE="\033[90m"
+LRED="\033[95m"
 GREEN="\033[32m"
 BLUE="\033[34m"
-BOLDYELLOW="\033[1m\033[33m"
 BOLDCYAN="\033[1m\033[36m"
 
 printf " $BOLDCYAN ___  ___ _____  _   _  _____  _____  _   _  _____  _      _       _____  _____  _____  _____  _____  ______ \n";
@@ -16,9 +16,11 @@ printf "  | |\/| |  | |  | . \` |  | |   \`--. \|  _  ||  __| | |    | |       |
 printf "  | |  | | _| |_ | |\  | _| |_ /\__/ /| | | || |___ | |____| |____   | |  | |___ /\__/ /  | |  | |___ | |\ \ \n";
 printf "  \_|  |_/ \___/ \_| \_/ \___/ \____/ \_| |_/\____/ \_____/\_____/   \_/  \____/ \____/   \_/  \____/ \_| \_|\n\n\n$RESET";
 
-$i = 0;
+
+i=1;
 compare_shells ()
 {
+	echo -n "test $i "; let "i=i+1";
 	MINI=$(echo "$@
 exit" | ./minishell)
 	BASH=$(echo "$@
@@ -26,19 +28,18 @@ exit" | ./minishell)
 if [ "$MINI" == "$BASH" ]; then
     printf " $BOLDGREEN%s$RESET\n" "✔ "
 else
-    printf " $BOLDRED%s$RESET $RED\n MINI: %s\n$BLUE BASH: %s\n$RESET" "✗ " "$MINI" "$BASH"
-i=$((i-1))
-((i=i-1))
-let "i=i-1"
+    printf " $BOLDRED%s$RESET\n" "✘ "
+	printf " $LRED MINI: %s\n$RESET $LPURPLE BASH: %s\n$RESET" "$MINI" "$BASH"
+# 
 fi
 }
 
-echo "test $i " compare_shells 'echo Hello World!'
-echo "test $i " compare_shells 'echo Hello World! > test'
-echo "test $i " compare_shells 'echo Hello again! >> test'
-echo "test $i " compare_shells '< Makefile cat | sort | grep a'
-echo "test $i " compare_shells 'echo this amazing sentence | cat > out
-                cat out'
+compare_shells 'echo Hello World!'
+compare_shells 'echo Hello World! > test'
+compare_shells 'echo Hello again! >> test'
+compare_shells '< Makefile cat | sort | grep a'
+compare_shells 'echo this amazing sentence | cat > out
+cat out'
 # compare_shells '< Makefile | ls > out
 #                 cat out'
 

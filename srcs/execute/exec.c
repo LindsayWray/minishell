@@ -1,21 +1,6 @@
 #include "../../includes/minishell.h"
 
-int	is_builtin(char *cmd)
-{
-	static char *str[7] = {"echo", "cd", "pwd", "export", "unset", "env", "exit"};
-	int i;
-	
-	i = 0;
-	while (i < 7)
-	{
-		if (ft_streql(cmd, str[i]))
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
-// fake functions in order to compile 
+//************ fake functions in order to compile 
 void	ft_echo(char **cmd, int fd_out)
 {
 	(void)cmd;
@@ -51,36 +36,91 @@ void	ft_exit(char **cmd, int fd_out)
 	(void)cmd;
 	(void)fd_out;
 }
+//*********** end of fake functions
 
-void	run_builtin(char **cmd, int fd_out)
+
+void	wait_for_childprocesses(int *pids, int len)
 {
-	static void (*func[7])(char **, int) = {ft_echo, ft_cd, ft_pwd, ft_export, ft_unset, ft_env, ft_exit};
-	int i;
+	int		stat_loc;
+	int j;
 
-	i = is_builtin(*cmd);
-	func[i](cmd, fd_out);
-}
-
-void	run_command(char **cmd, char **env)
-{
-	char	*path;
-	
-	path = get_path(*cmd);
-	if (execve(path, cmd, env) == -1)
+	j = 0;
+	while (j < len)
 	{
-		free (path);
-		exit (EXIT_FAILURE);
+		waitpid(pids[j], &stat_loc, 0);
+			// printf("Exitstatus:  %d\n", WEXITSTATUS(stat_loc));
+			// for command not found error, perhaps hardcode error status
+		j++;
 	}
+	free (pids);
 }
 
-int	exec(t_cmd_lst *cmd_lst, char **env)
+int	is_builtin(char *cmd)
+{
+	static char	*str[7] = {"echo", "cd", "pwd", "export", "unset", "env", "exit"};
+	int			i;
+	
+	i = 0;
+	while (i < 7)
+	{
+		if (ft_streql(cmd, str[i]))
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+pid_t	run_builtin(int in_fd, int out_fd, t_cmd_lst *cmd_lst)
 {
 	pid_t	pid;
+	int		exit_status;
+	static void (*builtin_func[7])(char **, int) = {ft_echo, ft_cd, ft_pwd, ft_export, ft_unset, ft_env, ft_exit};
+	int i;
+			
+	if (cmd_lst->next == NULL)
+		out_fd = STDOUT_FILENO;
+	set_redirection(&in_fd, &out_fd, cmd_lst->subcmd);
+	i = is_builtin(*cmd_lst->subcmd.cmd);
+	exit_status = 0; // will be the return value of the builtin_func
+	builtin_func[i](cmd_lst->subcmd.cmd, out_fd);
+	pid = fork();
+	if (pid == -1)
+		perror("fork error"); // temporary
+	if (pid == 0)
+		exit(exit_status);
+	return (pid);
+}
+
+pid_t	run_command_in_childprocess(int in_fd, int out_fd, t_cmd_lst *cmd_lst, char **env)
+{
+	pid_t	pid;
+	char	*path;
+
+	pid = fork();
+	if (pid == -1)
+		perror("fork error"); // temporary
+	if (pid == 0)
+	{
+		if (cmd_lst->next == NULL)
+			out_fd = STDOUT_FILENO;
+		set_redirection(&in_fd, &out_fd, cmd_lst->subcmd);
+		dup_fd(in_fd, out_fd);
+		path = get_path(*cmd_lst->subcmd.cmd);
+		if (execve(path, cmd_lst->subcmd.cmd, env) == -1)
+		{
+			free (path);
+			exit (EXIT_FAILURE);
+		}
+	}
+	return (pid);
+}
+
+void	exec(t_cmd_lst *cmd_lst, char **env)
+{
 	int		p[2];
     int     read_pipe;
-	int		stat_loc;
 	int		*pids;
-	int i;
+	int		i;
 
 	pids = malloc(lst_size(cmd_lst) * sizeof(pid_t));
     read_pipe = STDIN_FILENO;
@@ -89,46 +129,15 @@ int	exec(t_cmd_lst *cmd_lst, char **env)
 	{
 		if (pipe(p) == -1)
 			perror("pipe error"); // temporary 
-		if (is_builtin(*cmd_lst->subcmd.cmd) == -1)
-		{
-			pid = fork();
-			if (pid == -1)
-				perror("fork error"); // temporary
-			pids[i] = pid;
-			if (pid == 0)
-        	{
-            	if (cmd_lst->next == NULL)
-                	p[1] = STDOUT_FILENO;
-			set_redirection(&read_pipe, &p[1], cmd_lst->subcmd);
-			dup_fd(read_pipe, p[1]);
-			run_command(cmd_lst->subcmd.cmd, env);
-			}
-    	}
+		if (is_builtin(*cmd_lst->subcmd.cmd) != -1)
+			pids[i] = run_builtin(read_pipe, p[1], cmd_lst);
 		else
-		{
-			if (cmd_lst->next == NULL)
-                p[1] = STDOUT_FILENO;
-			set_redirection(&read_pipe, &p[1], cmd_lst->subcmd);
-			run_builtin(cmd_lst->subcmd.cmd, p[1]);
-			pids[i] = 0; // temporary fix. Needs different solution
-		}
+			pids[i] = run_command_in_childprocess(read_pipe, p[1], cmd_lst, env);
 		close (p[1]);
 		read_pipe = p[0];
 		cmd_lst = cmd_lst->next;
 		i++;
 	}
-	int j = 0;
-	while (j < i)
-	{
-		if (pids[j])
-		{
-			waitpid(pids[j], &stat_loc, 0);
-			printf("Exitstatus:  %d\n", WEXITSTATUS(stat_loc));
-			// for command not found error, perhaps hardcode error status
-		}
-		j++;
-	}
-	free (pids);
+	wait_for_childprocesses(pids, i);
 	cmd_lst_clear(&cmd_lst);
-	return (read_pipe);
 }

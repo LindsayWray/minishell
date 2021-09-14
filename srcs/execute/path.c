@@ -12,13 +12,12 @@ char	*get_path(char *command)
 	char	**paths;
 	char	*path;
 	int		i;
-	struct stat buf;
+	struct	stat buf;
 
 	if (lstat(command, &buf) == 0)
 		return (ft_strdup(command)); //means it already is the full path
-	//paths = find_env_paths(envp);
-    paths = ft_split(getenv("PATH"), ':');
-    i = 0;
+	paths = ft_split(getenv("PATH"), ':');
+	i = 0;
 	command = ft_strjoin("/", command);
 	i = 1;
 	while (paths[i])
@@ -33,8 +32,8 @@ char	*get_path(char *command)
 		free (path);
 		i++;
 	}
-	command_not_found_error(command + 1);
+	command_not_found_error(command + 1); //to skip the prev. added '/'
 	// free (command);
 	// free_array(paths);
-	exit (EXIT_FAILURE);
+	exit (COMMAND_NOT_FOUND);
 }

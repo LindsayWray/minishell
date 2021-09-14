@@ -22,19 +22,6 @@ void	print_cmd_lst(t_cmd_lst *cmd_lst)
 	}
 }
 
-// You can delete this function.. 
-void	print_env(t_env_lst *env_lst)
-{
-	printf("*********ENV LIST *********\n");
-	while (env_lst)
-	{
-		printf("%s=%s\n", env_lst->key, env_lst->value);
-		env_lst = env_lst->next;
-	}
-	printf("***************************\n");
-	return ;
-}
-
 int main(int argc, char **argv, char **env)
 {
 	char *str;
@@ -42,16 +29,15 @@ int main(int argc, char **argv, char **env)
 	t_cmd_lst	*cmd_lst;
 	t_env_lst	*env_lst;
 
-	if (isatty(STDIN_FILENO))
-		printf("\n\033[1m\033[36mWelcome to Isaac's and Lindsay's minishell!\n\033[0m");
-
-	// ** For testing environment list. 
-	(void)argc;
 	(void)argv;
+	if (argc != 1)
+	{
+		printf("Minishell should be run without arguments\n"); // send to stderr
+		return (EXIT_FAILURE);
+	}
 	env_lst = ft_getenv(env);
-	print_env(env_lst);
-	// ***
-
+	// if (isatty(STDIN_FILENO))
+	// 	printf("\n\033[1m\033[36mWelcome to Isaac's and Lindsay's minishell!\n\033[0m");
 	while (true)
 	{
 		str = readline("=^..^= ");
@@ -61,14 +47,8 @@ int main(int argc, char **argv, char **env)
 			add_history(str); // an empty line should not be added to the history
 		token = lexer(str);
 		cmd_lst = parser(token);
-		// while(token)
-		// {
-		// 	printf("TOKEN:  %s, %d\n", token->content, token->type);
-		// 	token = token->next;
-		// }
-		// printf("you typed: %s\n", str);
 		free (str);
-		print_cmd_lst(cmd_lst);
+		//print_cmd_lst(cmd_lst);
 		exec(cmd_lst, env);
 	}
 	//printf("\n\033[1m\033[36mBye, come again!\n\033[0m");

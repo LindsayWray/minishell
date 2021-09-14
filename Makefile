@@ -2,7 +2,6 @@ NAME := minishell
 HEADERFILES :=	includes/minishell.h \
 				includes/utils.h
 SRCS :=		srcs/main.c \
-			srcs/lexer.c \
 			srcs/utils/ft_substr.c \
 			srcs/utils/lst_add_back.c \
 			srcs/utils/lst_last.c \
@@ -16,7 +15,8 @@ SRCS :=		srcs/main.c \
 			srcs/utils/ft_streql.c \
 			srcs/utils/ft_putstr_fd.c \
 			srcs/utils/ft_getenv.c\
-			srcs/parser.c \
+			srcs/parsing/lexer.c \
+			srcs/parsing/parser.c \
 			srcs/execute/exec.c \
 			srcs/execute/path.c \
 			srcs/execute/redirection.c
