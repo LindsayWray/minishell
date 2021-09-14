@@ -16,13 +16,20 @@ int export_exists(char *key, char *value)
                 else
                 {
                     free(temp->value);
-                    printf("hey: %s\n", temp->value);
                     temp->value = ft_strdup(value);
-                    printf("hey: %s\n", temp->value);
                     return (1);
                 }
             }
         temp = temp->next;
     }
     return (0);
+}
+
+void ft_export_add(char *key, char *value)
+{
+    t_env_lst   *new;
+
+    new = env_lst_new(key, value);
+    env_lst_add_back(&(g_data.env_lst), new);
+    return ;
 }

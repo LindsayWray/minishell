@@ -22,4 +22,5 @@ void		dup_fd(int input_fd, int output_fd);
 //builtins
 int         ft_export(char **cmd, int fd_out);
 int         export_exists(char *key, char *value);
+void        ft_export_add(char *key, char *value);
 #endif
