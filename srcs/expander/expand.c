@@ -70,7 +70,7 @@ char *locate_env_var(char *cmd)
         if (i != 0)
             value = add_pre_string(ft_substr(cmd, 0, i), value);
         i = j;
-        while (cmd[j] != '\0')
+        while (cmd[j] != '\0' && cmd[j] != '$')
             j++;
         if (i != j)
             value = add_after_string(value, ft_substr(cmd, i, j));
