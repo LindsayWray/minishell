@@ -21,6 +21,8 @@ SRCS :=		srcs/main.c \
 			srcs/utils/ft_split_free.c\
 			srcs/utils/ft_getenv.c\
 			srcs/utils/ft_itoa.c \
+			srcs/utils/ft_shiftstr_right.c\
+			srcs/utils/ft_shiftstr_left.c\
 			srcs/parsing/lexer.c \
 			srcs/parsing/parser.c \
 			srcs/execute/exec.c \
