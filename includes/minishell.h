@@ -24,5 +24,6 @@ void	    handle_quotes(char * str, int *i);
 //builtins
 int         ft_export(char **cmd, int fd_out);
 int         export_exists(char *key, char *value);
-void        ft_export_add(char *key, char *value);
+int         export_exists_key(char *key);
+int 		ft_export_add(char *key, char *value);
 #endif
