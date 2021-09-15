@@ -36,6 +36,7 @@ t_env_lst	*env_lst_new(char *key, char *value)
 		return (NULL);
 	node->key = key;
 	node->value = value;
+	node->previous = NULL;
 	node->next = NULL;
 	return (node);
 }

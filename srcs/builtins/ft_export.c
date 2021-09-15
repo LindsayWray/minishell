@@ -9,7 +9,7 @@ static int ft_export_noarg(int fd_out)
     temp = g_data.env_lst;
     while (temp)
     {
-        if (ft_cinstr(temp->value, ' ') == 1)
+        if (ft_cinstr(temp->value, ' ') == 1 || ft_strlen(temp->value) == 0)
             ft_dprintf(fd_out, "%s='%s'\n", temp->key, temp->value);
         else
             ft_dprintf(fd_out, "%s=%s\n", temp->key, temp->value);
@@ -79,6 +79,7 @@ static int ft_export_key(char *cmd, int fd_out)
 int    ft_export(char **cmd, int fd_out)
 {
     int i;
+    int ret;
 
     (void)fd_out;
     if (cmd[1] == NULL)
@@ -89,9 +90,11 @@ int    ft_export(char **cmd, int fd_out)
         while (cmd[i])
         {
             if (ft_cinstr(cmd[i], '=') == 1)
-                return (ft_export_eql(cmd[i], fd_out));
+                ret = ft_export_eql(cmd[i], fd_out);
             else
-                return (ft_export_key(cmd[i], fd_out));
+                ret = ft_export_key(cmd[i], fd_out);
+            if (ret != 0)
+                return (ret);
             i++;
         }
     }

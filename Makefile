@@ -21,6 +21,7 @@ SRCS :=		srcs/main.c \
 			srcs/utils/ft_split_free.c\
 			srcs/utils/ft_getenv.c\
 			srcs/utils/ft_itoa.c \
+			srcs/utils/ft_strncmp.c\
 			srcs/utils/ft_shiftstr_right.c\
 			srcs/utils/ft_shiftstr_left.c\
 			srcs/parsing/lexer.c \
@@ -30,6 +31,7 @@ SRCS :=		srcs/main.c \
 			srcs/execute/redirection.c\
 			srcs/builtins/ft_export.c\
 			srcs/builtins/ft_export_utils_a.c \
+			srcs/builtins/ft_unset.c\
 			srcs/expander/expand.c
 
 FLAGS := -Wall -Wextra -Werror

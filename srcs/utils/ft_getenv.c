@@ -15,7 +15,10 @@ t_env_lst   *ft_getenv(char **env)
     {
         temp = ft_split(env[i], '=');
         key = ft_strdup(temp[0]);
-        value = ft_strdup(temp[1]);
+        if (temp[1] != NULL)
+            value = ft_strdup(temp[1]);
+        else
+            value = ft_strdup("");
         env_new = env_lst_new(key, value);
         env_lst_add_back(&env_lst, env_new);
         free(temp[0]);

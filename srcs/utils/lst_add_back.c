@@ -45,7 +45,10 @@ void	env_lst_add_back(t_env_lst **list, t_env_lst *new)
 	{
 		last = env_lst_last(*list);
 		if (last)
+		{
+			new->previous = last;
 			last->next = new;
+		}
 	}
 	else if (list)
 		*list= new;
