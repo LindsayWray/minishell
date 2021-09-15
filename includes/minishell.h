@@ -18,6 +18,8 @@ void		exec(t_cmd_lst *cmd_lst, char **env);
 char		*get_path(char *command);
 void		set_redirection(int *input_fd, int *output_fd, t_subcmd subcmd);
 void		dup_fd(int input_fd, int output_fd);
+void        expand(t_cmd_lst *cmd_lst);
+void	    handle_quotes(char * str, int *i);
 
 //builtins
 int         ft_export(char **cmd, int fd_out);

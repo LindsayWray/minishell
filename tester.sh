@@ -43,6 +43,8 @@ cat out'
 # compare_shells '< Makefile | ls > out
 #                 cat out'
 
+compare_shells 'export 6test=testing'
+
 # check if old file content is removed and not overwritten. O_TRUNC flag
 # force execve error with fake command (like cat or echo +x)
 # check if file permissions are the same as the terminals output files

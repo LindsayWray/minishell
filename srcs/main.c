@@ -61,7 +61,9 @@ int main(int argc, char **argv, char **env)
 		token = lexer(str);
 		cmd_lst = parser(token);
 		free (str);
-		//print_cmd_lst(cmd_lst);
+		print_cmd_lst(cmd_lst);
+		expand(cmd_lst);
+		print_cmd_lst(cmd_lst);
 		exec(cmd_lst, env);
 	}
 	print_env(g_data.env_lst);

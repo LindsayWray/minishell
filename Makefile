@@ -27,7 +27,8 @@ SRCS :=		srcs/main.c \
 			srcs/execute/path.c \
 			srcs/execute/redirection.c\
 			srcs/builtins/ft_export.c\
-			srcs/builtins/ft_export_utils_a.c
+			srcs/builtins/ft_export_utils_a.c \
+			srcs/expander/expand.c
 
 FLAGS := -Wall -Wextra -Werror
 OBJFILES := $(SRCS:srcs/%.c=obj/%.o)

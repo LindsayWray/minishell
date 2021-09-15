@@ -11,7 +11,7 @@ void	new_token(char *str, int i, int start, t_token **token, t_type type)
 		lst_clear(token); //add error message
 }
 
-void	handle_quotes(char * str, int *i)
+void	handle_quotes(char *str, int *i)
 {
 	if (str[*i] == '"')
 	{
