@@ -36,7 +36,7 @@ int	        ft_isalnum_str(char *str);
 char		*ft_itoa(int n);
 char		*ft_shiftstr_right(char *str);
 char		*ft_shiftstr_left(char *str);
-int         ft_strncmp(const char *s1, const char *s2, size_t n);
+int         ft_strcmp(char *s1, char *s2);
 int			ft_dprintf(int fd, const char *format, ...);
 
 #endif
