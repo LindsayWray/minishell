@@ -41,21 +41,27 @@ static int ft_export_noarg(int fd_out)
     lst = NULL;
     while (temp)
     {
-        new = env_lst_new(ft_strdup(temp->key), ft_strdup(temp->value));
+        if (temp->value != NULL)
+            new = env_lst_new(ft_strdup(temp->key), ft_strdup(temp->value));
+        else
+            new = env_lst_new(ft_strdup(temp->key), NULL);
         env_lst_add_back(&lst, new);
         temp = temp->next;
     }
     lst = sort_env_lst(lst);
     while (lst)
     {
-        if (ft_cinstr(lst->value, ' ') == 1 || ft_strlen(lst->value) == 0)
-            ft_dprintf(fd_out, "declare -x %s='%s'\n", lst->key, lst->value);
+        if (lst->value == NULL)
+            ft_dprintf(fd_out, "declare -x %s\n", lst->key);
+        else if (ft_cinstr(lst->value, ' ') == 1 || ft_strlen(lst->value) == 0)
+            ft_dprintf(fd_out, "declare -x %s=\"%s\"\n", lst->key, lst->value);
         else
             ft_dprintf(fd_out, "declare -x %s=%s\n", lst->key, lst->value);
         temp = lst;
         lst = lst->next;
         free(temp->key);
-        free(temp->value);
+        if (temp->value != NULL)
+            free(temp->value);
         free(temp);
     }
     return (0);
@@ -115,7 +121,7 @@ static int ft_export_key(char *cmd, int fd_out)
     else if (export_exists_key(cmd) == 1)
         return (0);
     else
-        return (ft_export_add(cmd, ""));
+        return (ft_export_add(cmd, NULL));
     return (0);
 }
 

@@ -30,11 +30,12 @@ int export_exists(char *key, char *value)
         if (ft_streql(key, temp->key))
             {
                 value = clean_value(value);
-                if (value[0] == '\0')
+                if (value[0] == '\0' && temp->value != NULL)
                     return (1);
                 else
                 {
-                    free(temp->value);
+                    if (temp->value != NULL)
+                        free(temp->value);
                     temp->value = ft_strdup(value);
                     return (1);
                 }
@@ -64,16 +65,14 @@ int    ft_export_add(char *key, char *value)
     char        *set_key;
     char        *set_value;
 
-    value = clean_value(value);
+    set_value = NULL;
+    if (value != NULL)
+        value = clean_value(value);
     set_key = ft_strdup(key);
     if (set_key == NULL)
         return (1);
-    set_value = ft_strdup(value);
-    if (set_value == NULL)
-    {
-        free(set_key);
-        return (1);
-    }
+    if (value != NULL)
+        set_value = ft_strdup(value);
     new = env_lst_new(set_key, set_value);
     env_lst_add_back(&(g_data.env_lst), new);
     return (0);
