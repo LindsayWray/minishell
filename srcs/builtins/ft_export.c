@@ -6,7 +6,8 @@ static  t_env_lst   *sort_env_lst(t_env_lst *lst)
 {
     t_env_lst   *sort_i;
     t_env_lst   *sort_j;
-    char        *temp_str;
+    char        *temp_key;
+    char        *temp_value;
 
     sort_i = lst;
     while (sort_i)
@@ -16,9 +17,12 @@ static  t_env_lst   *sort_env_lst(t_env_lst *lst)
         {
             if (ft_strcmp(sort_i->key, sort_j->key) > 0)
             {
-                temp_str = sort_i->key;
+                temp_key = sort_i->key;
+                temp_value = sort_i->value;
                 sort_i->key = sort_j->key;
-                sort_j->key = temp_str;
+                sort_i->value = sort_j->value;
+                sort_j->key = temp_key;
+                sort_j->value = temp_value;
             }
             sort_j = sort_j->next;
         }

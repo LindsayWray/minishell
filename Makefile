@@ -32,6 +32,7 @@ SRCS :=		srcs/main.c \
 			srcs/builtins/ft_export.c\
 			srcs/builtins/ft_export_utils_a.c \
 			srcs/builtins/ft_unset.c\
+			srcs/builtins/ft_env.c\
 			srcs/expander/expand.c
 
 FLAGS := -Wall -Wextra -Werror

@@ -20,12 +20,6 @@ int	ft_pwd(char **cmd, int fd_out)
 	return (0);
 }
 
-int	ft_env(char **cmd, int fd_out)
-{
-	(void)cmd;
-	(void)fd_out;
-	return (0);
-}
 int	ft_exit(char **cmd, int fd_out)
 {
 	(void)cmd;

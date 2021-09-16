@@ -27,4 +27,5 @@ int         export_exists(char *key, char *value);
 int         export_exists_key(char *key);
 int 		ft_export_add(char *key, char *value);
 int         ft_unset(char **cmd, int fd_out);
+int         ft_env(char **cmd, int fd_out);
 #endif
