@@ -6,8 +6,10 @@ static void ft_unset_del(char *cmd)
 {
     t_env_lst   *temp;
     t_env_lst   *temp2;
+    int         first;
 
     temp = g_data.env_lst;
+    first = 0;
     while (temp)
     {
         if (ft_streql(cmd, temp->key) == 1)
@@ -17,13 +19,18 @@ static void ft_unset_del(char *cmd)
                 free(temp->value);
             temp2 = temp;
             temp2 = temp2->next;
-            temp->previous->next = temp2;
+            if (temp->previous != NULL)
+                temp->previous->next = temp2;
+            else
+                first = 1;
             if (temp2 != NULL)
             {
                 if (temp2->next != NULL)
                     temp2->previous = temp->previous;
             }
             free(temp);
+            if  (first == 1)
+                g_data.env_lst = temp2;
             return ;
         }
         temp = temp->next;
