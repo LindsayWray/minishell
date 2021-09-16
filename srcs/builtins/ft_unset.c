@@ -13,11 +13,16 @@ static void ft_unset_del(char *cmd)
         if (ft_streql(cmd, temp->key) == 1)
         {
             free(temp->key);
-            free(temp->value);
+            if (temp->value != NULL)
+                free(temp->value);
             temp2 = temp;
             temp2 = temp2->next;
             temp->previous->next = temp2;
-            temp2->previous = temp->previous;
+            if (temp2 != NULL)
+            {
+                if (temp2->next != NULL)
+                    temp2->previous = temp->previous;
+            }
             free(temp);
             return ;
         }

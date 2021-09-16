@@ -35,7 +35,10 @@ t_env_lst	*env_lst_new(char *key, char *value)
 	if (!node)
 		return (NULL);
 	node->key = key;
-	node->value = value;
+	if (value != NULL)
+		node->value = value;
+	else
+		node->value = NULL;
 	node->previous = NULL;
 	node->next = NULL;
 	return (node);
