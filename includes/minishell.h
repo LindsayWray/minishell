@@ -11,6 +11,8 @@
 #include <sys/stat.h>
 #include "utils.h"
 #include "types.h"
+#include <errno.h>
+#include <limits.h>
 
 t_token		*lexer(char *str);
 t_cmd_lst	*parser(t_token *token);
@@ -28,4 +30,6 @@ int         export_exists_key(char *key);
 int 		ft_export_add(char *key, char *value);
 int         ft_unset(char **cmd, int fd_out);
 int         ft_env(char **cmd, int fd_out);
+int         ft_cd(char **cmd, int fd_out);
+int         ft_pwd(char **cmd, int fd_out);
 #endif

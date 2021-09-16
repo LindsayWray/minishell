@@ -7,18 +7,6 @@ int	ft_echo(char **cmd, int fd_out)
 	write (fd_out, "My echo\n", 8);
 	return (0);
 }
-int	ft_cd(char **cmd, int fd_out)
-{
-	(void)cmd;
-	(void)fd_out;
-	return (0);
-}
-int	ft_pwd(char **cmd, int fd_out)
-{
-	(void)cmd;
-	(void)fd_out;
-	return (0);
-}
 
 int	ft_exit(char **cmd, int fd_out)
 {
