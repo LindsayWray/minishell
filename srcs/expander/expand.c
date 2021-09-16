@@ -10,12 +10,10 @@ char *get_value(char *key)
     while (temp)
     {
         if (ft_streql(key, temp->key))
-        {
             return (ft_strdup(temp->value));
-        }
         temp = temp->next;
     }
-    return (NULL);
+    return (ft_strdup(""));
 }
 
 char *add_after_string(char *value, char *after_str)
@@ -57,26 +55,24 @@ char *locate_env_var(char *cmd)
     {
         if (cmd[i] == '\'')
             handle_quotes(cmd, &i);
-        //if (cmd[i] == '"')
-        i++;
+		else
+			i++;
     }
     if (cmd[i] == '$')
     {
         j = i + 1;
-        while (ft_isalpha(cmd[j]) || ft_isdigit(cmd[j]) || cmd[j] == '_')
+        while (ft_isalpha(cmd[j]) || ft_isdigit(cmd[j]) || cmd[j] == '_' || cmd[j] == '?')
             j++;
-        printf("%s\n", ft_substr(cmd, i + 1, j - (i + 1)));
         value = get_value(ft_substr(cmd, i + 1, j - (i + 1)));
-        if (i != 0)
-            value = add_pre_string(ft_substr(cmd, 0, i), value);
+		value = add_pre_string(ft_substr(cmd, 0, i), value);
         i = j;
-        while (cmd[j] != '\0' && cmd[j] != '$')
+        while (cmd[j] != '\0')
             j++;
-        if (i != j)
-            value = add_after_string(value, ft_substr(cmd, i, j));
-        return (value);
+        value = add_after_string(value, ft_substr(cmd, i, j - i));
+		free (cmd);
+        return (locate_env_var(value));
     }
-    return (NULL);
+    return (cmd);
 }
 
 void    expand(t_cmd_lst *cmd_lst)
@@ -86,13 +82,12 @@ void    expand(t_cmd_lst *cmd_lst)
     
     while (cmd_lst)
     {
-        i = 1;
+        i = 0;
         while (cmd_lst->subcmd.cmd[i])
         {
             expanded_str = locate_env_var(cmd_lst->subcmd.cmd[i]);
-            if (expanded_str)
+            if (!ft_streql(expanded_str, cmd_lst->subcmd.cmd[i]))
             {
-                free (cmd_lst->subcmd.cmd[i]);
                 cmd_lst->subcmd.cmd[i] = expanded_str;
             }
             i++;

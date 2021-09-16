@@ -44,6 +44,7 @@ cat out'
 #                 cat out'
 
 compare_shells 'export 6test=testing'
+compare_shells echo $USER'$PATH'$USER
 
 # check if old file content is removed and not overwritten. O_TRUNC flag
 # force execve error with fake command (like cat or echo +x)

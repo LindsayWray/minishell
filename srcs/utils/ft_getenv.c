@@ -25,5 +25,7 @@ t_env_lst   *ft_getenv(char **env)
         free(temp[1]);
         i++;
     }
+	env_new = env_lst_new(ft_strdup("?"), ft_strdup("0"));
+	env_lst_add_back(&env_lst, env_new); // added these lines to set the exit_status on 0 at the beginning
     return (env_lst);
 }

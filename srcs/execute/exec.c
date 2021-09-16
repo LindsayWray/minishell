@@ -49,8 +49,7 @@ void	wait_for_childprocesses(int *pids, int len)
 		j++;
 	}
 	exit_status = ft_itoa(WEXITSTATUS(stat_loc)); // does a %256 on statloc
-	if (!export_exists("?", exit_status))
-		ft_export_add("?", exit_status);
+	export_exists("?", exit_status); // is created in ft_getenv to give it value before first command
 	free (pids);
 }
 
@@ -126,7 +125,7 @@ void	exec(t_cmd_lst *cmd_lst, char **env)
 	while (cmd_lst)
 	{
 		if (pipe(p) == -1)
-			perror("pipe error"); // temporary 
+			perror("pipe error"); // still need to free and exit
 		if (is_builtin(*cmd_lst->subcmd.cmd) != -1)
 			pids[i] = run_builtin(read_pipe, p[1], cmd_lst);
 		else
