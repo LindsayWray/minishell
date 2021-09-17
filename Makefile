@@ -35,7 +35,8 @@ SRCS :=		srcs/main.c \
 			srcs/builtins/ft_env.c\
 			srcs/builtins/ft_cd.c\
 			srcs/builtins/ft_pwd.c\
-			srcs/expander/expand.c
+			srcs/expander/expand.c \
+			srcs/expander/quote_handler.c
 
 FLAGS := -Wall -Wextra -Werror
 OBJFILES := $(SRCS:srcs/%.c=obj/%.o)

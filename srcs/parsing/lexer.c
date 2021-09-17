@@ -11,23 +11,6 @@ void	new_token(char *str, int i, int start, t_token **token, t_type type)
 		lst_clear(token); //add error message
 }
 
-void	handle_quotes(char *str, int *i)
-{
-	if (str[*i] == '"')
-	{
-		(*i)++;
-		while (str[*i] != '"' && str[*i] != '\0')
-			(*i)++;
-	}
-	if (str[*i] == '\'')
-	{
-		(*i)++;
-		while (str[*i] != '\'' && str[*i] != '\0')
-			(*i)++;
-	}
-	(*i)++;
-}
-
 void	handle_redirections(char *str, int *i, t_token **token)
 {
 	t_type	type;
@@ -70,7 +53,7 @@ t_token	*lexer(char *str)
 	{
 		start = i;
 		while (str[i] != '|' && str[i] != '<' && str[i] != '>' && str[i] != ' ' && str[i] != '\0')
-			handle_quotes(str, &i);
+			skip_over_quotes(str, &i);
 		if (start != i) // this condition prevents empty tokens
 			new_token(str, i, start, &token, WORD);
 		if (str[i] == '|')
