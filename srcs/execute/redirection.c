@@ -9,7 +9,7 @@ int	get_output(char *output_file, t_type type)
 	else
 		output_fd = open(output_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (output_fd == -1)
-		perror("couldn't open output_file");
+		perror(output_file);
 	return (output_fd);
 }
 
@@ -19,7 +19,7 @@ int	get_input(char *input_file)
 
 	input_fd = open(input_file, O_RDONLY);
 	if (input_fd == -1)
-		perror("input file does not exist");
+		perror(input_file);
 	return (input_fd);
 }
 
@@ -29,7 +29,7 @@ int	read_input_heredoc(char *delimiter)
 	int		input_fd;
 
 	line = NULL;
-	input_fd = open("/tmp/heredoc", O_CREAT | O_RDWR);
+	input_fd = open("/tmp/heredoc", O_CREAT | O_RDWR, 0644);
 	if (input_fd == -1)
 		perror("input file does not exist");
 	while (true)
@@ -49,15 +49,25 @@ int	read_input_heredoc(char *delimiter)
 	}
 }
 
-void	set_redirection(int *input_fd, int *output_fd, t_subcmd subcmd)
+int	set_redirection(int *input_fd, int *output_fd, t_subcmd subcmd)
 {
 	if (subcmd.in_type == INPUT_REDIRECTION)
+	{
 		*input_fd = get_input(subcmd.in_file);
+		if (*input_fd == -1)
+			return (EXIT_FAILURE);
+	}
 	if (subcmd.in_type == HEREDOC)
 		*input_fd = read_input_heredoc(subcmd.in_file);
     if (subcmd.out_type == OUTPUT_REDIRECTION || subcmd.out_type == APPEND)
+	{
         *output_fd = get_output(subcmd.out_file, subcmd.out_type);
-
+		if (*output_fd == -1)
+			return (EXIT_FAILURE);
+	}
+	if (*subcmd.cmd == NULL)
+		exit(EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }
 
 void	dup_fd(int input_fd, int output_fd)

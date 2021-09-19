@@ -1,6 +1,7 @@
 #!/bin/bash
 
 RESET="\033[0m"
+PINK = "\x1b[35;01m"
 BOLDGREEN="\033[1m\033[32m"
 BOLDRED="\033[1m\033[31m"
 LPURPLE="\033[90m"

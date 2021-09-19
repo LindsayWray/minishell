@@ -36,6 +36,11 @@ void	print_env(t_env_lst *env_lst)
 	return ;
 }
 
+void	received_sigpipe(int i)
+{
+	printf("received signal%d\n", i);
+}
+
 int main(int argc, char **argv, char **env)
 {
 	char *str;
@@ -48,6 +53,7 @@ int main(int argc, char **argv, char **env)
 		printf("Minishell should be run without arguments\n"); // send to stderr
 		return (EXIT_FAILURE);
 	}
+	signal(SIGPIPE, received_sigpipe);
 	g_data.env_lst = ft_getenv(env);
 	// if (isatty(STDIN_FILENO))
 	// 	printf("\n\033[1m\033[36mWelcome to Isaac's and Lindsay's minishell!\n\033[0m");
@@ -55,7 +61,7 @@ int main(int argc, char **argv, char **env)
 	{
 		str = readline("=^..^= ");
 		if (!str || ft_streql(str, "exit")) // temporary for the tester
-			break ;
+			break ;	
 		if (*str)
 			add_history(str); // an empty line should not be added to the history
 		token = lexer(str);
