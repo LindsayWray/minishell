@@ -53,8 +53,6 @@ static int ft_export_noarg(int fd_out)
     {
         if (lst->value == NULL)
             ft_dprintf(fd_out, "declare -x %s\n", lst->key);
-        else if (ft_cinstr(lst->value, ' ') == 1 || ft_strlen(lst->value) == 0)
-            ft_dprintf(fd_out, "declare -x %s=\"%s\"\n", lst->key, lst->value);
         else
             ft_dprintf(fd_out, "declare -x %s=%s\n", lst->key, lst->value);
         temp = lst;
