@@ -23,6 +23,7 @@ SRCS :=		srcs/main.c \
 			srcs/utils/ft_itoa.c \
 			srcs/utils/ft_strcmp.c\
 			srcs/utils/ft_atoi.c\
+			srcs/utils/ft_get_env_var.c\
 			srcs/utils/ft_shiftstr_right.c\
 			srcs/utils/ft_shiftstr_left.c\
 			srcs/parsing/lexer.c \

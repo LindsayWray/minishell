@@ -1,5 +1,36 @@
 #include "../../includes/utils.h"
 
+static t_env_lst *get_shell_lvl(t_env_lst *temp)
+{
+    while (temp)
+    {
+        if (ft_streql(temp->key, "SHLVL") == 1)
+            return (temp);
+        temp = temp->next;
+    }
+    return (temp);
+}
+
+static void set_shell_lvl(t_env_lst *lst)
+{
+    t_env_lst   *temp;
+    int         level;
+
+    temp = lst;
+    temp = get_shell_lvl(temp);
+    if (temp)
+    {
+        if (temp->value)
+        {
+            level = ft_atoi(temp->value);
+            level++;
+            free(temp->value);
+            temp->value = ft_itoa(level);
+        }
+    }
+    return ;
+}
+
 t_env_lst   *ft_getenv(char **env)
 {
     t_env_lst   *env_lst;
@@ -26,6 +57,7 @@ t_env_lst   *ft_getenv(char **env)
             free(temp[1]);
         i++;
     }
+    set_shell_lvl(env_lst);
     env_new = env_lst_new(ft_strdup("?"), ft_strdup("0"));
 	env_lst_add_back(&env_lst, env_new); // added these lines to set the exit_status on 0 at the beginning
     return (env_lst);

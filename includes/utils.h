@@ -38,6 +38,7 @@ char		*ft_shiftstr_right(char *str);
 char		*ft_shiftstr_left(char *str);
 int         ft_strcmp(char *s1, char *s2);
 int			ft_atoi(const char *num);
+t_env_lst	*ft_get_env_var(char *key);
 int			ft_dprintf(int fd, const char *format, ...);
 
 #endif
