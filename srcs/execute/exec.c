@@ -1,22 +1,5 @@
 #include "../../includes/minishell.h"
 
-//************ fake functions in order to compile 
-int	ft_echo(char **cmd, int fd_out)
-{
-	(void)cmd;
-	write (fd_out, "My echo\n", 8);
-	return (0);
-}
-
-int	ft_exit(char **cmd, int fd_out)
-{
-	(void)cmd;
-	(void)fd_out;
-	return (0);
-}
-//*********** end of fake functions
-
-
 void	wait_for_childprocesses(int *pids, int len)
 {
 	int		stat_loc;

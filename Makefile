@@ -22,6 +22,7 @@ SRCS :=		srcs/main.c \
 			srcs/utils/ft_getenv.c\
 			srcs/utils/ft_itoa.c \
 			srcs/utils/ft_strcmp.c\
+			srcs/utils/ft_atoi.c\
 			srcs/utils/ft_shiftstr_right.c\
 			srcs/utils/ft_shiftstr_left.c\
 			srcs/parsing/lexer.c \
@@ -35,6 +36,8 @@ SRCS :=		srcs/main.c \
 			srcs/builtins/ft_env.c\
 			srcs/builtins/ft_cd.c\
 			srcs/builtins/ft_pwd.c\
+			srcs/builtins/ft_echo.c\
+			srcs/builtins/ft_exit.c\
 			srcs/expander/expand.c \
 			srcs/expander/quote_handler.c
 

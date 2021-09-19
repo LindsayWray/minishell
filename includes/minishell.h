@@ -34,4 +34,6 @@ int         ft_unset(char **cmd, int fd_out);
 int         ft_env(char **cmd, int fd_out);
 int         ft_cd(char **cmd, int fd_out);
 int         ft_pwd(char **cmd, int fd_out);
+int         ft_echo(char **cmd, int fd_out);
+int         ft_exit(char **cmd, int fd_out);
 #endif
