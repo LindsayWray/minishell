@@ -75,7 +75,7 @@ pid_t	run_command_in_childprocess(int in_fd, int out_fd, t_cmd_lst *cmd_lst, cha
 			exit (EXIT_FAILURE);
 		//printf("in %d out %d, p %d\n", in_fd, out_fd, p);
 		dup_fd(in_fd, out_fd);
-		close (p);
+		// close (p);
 		path = get_path(*cmd_lst->subcmd.cmd);
 		if (execve(path, cmd_lst->subcmd.cmd, env) == -1)
 		{
@@ -84,8 +84,9 @@ pid_t	run_command_in_childprocess(int in_fd, int out_fd, t_cmd_lst *cmd_lst, cha
 		}
 	}
 	//printf("parent closing %d and %d\n", p, out_fd);
-	close (p);
-	close (out_fd);
+	// close (p);
+	// close (out_fd);
+	(void)p;
 	return (pid);
 }
 

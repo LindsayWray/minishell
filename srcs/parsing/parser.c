@@ -14,21 +14,21 @@ int	word_count(t_token *token)
 	return (count);
 }
 
-t_cmd_lst	*parser(t_token *token)
+t_cmd_lst	*parser(t_token *token_lst)
 {
 	t_subcmd	subcmd;
 	t_cmd_lst	*cmd_lst;
 	int			count;
 	int i;
-
+	t_token		*token = token_lst;
 	cmd_lst = NULL;
 	while (token)
 	{
 		i = 0;
 		count = word_count(token);
 		subcmd.cmd = malloc((count + 1) * sizeof(char *));
-		// if (!subcmd.cmd)
-		// 	call to global to clean up
+		if (!subcmd.cmd)
+			return (NULL);
 		subcmd.in_type = VOID;
 		subcmd.out_type = VOID;
 		while (token && token->type != PIPE)
@@ -55,6 +55,31 @@ t_cmd_lst	*parser(t_token *token)
 		if (token)
 			token = token->next;
 	}
-	lst_clear(&token); //add error message
-	return (cmd_lst); // put in global instead of return
+	token = token_lst;
+	t_cmd_lst	*lst = cmd_lst;
+	while (lst)
+	{
+		printf("-> %d\n", lst_last(token)->type);
+		if ((!*lst->subcmd.cmd && lst->subcmd.in_type == VOID && lst->subcmd.out_type == VOID) || lst_last(token)->type == PIPE)
+		{
+			dprintf(STDERR_FILENO, "minishell: syntax error near unexpected token `|'\n");
+			return (NULL);
+		}
+		lst = lst->next;
+	}
+	lst = cmd_lst;
+	while (lst)
+	{
+		if (lst->subcmd.in_type == INPUT_REDIRECTION || lst->subcmd.in_type == HEREDOC || lst->subcmd.out_type == OUTPUT_REDIRECTION || lst->subcmd.out_type == APPEND)
+		{
+			if (!*lst->subcmd.in_file || !*lst->subcmd.out_file)
+			{
+				dprintf(STDERR_FILENO, "minishell: syntax error near unexpected token `newline'\n");
+				return (NULL);
+			}
+		}
+		lst = lst->next;
+	}
+	lst_clear(&token);
+	return (cmd_lst);
 }
