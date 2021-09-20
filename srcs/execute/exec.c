@@ -10,10 +10,11 @@ void	wait_for_childprocesses(int *pids, int len)
 	while (j < len)
 	{
 		waitpid(pids[j], &stat_loc, 0);
-		printf("Exitstatus:  %d      %d\n", WEXITSTATUS(stat_loc), WTERMSIG(stat_loc));
+		//printf("Exitstatus:  %d      %d\n", WEXITSTATUS(stat_loc), WTERMSIG(stat_loc));
+		// if (WIFEXITED(stat_loc))
+		// {
 		j++;
 	}
-	printf("children are dead\n");
 	exit_status = ft_itoa(WEXITSTATUS(stat_loc)); // does a %256 on statloc
 	export_exists("?", exit_status); // is created in ft_getenv to give it value before first command
 	free (pids);
@@ -68,12 +69,13 @@ pid_t	run_command_in_childprocess(int in_fd, int out_fd, t_cmd_lst *cmd_lst, cha
 		perror("fork error"); // temporary
 	if (pid == 0)
 	{
-		close (p);
 		if (cmd_lst->next == NULL)
 			out_fd = STDOUT_FILENO;
 		if (set_redirection(&in_fd, &out_fd, cmd_lst->subcmd))
 			exit (EXIT_FAILURE);
+		//printf("in %d out %d, p %d\n", in_fd, out_fd, p);
 		dup_fd(in_fd, out_fd);
+		close (p);
 		path = get_path(*cmd_lst->subcmd.cmd);
 		if (execve(path, cmd_lst->subcmd.cmd, env) == -1)
 		{
@@ -81,8 +83,8 @@ pid_t	run_command_in_childprocess(int in_fd, int out_fd, t_cmd_lst *cmd_lst, cha
 			exit (EXIT_FAILURE);
 		}
 	}
+	//printf("parent closing %d and %d\n", p, out_fd);
 	close (p);
-	//close (in_fd);
 	close (out_fd);
 	return (pid);
 }

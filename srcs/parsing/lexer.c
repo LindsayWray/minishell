@@ -36,7 +36,7 @@ void	handle_redirections(char *str, int *i, t_token **token)
 	while (str[*i] == ' ')
 		(*i)++;
 	start = *i;
-	while (str[*i] != ' ' && str[*i] != '\0')
+	while (str[*i] != ' ' && str[*i] != '\0' && str[*i] != '|')
 		(*i)++;
 	new_token(str, *i, start, token, type);
 }

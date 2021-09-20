@@ -36,4 +36,5 @@ char	*get_path(char *command)
 	// free (command);
 	// free_array(paths);
 	exit (COMMAND_NOT_FOUND);
+	//return (NULL);
 }
