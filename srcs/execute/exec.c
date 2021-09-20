@@ -11,12 +11,13 @@ void	wait_for_childprocesses(int *pids, int len)
 	{
 		waitpid(pids[j], &stat_loc, 0);
 		//printf("Exitstatus:  %d      %d\n", WEXITSTATUS(stat_loc), WTERMSIG(stat_loc));
-		// if (WIFEXITED(stat_loc))
-		// {
+		if (WIFEXITED(stat_loc))
+		{
+			exit_status = ft_itoa(WEXITSTATUS(stat_loc)); // does a %256 on statloc
+			export_exists("?", exit_status); // is created in ft_getenv to give it value before first command
+		}
 		j++;
 	}
-	exit_status = ft_itoa(WEXITSTATUS(stat_loc)); // does a %256 on statloc
-	export_exists("?", exit_status); // is created in ft_getenv to give it value before first command
 	free (pids);
 }
 

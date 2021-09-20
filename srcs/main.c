@@ -54,7 +54,7 @@ int main(int argc, char **argv, char **env)
 	while (true)
 	{
 		str = readline("=^..^= ");
-		if (!str || ft_streql(str, "exit")) // temporary for the tester
+		if (!str)
 			break ;	
 		if (*str)
 			add_history(str); // an empty line should not be added to the history
@@ -68,7 +68,7 @@ int main(int argc, char **argv, char **env)
 		free (str);
 		print_cmd_lst(cmd_lst);
 		expand(cmd_lst);
-		//print_cmd_lst(cmd_lst);
+		print_cmd_lst(cmd_lst);
 		exec(cmd_lst, env);
 	}
 	//print_env(g_data.env_lst);

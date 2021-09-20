@@ -59,7 +59,6 @@ t_cmd_lst	*parser(t_token *token_lst)
 	t_cmd_lst	*lst = cmd_lst;
 	while (lst)
 	{
-		printf("-> %d\n", lst_last(token)->type);
 		if ((!*lst->subcmd.cmd && lst->subcmd.in_type == VOID && lst->subcmd.out_type == VOID) || lst_last(token)->type == PIPE)
 		{
 			dprintf(STDERR_FILENO, "minishell: syntax error near unexpected token `|'\n");
