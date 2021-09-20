@@ -60,6 +60,7 @@ int main(int argc, char **argv, char **env)
 			add_history(str); // an empty line should not be added to the history
 		token = lexer(str);
 		cmd_lst = parser(token);
+		g_data.cmd_lst = cmd_lst;
 		if (!cmd_lst)
 		{
 			//free 

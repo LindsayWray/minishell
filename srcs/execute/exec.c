@@ -1,5 +1,55 @@
 #include "../../includes/minishell.h"
 
+t_data	g_data;
+
+void	ft_delete_str_array(char **str_array)
+{
+	int	i;
+
+	i = 0;
+	while (str_array[i])
+	{
+		free(str_array[i]);
+		i++;
+	}
+	free(str_array[i]);
+	free(str_array);
+	return ;
+}
+
+char    **ft_envlst_to_array(t_env_lst *env_lst)
+{
+    char		**env_array;
+	char		*temp_str;
+	char		*temp_str_final;
+    t_env_lst	*temp;
+	int			i;
+
+    env_array = NULL;
+	temp = env_lst;
+	i = 0;
+	while (temp)
+	{
+		i++;
+		temp = temp->next;
+	}
+	i += 1;
+	env_array = malloc(sizeof(char *) * i);
+	temp = env_lst;
+	i = 0;
+	while (temp)
+	{
+		temp_str = ft_strjoin(temp->key, "=");
+		temp_str_final = ft_strjoin(temp_str, temp->value);
+		env_array[i] = temp_str_final;
+		free(temp_str);
+		i++;
+		temp = temp->next;
+	}
+	env_array[i] = NULL;
+    return (env_array);
+}
+
 void	wait_for_childprocesses(int *pids, int len)
 {
 	int		stat_loc;
@@ -78,7 +128,7 @@ pid_t	run_command_in_childprocess(int in_fd, int out_fd, t_cmd_lst *cmd_lst, cha
 		dup_fd(in_fd, out_fd);
 		// close (p);
 		path = get_path(*cmd_lst->subcmd.cmd);
-		if (execve(path, cmd_lst->subcmd.cmd, env) == -1)
+		if (execve(path, cmd_lst->subcmd.cmd, ft_envlst_to_array(ft_getenv(env))) == -1)
 		{
 			free (path);
 			exit (EXIT_FAILURE);
@@ -88,6 +138,7 @@ pid_t	run_command_in_childprocess(int in_fd, int out_fd, t_cmd_lst *cmd_lst, cha
 	// close (p);
 	// close (out_fd);
 	(void)p;
+	(void)env;
 	return (pid);
 }
 

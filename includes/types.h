@@ -47,6 +47,7 @@ typedef struct s_env
 
 typedef struct s_data
 {
+	t_cmd_lst	*cmd_lst;
 	t_env_lst	*env_lst;
 }	t_data;
 
