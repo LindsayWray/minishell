@@ -67,9 +67,9 @@ int main(int argc, char **argv, char **env)
 			continue ;
 		}
 		free (str);
-		print_cmd_lst(cmd_lst);
+		//print_cmd_lst(cmd_lst);
 		expand(cmd_lst);
-		print_cmd_lst(cmd_lst);
+		//print_cmd_lst(cmd_lst);
 		exec(cmd_lst);
 	}
 	//print_env(g_data.env_lst);

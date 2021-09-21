@@ -101,7 +101,7 @@ pid_t	run_command_in_childprocess(int in_fd, int out_fd, t_cmd_lst *cmd_lst, int
 			exit (EXIT_FAILURE);
 		//printf("in %d out %d, p %d\n", in_fd, out_fd, p);
 		dup_fd(in_fd, out_fd);
-		// close (p);
+		close (p);
 		path = get_path(*cmd_lst->subcmd.cmd);
 		if (execve(path, cmd_lst->subcmd.cmd, ft_envlst_to_array(g_data.env_lst)) == -1)
 		{
@@ -111,9 +111,8 @@ pid_t	run_command_in_childprocess(int in_fd, int out_fd, t_cmd_lst *cmd_lst, int
 		}
 	}
 	//printf("parent closing %d and %d\n", p, out_fd);
-	// close (p);
-	// close (out_fd);
-	(void)p;
+	//close (p);
+	//(void)p;
 	return (pid);
 }
 
@@ -127,19 +126,30 @@ void	exec(t_cmd_lst *cmd_lst)
 	pids = malloc(lst_size(cmd_lst) * sizeof(pid_t));
     read_pipe = STDIN_FILENO;
 	i = 0;
-	while (cmd_lst)
+	while (cmd_lst->next)
 	{
 		if (pipe(p) == -1)
 			perror("pipe error"); // still need to free and exit
+		//printf("new pipe rd: %d  wr: %d\n", p[0], p[1]);
 		if (is_builtin(*cmd_lst->subcmd.cmd) != -1)
 			pids[i] = run_builtin(read_pipe, p[1], cmd_lst);
 		else
 			pids[i] = run_command_in_childprocess(read_pipe, p[1], cmd_lst, p[0]);
 		close (p[1]);
+		if (read_pipe != STDIN_FILENO) 
+			close (read_pipe);
 		read_pipe = p[0];
 		cmd_lst = cmd_lst->next;
 		i++;
 	}
+	if (is_builtin(*cmd_lst->subcmd.cmd) != -1)
+		pids[i] = run_builtin(read_pipe, STDOUT_FILENO, cmd_lst);
+	else
+		pids[i] = run_command_in_childprocess(read_pipe, STDOUT_FILENO, cmd_lst, p[0]);
+	if (read_pipe != STDIN_FILENO) 
+		close (read_pipe);
+	i++;
+	// last_pipe = multiple_commands
 	wait_for_childprocesses(pids, i);
 	cmd_lst_clear(&cmd_lst);
 }
