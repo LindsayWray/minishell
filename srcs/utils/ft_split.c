@@ -1,21 +1,5 @@
 #include "../../includes/utils.h"
 
-// think I have a improved verion of ft_split on home laptop
-
-static void	*free_split(char **strs)
-{
-	int	i;
-
-	i = 0;
-	while (strs[i] != NULL)
-	{
-		free(strs[i]);
-		i++;
-	}
-	free(strs);
-	return (NULL);
-}
-
 static int	count_words(char const *str, char c)
 {
 	int	count;
@@ -82,7 +66,7 @@ char	**ft_split(char const *s, char c)
 		{
 			strs[j] = next_word(s, i, c);
 			if (strs[j] == NULL)
-				return (free_split(strs));
+				return (ft_free_array(strs));
 			j++;
 		}
 		i++;

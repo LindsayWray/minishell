@@ -70,7 +70,7 @@ int main(int argc, char **argv, char **env)
 		print_cmd_lst(cmd_lst);
 		expand(cmd_lst);
 		print_cmd_lst(cmd_lst);
-		exec(cmd_lst, env);
+		exec(cmd_lst);
 	}
 	//print_env(g_data.env_lst);
 	//printf("\n\033[1m\033[36mBye, come again!\n\033[0m");

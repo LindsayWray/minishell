@@ -26,6 +26,7 @@ SRCS :=		srcs/main.c \
 			srcs/utils/ft_get_env_var.c\
 			srcs/utils/ft_shiftstr_right.c\
 			srcs/utils/ft_shiftstr_left.c\
+			srcs/utils/ft_free_array.c \
 			srcs/parsing/lexer.c \
 			srcs/parsing/parser.c \
 			srcs/execute/exec.c \

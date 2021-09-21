@@ -31,6 +31,8 @@ t_cmd_lst	*parser(t_token *token_lst)
 			return (NULL);
 		subcmd.in_type = VOID;
 		subcmd.out_type = VOID;
+		subcmd.in_file = NULL;
+		subcmd.out_file = NULL;
 		while (token && token->type != PIPE)
 		{
 			if (token->type == WORD)
@@ -69,9 +71,17 @@ t_cmd_lst	*parser(t_token *token_lst)
 	lst = cmd_lst;
 	while (lst)
 	{
-		if (lst->subcmd.in_type == INPUT_REDIRECTION || lst->subcmd.in_type == HEREDOC || lst->subcmd.out_type == OUTPUT_REDIRECTION || lst->subcmd.out_type == APPEND)
+		if (lst->subcmd.in_type == INPUT_REDIRECTION || lst->subcmd.in_type == HEREDOC)
 		{
-			if (!*lst->subcmd.in_file || !*lst->subcmd.out_file)
+			if (!*lst->subcmd.in_file)
+			{
+				dprintf(STDERR_FILENO, "minishell: syntax error near unexpected token `newline'\n");
+				return (NULL);
+			}
+		}
+		if (lst->subcmd.out_type == OUTPUT_REDIRECTION || lst->subcmd.out_type == APPEND)
+		{
+			if (!*lst->subcmd.out_file)
 			{
 				dprintf(STDERR_FILENO, "minishell: syntax error near unexpected token `newline'\n");
 				return (NULL);

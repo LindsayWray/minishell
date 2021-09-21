@@ -2,49 +2,24 @@
 
 t_data	g_data;
 
-void	ft_delete_str_array(char **str_array)
-{
-	int	i;
-
-	i = 0;
-	while (str_array[i])
-	{
-		free(str_array[i]);
-		i++;
-	}
-	free(str_array[i]);
-	free(str_array);
-	return ;
-}
-
 char    **ft_envlst_to_array(t_env_lst *env_lst)
 {
     char		**env_array;
 	char		*temp_str;
 	char		*temp_str_final;
-    t_env_lst	*temp;
 	int			i;
 
-    env_array = NULL;
-	temp = env_lst;
-	i = 0;
-	while (temp)
-	{
-		i++;
-		temp = temp->next;
-	}
-	i += 1;
+	i = env_lst_size(env_lst) + 1;
 	env_array = malloc(sizeof(char *) * i);
-	temp = env_lst;
 	i = 0;
-	while (temp)
+	while (env_lst)
 	{
-		temp_str = ft_strjoin(temp->key, "=");
-		temp_str_final = ft_strjoin(temp_str, temp->value);
+		temp_str = ft_strjoin(env_lst->key, "=");
+		temp_str_final = ft_strjoin(temp_str, env_lst->value);
 		env_array[i] = temp_str_final;
 		free(temp_str);
 		i++;
-		temp = temp->next;
+		env_lst = env_lst->next;
 	}
 	env_array[i] = NULL;
     return (env_array);
@@ -110,7 +85,7 @@ pid_t	run_builtin(int in_fd, int out_fd, t_cmd_lst *cmd_lst)
 	return (pid);
 }
 
-pid_t	run_command_in_childprocess(int in_fd, int out_fd, t_cmd_lst *cmd_lst, char **env, int p)
+pid_t	run_command_in_childprocess(int in_fd, int out_fd, t_cmd_lst *cmd_lst, int p)
 {
 	pid_t	pid;
 	char	*path;
@@ -128,8 +103,9 @@ pid_t	run_command_in_childprocess(int in_fd, int out_fd, t_cmd_lst *cmd_lst, cha
 		dup_fd(in_fd, out_fd);
 		// close (p);
 		path = get_path(*cmd_lst->subcmd.cmd);
-		if (execve(path, cmd_lst->subcmd.cmd, ft_envlst_to_array(ft_getenv(env))) == -1)
+		if (execve(path, cmd_lst->subcmd.cmd, ft_envlst_to_array(g_data.env_lst)) == -1)
 		{
+			// free env_array
 			free (path);
 			exit (EXIT_FAILURE);
 		}
@@ -138,11 +114,10 @@ pid_t	run_command_in_childprocess(int in_fd, int out_fd, t_cmd_lst *cmd_lst, cha
 	// close (p);
 	// close (out_fd);
 	(void)p;
-	(void)env;
 	return (pid);
 }
 
-void	exec(t_cmd_lst *cmd_lst, char **env)
+void	exec(t_cmd_lst *cmd_lst)
 {
 	int		p[2];
     int     read_pipe;
@@ -159,7 +134,7 @@ void	exec(t_cmd_lst *cmd_lst, char **env)
 		if (is_builtin(*cmd_lst->subcmd.cmd) != -1)
 			pids[i] = run_builtin(read_pipe, p[1], cmd_lst);
 		else
-			pids[i] = run_command_in_childprocess(read_pipe, p[1], cmd_lst, env, p[0]);
+			pids[i] = run_command_in_childprocess(read_pipe, p[1], cmd_lst, p[0]);
 		close (p[1]);
 		read_pipe = p[0];
 		cmd_lst = cmd_lst->next;
