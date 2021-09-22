@@ -71,6 +71,7 @@ int main(int argc, char **argv, char **env)
 		expand(cmd_lst);
 		//print_cmd_lst(cmd_lst);
 		exec(cmd_lst);
+		free_cmdlst();
 	}
 	//print_env(g_data.env_lst);
 	//printf("\n\033[1m\033[36mBye, come again!\n\033[0m");

@@ -92,10 +92,9 @@ void	exec(t_cmd_lst *cmd_lst)
 {
 	int		p[2];
     int     read_pipe;
-	int		*pids;
 	int		i;
 	
-	pids = malloc(lst_size(cmd_lst) * sizeof(pid_t));
+	g_data.pids = malloc(lst_size(cmd_lst) * sizeof(pid_t));
     read_pipe = STDIN_FILENO;
 	i = 0;
 	while (cmd_lst->next)
@@ -103,9 +102,9 @@ void	exec(t_cmd_lst *cmd_lst)
 		if (pipe(p) == -1)
 			perror("pipe error"); // still need to free and exit
 		if (is_builtin(*cmd_lst->subcmd.cmd) != -1)
-			pids[i] = run_builtin(read_pipe, p[1], cmd_lst);
+			g_data.pids[i] = run_builtin(read_pipe, p[1], cmd_lst);
 		else
-			pids[i] = run_command_in_childprocess(read_pipe, p[1], cmd_lst, p[0]);
+			g_data.pids[i] = run_command_in_childprocess(read_pipe, p[1], cmd_lst, p[0]);
 		close (p[1]);
 		if (read_pipe != STDIN_FILENO) 
 			close (read_pipe);
@@ -114,12 +113,11 @@ void	exec(t_cmd_lst *cmd_lst)
 		i++;
 	}
 	if (is_builtin(*cmd_lst->subcmd.cmd) != -1)
-		pids[i] = run_builtin(read_pipe, STDOUT_FILENO, cmd_lst);
+		g_data.pids[i] = run_builtin(read_pipe, STDOUT_FILENO, cmd_lst);
 	else
-		pids[i] = run_command_in_childprocess(read_pipe, STDOUT_FILENO, cmd_lst, p[0]);
+		g_data.pids[i] = run_command_in_childprocess(read_pipe, STDOUT_FILENO, cmd_lst, p[0]);
 	if (read_pipe != STDIN_FILENO) 
 		close (read_pipe);
 	i++;
-	wait_for_childprocesses(pids, i);
-	cmd_lst_clear(&cmd_lst);
+	wait_for_childprocesses(g_data.pids, i);
 }

@@ -42,7 +42,8 @@ SRCS :=		srcs/main.c \
 			srcs/expander/quote_handler.c \
 			srcs/environment/envlst_to_array.c \
 			srcs/environment/get_env_var.c\
-			srcs/environment/getenv.c
+			srcs/environment/getenv.c \
+			srcs/cleanup/free_cmdlst.c
 
 FLAGS := -Wall -Wextra -Werror
 OBJFILES := $(SRCS:srcs/%.c=obj/%.o)
