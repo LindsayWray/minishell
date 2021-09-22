@@ -2,6 +2,7 @@
 
 t_data	g_data;
 
+
 void	print_cmd_lst(t_cmd_lst *cmd_lst)
 {
 	while (cmd_lst)
