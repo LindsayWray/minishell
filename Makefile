@@ -19,11 +19,9 @@ SRCS :=		srcs/main.c \
 			srcs/utils/ft_isalpha.c\
 			srcs/utils/ft_isdigit.c\
 			srcs/utils/ft_split_free.c\
-			srcs/utils/ft_getenv.c\
 			srcs/utils/ft_itoa.c \
 			srcs/utils/ft_strcmp.c\
 			srcs/utils/ft_atoi.c\
-			srcs/utils/ft_get_env_var.c\
 			srcs/utils/ft_shiftstr_right.c\
 			srcs/utils/ft_shiftstr_left.c\
 			srcs/utils/ft_free_array.c \
@@ -41,7 +39,10 @@ SRCS :=		srcs/main.c \
 			srcs/builtins/ft_echo.c\
 			srcs/builtins/ft_exit.c\
 			srcs/expander/expand.c \
-			srcs/expander/quote_handler.c
+			srcs/expander/quote_handler.c \
+			srcs/environment/envlst_to_array.c \
+			srcs/environment/get_env_var.c\
+			srcs/environment/getenv.c
 
 FLAGS := -Wall -Wextra -Werror
 OBJFILES := $(SRCS:srcs/%.c=obj/%.o)

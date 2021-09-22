@@ -74,5 +74,6 @@ int main(int argc, char **argv, char **env)
 	}
 	//print_env(g_data.env_lst);
 	//printf("\n\033[1m\033[36mBye, come again!\n\033[0m");
+	//system ("leaks minishell");
 	return (0);
 }

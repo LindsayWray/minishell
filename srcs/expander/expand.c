@@ -16,20 +16,6 @@ char *add_string(char *str1, char *str2)
     return (str1);
 }
 
-char *get_value(char *key)
-{
-    t_env_lst   *temp;
-
-    temp = g_data.env_lst;
-    while (temp)
-    {
-        if (ft_streql(key, temp->key))
-            return (ft_strdup(temp->value));
-        temp = temp->next;
-    }
-    return (ft_strdup(""));
-}
-
 char *locate_env_var(char *cmd)
 {
     int i;
@@ -49,7 +35,7 @@ char *locate_env_var(char *cmd)
         j = i + 1;
         while (ft_isalpha(cmd[j]) || ft_isdigit(cmd[j]) || cmd[j] == '_' || cmd[j] == '?')
             j++;
-        value = get_value(ft_substr(cmd, i + 1, j - (i + 1)));
+        value = ft_strdup(get_env_value(ft_substr(cmd, i + 1, j - (i + 1))));
 		value = add_string(ft_substr(cmd, 0, i), value);
         i = j;
         while (cmd[j] != '\0')

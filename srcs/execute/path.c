@@ -16,25 +16,23 @@ char	*get_path(char *command)
 
 	if (lstat(command, &buf) == 0)
 		return (ft_strdup(command)); //means it already is the full path
-	paths = ft_split(getenv("PATH"), ':');
-	i = 0;
+	paths = ft_split(get_env_value("PATH"), ':');
 	command = ft_strjoin("/", command);
-	i = 1;
+	i = 0;
 	while (paths[i])
 	{
 		path = ft_strjoin(paths[i], command);
 		if (lstat(path, &buf) == 0)
 		{
-			//free (command);
-			//free_array(paths);
+			free (command);
+			ft_free_array(paths);
 			return (path);
 		}
 		free (path);
 		i++;
 	}
 	command_not_found_error(command + 1); //to skip the prev. added '/'
-	// free (command);
-	// free_array(paths);
+	free (command);
+	ft_free_array(paths);
 	exit (COMMAND_NOT_FOUND);
-	//return (NULL);
 }

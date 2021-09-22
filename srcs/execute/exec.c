@@ -2,29 +2,6 @@
 
 t_data	g_data;
 
-char    **ft_envlst_to_array(t_env_lst *env_lst)
-{
-    char		**env_array;
-	char		*temp_str;
-	char		*temp_str_final;
-	int			i;
-
-	i = env_lst_size(env_lst) + 1;
-	env_array = malloc(sizeof(char *) * i);
-	i = 0;
-	while (env_lst)
-	{
-		temp_str = ft_strjoin(env_lst->key, "=");
-		temp_str_final = ft_strjoin(temp_str, env_lst->value);
-		env_array[i] = temp_str_final;
-		free(temp_str);
-		i++;
-		env_lst = env_lst->next;
-	}
-	env_array[i] = NULL;
-    return (env_array);
-}
-
 void	wait_for_childprocesses(int *pids, int len)
 {
 	int		stat_loc;
@@ -35,7 +12,6 @@ void	wait_for_childprocesses(int *pids, int len)
 	while (j < len)
 	{
 		waitpid(pids[j], &stat_loc, 0);
-		//printf("Exitstatus:  %d      %d\n", WEXITSTATUS(stat_loc), WTERMSIG(stat_loc));
 		if (WIFEXITED(stat_loc))
 		{
 			exit_status = ft_itoa(WEXITSTATUS(stat_loc)); // does a %256 on statloc
@@ -99,7 +75,6 @@ pid_t	run_command_in_childprocess(int in_fd, int out_fd, t_cmd_lst *cmd_lst, int
 			out_fd = STDOUT_FILENO;
 		if (set_redirection(&in_fd, &out_fd, cmd_lst->subcmd))
 			exit (EXIT_FAILURE);
-		//printf("in %d out %d, p %d\n", in_fd, out_fd, p);
 		dup_fd(in_fd, out_fd);
 		close (p);
 		path = get_path(*cmd_lst->subcmd.cmd);
@@ -110,9 +85,6 @@ pid_t	run_command_in_childprocess(int in_fd, int out_fd, t_cmd_lst *cmd_lst, int
 			exit (EXIT_FAILURE);
 		}
 	}
-	//printf("parent closing %d and %d\n", p, out_fd);
-	//close (p);
-	//(void)p;
 	return (pid);
 }
 
@@ -130,7 +102,6 @@ void	exec(t_cmd_lst *cmd_lst)
 	{
 		if (pipe(p) == -1)
 			perror("pipe error"); // still need to free and exit
-		//printf("new pipe rd: %d  wr: %d\n", p[0], p[1]);
 		if (is_builtin(*cmd_lst->subcmd.cmd) != -1)
 			pids[i] = run_builtin(read_pipe, p[1], cmd_lst);
 		else
@@ -149,7 +120,6 @@ void	exec(t_cmd_lst *cmd_lst)
 	if (read_pipe != STDIN_FILENO) 
 		close (read_pipe);
 	i++;
-	// last_pipe = multiple_commands
 	wait_for_childprocesses(pids, i);
 	cmd_lst_clear(&cmd_lst);
 }

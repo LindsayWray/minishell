@@ -16,19 +16,14 @@ static void set_shell_lvl(t_env_lst *lst)
     t_env_lst   *temp;
     int         level;
 
-    temp = lst;
-    temp = get_shell_lvl(temp);
-    if (temp)
+    temp = get_shell_lvl(lst);
+    if (temp && temp->value)
     {
-        if (temp->value)
-        {
-            level = ft_atoi(temp->value);
-            level++;
-            free(temp->value);
-            temp->value = ft_itoa(level);
-        }
+        level = ft_atoi(temp->value);
+		level++;
+        free(temp->value);
+        temp->value = ft_itoa(level);
     }
-    return ;
 }
 
 t_env_lst   *ft_getenv(char **env)
