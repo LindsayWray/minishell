@@ -17,7 +17,6 @@ t_env_lst	*env_lst_new(char *key, char *value);
 void	    env_lst_add_back(t_env_lst **list, t_env_lst *new);
 int     	lst_size(t_cmd_lst *cmd_lst);
 int			env_lst_size(t_env_lst *env_lst);
-void	    lst_clear(t_token **lst);
 void	    cmd_lst_clear(t_cmd_lst **cmd_lst);
 // ***
 char	    *ft_substr(char const *s, unsigned int start, size_t len);

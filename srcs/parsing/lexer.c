@@ -1,5 +1,7 @@
 #include "../../includes/minishell.h"
 
+t_data	g_data;
+
 void	new_token(char *str, int i, int start, t_token **token, t_type type)
 {
 	char *content;
@@ -17,19 +19,13 @@ void	handle_redirections(char *str, int *i, t_token **token)
 	int		start;
 
 	if (str[*i] == '<')
-	{
-		if (str[(*i) + 1] == '<')
+		type = INPUT_REDIRECTION;
+	if (str[*i] == '<' && str[(*i) + 1] == '<')
 			type = HEREDOC;
-		else
-			type = INPUT_REDIRECTION;
-	}
 	if (str[*i] == '>')
-	{
-		if (str[(*i) + 1] == '>')
+		type = OUTPUT_REDIRECTION;
+	if (str[(*i) + 1] == '>')
 			type = APPEND;
-		else
-			type = OUTPUT_REDIRECTION;
-	}
 	(*i)++;
 	if (type == HEREDOC || type == APPEND)
 		(*i)++;
@@ -45,9 +41,9 @@ t_token	*lexer(char *str)
 {
 	int i;
 	int start;
-	t_token *token;
+	//t_token *token;
 
-	token = NULL;
+	g_data.token = NULL;
 	i = 0;
 	while (str[i] != '\0')
 	{
@@ -55,15 +51,15 @@ t_token	*lexer(char *str)
 		while (str[i] != '|' && str[i] != '<' && str[i] != '>' && str[i] != ' ' && str[i] != '\0')
 			skip_over_quotes(str, &i);
 		if (start != i) // this condition prevents empty tokens
-			new_token(str, i, start, &token, WORD);
+			new_token(str, i, start, &g_data.token, WORD);
 		if (str[i] == '|')
 		{
-			if (!lst_add_back(&token, lst_new(NULL, PIPE)))
-				lst_clear(&token); //add error message
+			if (!lst_add_back(&g_data.token, lst_new(NULL, PIPE)))
+				lst_clear(&g_data.token); //add error message
 		}
 		if (str[i] == '<' || str[i] == '>')
-			handle_redirections(str, &i, &token);
+			handle_redirections(str, &i, &g_data.token);
 		i++;
 	}
-	return (token);
+	return (g_data.token);
 }

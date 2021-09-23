@@ -20,13 +20,14 @@ void	wait_for_childprocesses(int *pids, int len)
 		j++;
 	}
 	free (pids);
+	g_data.pids = NULL;
 }
 
 int	is_builtin(char *cmd)
 {
 	static char	*str[7] = {"echo", "cd", "pwd", "export", "unset", "env", "exit"};
 	int			i;
-	
+
 	i = 0;
 	while (i < 7)
 	{
@@ -43,7 +44,7 @@ pid_t	run_builtin(int in_fd, int out_fd, t_cmd_lst *cmd_lst)
 	int		exit_status;
 	static int (*builtin_func[7])(char **, int) = {ft_echo, ft_cd, ft_pwd, ft_export, ft_unset, ft_env, ft_exit};
 	int i;
-			
+
 	if (cmd_lst->next == NULL)
 		out_fd = STDOUT_FILENO;
 	if (!set_redirection(&in_fd, &out_fd, cmd_lst->subcmd))

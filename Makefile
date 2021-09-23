@@ -6,7 +6,6 @@ SRCS :=		srcs/main.c \
 			srcs/utils/lst_add_back.c \
 			srcs/utils/lst_last.c \
 			srcs/utils/lst_new.c \
-			srcs/utils/lst_clear.c \
 			srcs/utils/lst_size.c \
 			srcs/utils/ft_strlen.c \
 			srcs/utils/ft_split.c \
@@ -43,7 +42,7 @@ SRCS :=		srcs/main.c \
 			srcs/environment/envlst_to_array.c \
 			srcs/environment/get_env_var.c\
 			srcs/environment/getenv.c \
-			srcs/cleanup/free_cmdlst.c
+			srcs/cleanup/clean.c
 
 FLAGS := -Wall -Wextra -Werror
 OBJFILES := $(SRCS:srcs/%.c=obj/%.o)

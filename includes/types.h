@@ -50,6 +50,7 @@ typedef struct s_data
 	t_cmd_lst	*cmd_lst;
 	t_env_lst	*env_lst;
 	int			*pids;
+	t_token     *token;
 }	t_data;
 
 #endif
