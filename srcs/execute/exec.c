@@ -14,8 +14,8 @@ void	wait_for_childprocesses(int *pids, int len)
 		waitpid(pids[j], &stat_loc, 0);
 		if (WIFEXITED(stat_loc))
 		{
-			exit_status = ft_itoa(WEXITSTATUS(stat_loc)); // does a %256 on statloc
-			export_exists("?", exit_status); // is created in ft_getenv to give it value before first command
+			exit_status = ft_itoa(WEXITSTATUS(stat_loc));
+			export_exists("?", exit_status);
 		}
 		j++;
 	}
@@ -56,7 +56,7 @@ pid_t	run_builtin(int in_fd, int out_fd, t_cmd_lst *cmd_lst)
 		exit_status = EXIT_FAILURE;
 	pid = fork();
 	if (pid == -1)
-		perror("fork error"); // temporary
+		system_error("Fork Error");
 	if (pid == 0)
 		exit(exit_status);
 	return (pid);
@@ -69,7 +69,7 @@ pid_t	run_command_in_childprocess(int in_fd, int out_fd, t_cmd_lst *cmd_lst, int
 
 	pid = fork();
 	if (pid == -1)
-		perror("fork error"); // temporary
+		system_error("Fork Error");
 	if (pid == 0)
 	{
 		if (cmd_lst->next == NULL)
@@ -96,18 +96,20 @@ void	exec(t_cmd_lst *cmd_lst)
 	int		i;
 	
 	g_data.pids = malloc(lst_size(cmd_lst) * sizeof(pid_t));
+	if (!g_data.pids)
+		system_error("Malloc Error");
     read_pipe = STDIN_FILENO;
 	i = 0;
 	while (cmd_lst->next)
 	{
 		if (pipe(p) == -1)
-			perror("pipe error"); // still need to free and exit
+			system_error("Pipe Error");
 		if (is_builtin(*cmd_lst->subcmd.cmd) != -1)
 			g_data.pids[i] = run_builtin(read_pipe, p[1], cmd_lst);
 		else
 			g_data.pids[i] = run_command_in_childprocess(read_pipe, p[1], cmd_lst, p[0]);
 		close (p[1]);
-		if (read_pipe != STDIN_FILENO) 
+		if (read_pipe != STDIN_FILENO)
 			close (read_pipe);
 		read_pipe = p[0];
 		cmd_lst = cmd_lst->next;
@@ -117,7 +119,7 @@ void	exec(t_cmd_lst *cmd_lst)
 		g_data.pids[i] = run_builtin(read_pipe, STDOUT_FILENO, cmd_lst);
 	else
 		g_data.pids[i] = run_command_in_childprocess(read_pipe, STDOUT_FILENO, cmd_lst, p[0]);
-	if (read_pipe != STDIN_FILENO) 
+	if (read_pipe != STDIN_FILENO)
 		close (read_pipe);
 	i++;
 	wait_for_childprocesses(g_data.pids, i);

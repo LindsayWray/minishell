@@ -9,7 +9,7 @@ int	get_output(char *output_file, t_type type)
 	else
 		output_fd = open(output_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (output_fd == -1)
-		perror(output_file);
+		system_error(output_file);
 	return (output_fd);
 }
 
@@ -31,7 +31,7 @@ int	read_input_heredoc(char *delimiter)
 	line = NULL;
 	input_fd = open("/tmp/heredoc", O_CREAT | O_RDWR, 0644);
 	if (input_fd == -1)
-		perror("input file does not exist");
+		system_error("input file does not exist");
 	while (true)
 	{
 		line = readline("> ");
@@ -73,11 +73,11 @@ int	set_redirection(int *input_fd, int *output_fd, t_subcmd subcmd)
 void	dup_fd(int input_fd, int output_fd)
 {
 	if (dup2(output_fd, STDOUT_FILENO) == -1)
-		perror("dup error"); // temporary 
+		system_error("dup error");
 	if (output_fd != STDOUT_FILENO)
 		close (output_fd);
 	if (dup2(input_fd, STDIN_FILENO) == -1)
-		perror("dup error"); // temporary
+		system_error("dup error");
 	if (input_fd != STDIN_FILENO)
 		close (input_fd);
 }

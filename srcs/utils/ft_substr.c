@@ -18,7 +18,7 @@ char	*empty_str(void)
 
 	substr = (char *)malloc(1);
 	if (substr == NULL)
-		return (0);
+		system_error("Malloc Error");
 	substr[0] = '\0';
 	return (substr);
 }
@@ -39,7 +39,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	else
 		substr = (char *)malloc(len_s - start + 1);
 	if (substr == 0)
-		return (NULL);
+		 system_error("Malloc Error");
 	i = 0;
 	while ((s[i] != '\0') && (i < len))
 	{

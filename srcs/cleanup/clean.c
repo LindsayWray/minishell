@@ -33,6 +33,7 @@ void	clean_all(void)
 {
 	free_cmdlst();
 	free(g_data.pids);
-	lst_clear(&g_data.token);
+	if (g_data.token)
+		lst_clear(&g_data.token);
 	//free env;
 }

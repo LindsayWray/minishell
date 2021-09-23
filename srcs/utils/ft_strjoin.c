@@ -12,7 +12,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	len = ft_strlen((char *)s1) + ft_strlen((char *)s2);
 	joined_str = (char *)malloc(len + 1);
 	if (joined_str == NULL)
-		return (0);
+		system_error("Malloc Error");
 	i = 0;
 	j = 0;
 	while (s1[i] != '\0')

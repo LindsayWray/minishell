@@ -37,7 +37,9 @@ char		*ft_shiftstr_right(char *str);
 char		*ft_shiftstr_left(char *str);
 int         ft_strcmp(char *s1, char *s2);
 int			ft_atoi(const char *num);
-void	*ft_free_array(char **str_array);
+void		*ft_free_array(char **str_array);
 int			ft_dprintf(int fd, const char *format, ...);
+
+void		system_error(char *msg);
 
 #endif

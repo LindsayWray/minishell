@@ -30,6 +30,7 @@ t_env_lst	*ft_get_env_var(char *key);
 char		*get_env_value(char *key);
 void		clean_all(void);
 void		lst_clear(t_token **lst);
+void		clean_and_exit();
 
 //builtins
 int         ft_export(char **cmd, int fd_out);

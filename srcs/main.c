@@ -62,17 +62,12 @@ int main(int argc, char **argv, char **env)
 		token = lexer(str);
 		cmd_lst = parser(token);
 		g_data.cmd_lst = cmd_lst;
-		if (!cmd_lst)
-		{
-			//free 
-			continue ;
-		}
 		free (str);
-		print_cmd_lst(cmd_lst);
+		//print_cmd_lst(cmd_lst);
 		expand(cmd_lst);
 		//print_cmd_lst(cmd_lst);
 		exec(cmd_lst);
-		//clean_all();
+		clean_all();
 	}
 	//print_env(g_data.env_lst);
 	//printf("\n\033[1m\033[36mBye, come again!\n\033[0m");

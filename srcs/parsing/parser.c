@@ -1,5 +1,7 @@
 #include "../../includes/minishell.h"
 
+t_data	g_data;
+
 int	word_count(t_token *token)
 {
 	int	count;
@@ -17,8 +19,8 @@ int	word_count(t_token *token)
 void	set_default(t_subcmd *subcmd, t_token *token)
 {
 	subcmd->cmd = malloc((word_count(token) + 1) * sizeof(char *));
-	// if (!subcmd.cmd)
-	// 	return (NULL);
+	if (!subcmd->cmd)
+		system_error("Malloc Error");
 	subcmd->in_type = VOID;
 	subcmd->out_type = VOID;
 	subcmd->in_file = NULL;
@@ -77,6 +79,7 @@ t_cmd_lst	*parser(t_token *token_lst)
 	int i;
 	t_token		*token = token_lst;
 	cmd_lst = NULL;
+
 	while (token)
 	{
 		i = 0;
@@ -92,7 +95,8 @@ t_cmd_lst	*parser(t_token *token_lst)
 			token = token->next;
 	}
 	if (syntax_error(token_lst, cmd_lst))
-		return (NULL);
+		clean_and_exit(); // needs to return not exit, fix later
 	lst_clear(&token);
+	g_data.token = NULL;
 	return (cmd_lst);
 }

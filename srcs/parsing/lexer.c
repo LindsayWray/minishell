@@ -7,10 +7,8 @@ void	new_token(char *str, int i, int start, t_token **token, t_type type)
 	char *content;
 
 	content = ft_substr(str, start, i - start);
-	if (!content)
-		lst_clear(token); //add error message
 	if (!lst_add_back(token, lst_new(content, type)))
-		lst_clear(token); //add error message
+		lst_clear(&g_data.token);
 }
 
 void	handle_redirections(char *str, int *i, t_token **token)
@@ -41,7 +39,6 @@ t_token	*lexer(char *str)
 {
 	int i;
 	int start;
-	//t_token *token;
 
 	g_data.token = NULL;
 	i = 0;
