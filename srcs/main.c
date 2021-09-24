@@ -37,6 +37,24 @@ void	print_env(t_env_lst *env_lst)
 	return ;
 }
 
+void	received_signal(int signal)
+{
+	int	i;
+
+	i = 0;
+	if (signal == SIGINT)
+	{
+		while (i != 0)
+		{
+			kill(g_data.pids[i], SIGINT);
+			i++;
+		}
+		printf("received signal: %d\n", signal); // for testing
+		clean_all();
+		exit(EXIT_SUCCESS);
+	}
+}
+
 int main(int argc, char **argv, char **env)
 {
 	char *str;
@@ -49,6 +67,8 @@ int main(int argc, char **argv, char **env)
 		printf("Minishell should be run without arguments\n"); // send to stderr
 		return (EXIT_FAILURE);
 	}
+	signal(SIGINT, received_signal);
+	signal(SIGQUIT, SIG_IGN); 
 	g_data.env_lst = ft_getenv(env);
 	// if (isatty(STDIN_FILENO))
 	// 	printf("\n\033[1m\033[36mWelcome to Isaac's and Lindsay's minishell!\n\033[0m");
@@ -65,7 +85,6 @@ int main(int argc, char **argv, char **env)
 		g_data.cmd_lst = cmd_lst;
 		if (!cmd_lst)
 			continue ;
-		
 		//print_cmd_lst(cmd_lst);
 		expand(cmd_lst);
 		//print_cmd_lst(cmd_lst);

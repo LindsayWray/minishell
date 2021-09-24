@@ -122,5 +122,7 @@ void	exec(t_cmd_lst *cmd_lst)
 	if (read_pipe != STDIN_FILENO)
 		close (read_pipe);
 	i++;
-	wait_for_childprocesses(g_data.pids, i);
+	g_data.pids[i] = 0;
+	i++;
+	wait_for_childprocesses(g_data.pids, i - 1);
 }
