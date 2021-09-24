@@ -22,7 +22,7 @@ void	handle_redirections(char *str, int *i, t_token **token)
 			type = HEREDOC;
 	if (str[*i] == '>')
 		type = OUTPUT_REDIRECTION;
-	if (str[(*i) + 1] == '>')
+	if (str[*i] == '>' && str[(*i) + 1] == '>')
 			type = APPEND;
 	(*i)++;
 	if (type == HEREDOC || type == APPEND)

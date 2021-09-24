@@ -27,6 +27,7 @@ void	free_cmdlst(void)
 		free (g_data.cmd_lst);
 		g_data.cmd_lst = temp_next;
 	}
+	g_data.cmd_lst = NULL;
 }
 
 void	clean_all(void)

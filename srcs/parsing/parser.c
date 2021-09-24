@@ -77,9 +77,10 @@ t_cmd_lst	*parser(t_token *token_lst)
 	t_subcmd	subcmd;
 	t_cmd_lst	*cmd_lst;
 	int i;
-	t_token		*token = token_lst;
-	cmd_lst = NULL;
+	t_token		*token;
 
+	token = token_lst;
+	cmd_lst = NULL;
 	while (token)
 	{
 		i = 0;
@@ -95,7 +96,10 @@ t_cmd_lst	*parser(t_token *token_lst)
 			token = token->next;
 	}
 	if (syntax_error(token_lst, cmd_lst))
-		clean_and_exit(); // needs to return not exit, fix later
+	{
+		free_cmdlst();
+		cmd_lst = NULL;
+	}
 	lst_clear(&token);
 	g_data.token = NULL;
 	return (cmd_lst);

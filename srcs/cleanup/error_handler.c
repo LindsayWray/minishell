@@ -6,9 +6,3 @@ void	system_error(char *msg)
 	perror(msg);
 	exit (EXIT_FAILURE);
 }
-
-void	clean_and_exit(void)
-{
-	clean_all();
-	exit(EXIT_FAILURE);
-}

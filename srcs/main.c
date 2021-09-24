@@ -60,14 +60,17 @@ int main(int argc, char **argv, char **env)
 		if (*str)
 			add_history(str); // an empty line should not be added to the history
 		token = lexer(str);
+		free (str);
 		cmd_lst = parser(token);
 		g_data.cmd_lst = cmd_lst;
-		free (str);
+		if (!cmd_lst)
+			continue ;
+		
 		//print_cmd_lst(cmd_lst);
 		expand(cmd_lst);
 		//print_cmd_lst(cmd_lst);
 		exec(cmd_lst);
-		clean_all();
+		free_cmdlst();
 	}
 	//print_env(g_data.env_lst);
 	//printf("\n\033[1m\033[36mBye, come again!\n\033[0m");
