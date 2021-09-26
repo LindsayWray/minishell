@@ -7,7 +7,7 @@ void	signal_from_child(int signal)
 	if (signal == SIGINT)
 		ft_dprintf(STDOUT_FILENO, "\n");
 	if (signal == SIGQUIT)
-		ft_dprintf(STDOUT_FILENO, "Quit: 3\n");
+		ft_dprintf(STDOUT_FILENO, "Quit: %d\n", signal);
 }
 
 void	wait_for_childprocesses(int *pids, int len)
