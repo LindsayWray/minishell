@@ -52,11 +52,11 @@ LIBS = srcs/utils/dprintf/libftdprintf.a
 all: dprintf $(NAME)
 
 $(NAME): $(OBJFILES) 
-	gcc -o $@ $^ $(LIBS) -lreadline
+	gcc -o $@ $^ $(LIBS) -lreadline -L/usr/local/opt/readline/lib -I/usr/local/opt/readline/include
 
 obj/%.o: srcs/%.c $(HEADERFILES)
 	@mkdir -p $(dir $@)
-	gcc -c $(FLAGS) -o $@ $<
+	gcc -c $(FLAGS) -o $@ $< -I/usr/local/opt/readline/include
 
 dprintf:
 	@echo "\033[1m\033[32mft_dprintf library generated.\033[39m"

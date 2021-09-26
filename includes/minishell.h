@@ -32,6 +32,7 @@ char		*get_env_value(char *key);
 void		clean_all(void);
 void		free_cmdlst(void);
 void		lst_clear(t_token **lst);
+void		received_signal(int signal);
 
 
 //builtins

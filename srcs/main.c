@@ -42,17 +42,21 @@ void	received_signal(int signal)
 	int	i;
 
 	i = 0;
+	while (g_data.pids && g_data.pids[i] != 0)
+	{
+		printf("%d\n", i);
+		kill(g_data.pids[i], signal);
+		i++;
+	}
 	if (signal == SIGINT)
 	{
-		while (i != 0)
-		{
-			kill(g_data.pids[i], SIGINT);
-			i++;
-		}
-		printf("received signal: %d\n", signal); // for testing
-		//clean_all();
-		//exit(EXIT_SUCCESS);
+		rl_replace_line("", 1);
+		ft_dprintf(STDOUT_FILENO, "\n");
 	}
+	rl_on_new_line();
+	rl_redisplay();
+	//printf("received signal: %d\n", signal); // for testing
+	clean_all(); //not the environment
 }
 
 void	prompt_loop(void)
@@ -92,7 +96,7 @@ int main(int argc, char **argv, char **env)
 		return (EXIT_FAILURE);
 	}
 	signal(SIGINT, received_signal);
-	signal(SIGQUIT, SIG_IGN); 
+	signal(SIGQUIT, received_signal); 
 	g_data.env_lst = ft_getenv(env);
 	// if (isatty(STDIN_FILENO))
 	// 	printf("\n\033[1m\033[36mWelcome to Isaac's and Lindsay's minishell!\n\033[0m");

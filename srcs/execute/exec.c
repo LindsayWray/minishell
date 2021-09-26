@@ -2,6 +2,14 @@
 
 t_data	g_data;
 
+void	signal_from_child(int signal)
+{
+	if (signal == SIGINT)
+		ft_dprintf(STDOUT_FILENO, "\n");
+	if (signal == SIGQUIT)
+		ft_dprintf(STDOUT_FILENO, "Quit: 3\n");
+}
+
 void	wait_for_childprocesses(int *pids, int len)
 {
 	int		stat_loc;
@@ -11,6 +19,8 @@ void	wait_for_childprocesses(int *pids, int len)
 	j = 0;
 	while (j < len)
 	{
+		signal(SIGINT, signal_from_child);
+		signal(SIGQUIT, signal_from_child);
 		waitpid(pids[j], &stat_loc, 0);
 		if (WIFEXITED(stat_loc))
 		{
@@ -19,6 +29,8 @@ void	wait_for_childprocesses(int *pids, int len)
 		}
 		j++;
 	}
+	signal(SIGINT, received_signal);
+	signal(SIGQUIT, received_signal);
 	free (pids);
 	g_data.pids = NULL;
 }
@@ -95,7 +107,7 @@ void	exec(t_cmd_lst *cmd_lst)
     int     read_pipe;
 	int		i;
 	
-	g_data.pids = malloc(lst_size(cmd_lst) * sizeof(pid_t));
+	g_data.pids = malloc((lst_size(cmd_lst) + 1) * sizeof(pid_t));
 	if (!g_data.pids)
 		system_error("Malloc Error");
     read_pipe = STDIN_FILENO;
