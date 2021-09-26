@@ -50,28 +50,17 @@ void	received_signal(int signal)
 			i++;
 		}
 		printf("received signal: %d\n", signal); // for testing
-		clean_all();
-		exit(EXIT_SUCCESS);
+		//clean_all();
+		//exit(EXIT_SUCCESS);
 	}
 }
 
-int main(int argc, char **argv, char **env)
+void	prompt_loop(void)
 {
-	char *str;
+	char	*str;
 	t_token	*token;
 	t_cmd_lst	*cmd_lst;
 
-	(void)argv;
-	if (argc != 1)
-	{
-		printf("Minishell should be run without arguments\n"); // send to stderr
-		return (EXIT_FAILURE);
-	}
-	signal(SIGINT, received_signal);
-	signal(SIGQUIT, SIG_IGN); 
-	g_data.env_lst = ft_getenv(env);
-	// if (isatty(STDIN_FILENO))
-	// 	printf("\n\033[1m\033[36mWelcome to Isaac's and Lindsay's minishell!\n\033[0m");
 	while (true)
 	{
 		str = readline("=^..^= ");
@@ -91,6 +80,23 @@ int main(int argc, char **argv, char **env)
 		exec(cmd_lst);
 		free_cmdlst();
 	}
+	return ;
+}
+
+int main(int argc, char **argv, char **env)
+{
+	(void)argv;
+	if (argc != 1)
+	{
+		printf("Minishell should be run without arguments\n"); // send to stderr
+		return (EXIT_FAILURE);
+	}
+	signal(SIGINT, received_signal);
+	signal(SIGQUIT, SIG_IGN); 
+	g_data.env_lst = ft_getenv(env);
+	// if (isatty(STDIN_FILENO))
+	// 	printf("\n\033[1m\033[36mWelcome to Isaac's and Lindsay's minishell!\n\033[0m");
+	prompt_loop();
 	//print_env(g_data.env_lst);
 	//printf("\n\033[1m\033[36mBye, come again!\n\033[0m");
 	//system ("leaks minishell");
