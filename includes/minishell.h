@@ -14,6 +14,7 @@
 #include <errno.h>
 #include <limits.h>
 #include <signal.h>
+#include <termios.h>
 
 t_token		*lexer(char *str);
 t_cmd_lst	*parser(t_token *token);

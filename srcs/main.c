@@ -68,12 +68,19 @@ void	prompt_loop(void)
 	while (true)
 	{
 		str = readline("=^..^= ");
+		//printf("***%s***\n", str);
 		if (!str)
 			break ;	
 		if (*str)
 			add_history(str); // an empty line should not be added to the history
 		token = lexer(str);
 		free (str);
+		// t_token *token_list = token;
+		// while(token_list)
+		// {
+		// 	printf("TOKEN:  %s\n", token_list->content);
+		// 	token_list = token_list->next;
+		// }
 		cmd_lst = parser(token);
 		g_data.cmd_lst = cmd_lst;
 		if (!cmd_lst)
@@ -100,7 +107,12 @@ int main(int argc, char **argv, char **env)
 	g_data.env_lst = ft_getenv(env);
 	// if (isatty(STDIN_FILENO))
 	// 	printf("\n\033[1m\033[36mWelcome to Isaac's and Lindsay's minishell!\n\033[0m");
+	struct termios termios_p;
+	tcgetattr(STDIN_FILENO, &termios_p);
+	termios_p.c_lflag = termios_p.c_lflag & ~ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &termios_p);
 	prompt_loop();
+	ft_dprintf(STDERR_FILENO, "exit\n");
 	//print_env(g_data.env_lst);
 	//printf("\n\033[1m\033[36mBye, come again!\n\033[0m");
 	//system ("leaks minishell");

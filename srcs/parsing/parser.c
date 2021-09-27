@@ -35,6 +35,15 @@ int	syntax_error(t_token *token_lst, t_cmd_lst *cmd_lst)
 	{
 		if ((!*lst->subcmd.cmd && lst->subcmd.in_type == VOID && lst->subcmd.out_type == VOID) || lst_last(token_lst)->type == PIPE)
 		{
+			if (lst_last(token_lst)->type == PIPE)
+			{
+				t_token *token_list = token_lst;
+				while(token_list)
+				{
+					printf("TOKEN:  %s\n", token_list->content);
+					token_list = token_list->next;
+				}
+			}
 			dprintf(STDERR_FILENO, "minishell: syntax error near unexpected token `|'\n");
 			return (EXIT_FAILURE);
 		}

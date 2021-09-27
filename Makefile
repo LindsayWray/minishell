@@ -24,6 +24,7 @@ SRCS :=		srcs/main.c \
 			srcs/utils/ft_shiftstr_right.c\
 			srcs/utils/ft_shiftstr_left.c\
 			srcs/utils/ft_free_array.c \
+			srcs/utils/is_whitespace.c \
 			srcs/parsing/lexer.c \
 			srcs/parsing/parser.c \
 			srcs/execute/exec.c \
@@ -52,11 +53,13 @@ LIBS = srcs/utils/dprintf/libftdprintf.a
 all: dprintf $(NAME)
 
 $(NAME): $(OBJFILES) 
-	gcc -o $@ $^ $(LIBS) -lreadline -L/usr/local/opt/readline/lib -I/usr/local/opt/readline/include
+	gcc -o $@ $^ $(LIBS) -lreadline -L /usr/local/opt/readline/lib
+	#/Users/$(USER)/.brew/opt/readline/lib
 
 obj/%.o: srcs/%.c $(HEADERFILES)
 	@mkdir -p $(dir $@)
-	gcc -c $(FLAGS) -o $@ $< -I/usr/local/opt/readline/include
+	gcc -c $(FLAGS) -o $@ $< -I /usr/local/opt/readline/include
+	#/Users/$(USER)/.brew/opt/readline/include
 
 dprintf:
 	@echo "\033[1m\033[32mft_dprintf library generated.\033[39m"

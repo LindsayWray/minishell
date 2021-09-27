@@ -7,6 +7,8 @@ void	new_token(char *str, int i, int start, t_token **token, t_type type)
 	char *content;
 
 	content = ft_substr(str, start, i - start);
+	if (!content || !*content)
+		return;
 	if (!lst_add_back(token, lst_new(content, type)))
 		lst_clear(&g_data.token);
 }
@@ -27,10 +29,10 @@ void	handle_redirections(char *str, int *i, t_token **token)
 	(*i)++;
 	if (type == HEREDOC || type == APPEND)
 		(*i)++;
-	while (str[*i] == ' ')
+	while (is_whitespace(str[*i]))
 		(*i)++;
 	start = *i;
-	while (str[*i] != ' ' && str[*i] != '\0' && str[*i] != '|')
+	while (!is_whitespace(str[*i]) && str[*i] != '\0' && str[*i] != '|')
 		(*i)++;
 	new_token(str, *i, start, token, type);
 }
@@ -45,7 +47,7 @@ t_token	*lexer(char *str)
 	while (str[i] != '\0')
 	{
 		start = i;
-		while (str[i] != '|' && str[i] != '<' && str[i] != '>' && str[i] != ' ' && str[i] != '\0')
+		while (str[i] != '|' && str[i] != '<' && str[i] != '>' && !is_whitespace(str[i]) && str[i] != '\0')
 			skip_over_quotes(str, &i);
 		if (start != i) // this condition prevents empty tokens
 			new_token(str, i, start, &g_data.token, WORD);
