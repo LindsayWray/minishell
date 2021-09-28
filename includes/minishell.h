@@ -34,6 +34,7 @@ void		clean_all(void);
 void		free_cmdlst(void);
 void		lst_clear(t_token **lst);
 void		received_signal(int signal);
+void		signal_from_child(int signal);
 
 
 //builtins

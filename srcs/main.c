@@ -2,7 +2,6 @@
 
 t_data	g_data;
 
-
 void	print_cmd_lst(t_cmd_lst *cmd_lst)
 {
 	while (cmd_lst)
@@ -37,9 +36,20 @@ void	print_env(t_env_lst *env_lst)
 	return ;
 }
 
+void	signal_from_child(int signal)
+{
+	ft_dprintf(STDOUT_FILENO, "child hanlder\n");
+	if (signal == SIGINT)
+		ft_dprintf(STDOUT_FILENO, "\n");
+	if (signal == SIGQUIT)
+		ft_dprintf(STDOUT_FILENO, "Quit: %d\n", signal);
+}
+
 void	received_signal(int signal)
 {
 	int	i;
+
+	ft_dprintf(STDOUT_FILENO, "parent hanlder\n");
 
 	i = 0;
 	while (g_data.pids && g_data.pids[i] != 0)
@@ -50,6 +60,7 @@ void	received_signal(int signal)
 	}
 	if (signal == SIGINT)
 	{
+		export_exists("?", ft_strdup("1"));
 		rl_replace_line("", 1);
 		ft_dprintf(STDOUT_FILENO, "\n");
 	}
@@ -97,14 +108,27 @@ void	prompt_loop(void)
 int main(int argc, char **argv, char **env)
 {
 	(void)argv;
-	if (argc != 1)
-	{
-		printf("Minishell should be run without arguments\n"); // send to stderr
-		return (EXIT_FAILURE);
-	}
 	signal(SIGINT, received_signal);
 	signal(SIGQUIT, received_signal); 
 	g_data.env_lst = ft_getenv(env);
+
+	//********** FOR TESTER
+	if (argc >= 3 && ft_streql(argv[1], "-c"))
+	{
+		t_cmd_lst *cmd_lst = parser(lexer(argv[2]));
+		expand(cmd_lst);
+		exec(cmd_lst);
+		exit(ft_atoi(get_env_value("?")));
+	}
+	//********** FOR TESTER
+
+
+	if (argc != 1)
+	{
+		printf("Minishell should run without arguments\n"); // send to stderr
+		return (EXIT_FAILURE);
+	}
+
 	// if (isatty(STDIN_FILENO))
 	// 	printf("\n\033[1m\033[36mWelcome to Isaac's and Lindsay's minishell!\n\033[0m");
 	struct termios termios_p;

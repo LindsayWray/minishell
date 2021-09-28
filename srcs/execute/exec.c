@@ -2,14 +2,6 @@
 
 t_data	g_data;
 
-void	signal_from_child(int signal)
-{
-	if (signal == SIGINT)
-		ft_dprintf(STDOUT_FILENO, "\n");
-	if (signal == SIGQUIT)
-		ft_dprintf(STDOUT_FILENO, "Quit: %d\n", signal);
-}
-
 void	wait_for_childprocesses(int *pids, int len)
 {
 	int		stat_loc;
@@ -17,16 +9,16 @@ void	wait_for_childprocesses(int *pids, int len)
 	int j;
 
 	j = 0;
+	signal(SIGINT, signal_from_child);
+	signal(SIGQUIT, signal_from_child);
 	while (j < len)
 	{
-		signal(SIGINT, signal_from_child);
-		signal(SIGQUIT, signal_from_child);
 		waitpid(pids[j], &stat_loc, 0);
 		if (WIFEXITED(stat_loc))
-		{
 			exit_status = ft_itoa(WEXITSTATUS(stat_loc));
-			export_exists("?", exit_status);
-		}
+		if (WIFSIGNALED(stat_loc))
+			exit_status = ft_itoa(128 + WTERMSIG(stat_loc));
+		export_exists("?", exit_status);
 		j++;
 	}
 	signal(SIGINT, received_signal);
@@ -93,7 +85,7 @@ pid_t	run_command_in_childprocess(int in_fd, int out_fd, t_cmd_lst *cmd_lst, int
 		path = get_path(*cmd_lst->subcmd.cmd);
 		if (execve(path, cmd_lst->subcmd.cmd, ft_envlst_to_array(g_data.env_lst)) == -1)
 		{
-			// free env_array
+			clean_all();
 			free (path);
 			exit (EXIT_FAILURE);
 		}
