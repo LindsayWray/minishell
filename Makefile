@@ -50,6 +50,7 @@ FLAGS := -Wall -Wextra -Werror
 OBJFILES := $(SRCS:srcs/%.c=obj/%.o)
 LIBS = srcs/utils/dprintf/libftdprintf.a
 
+
 all: dprintf $(NAME)
 
 $(NAME): $(OBJFILES) 

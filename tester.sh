@@ -50,3 +50,7 @@ compare_shells echo $USER'$PATH'$USER
 # check if old file content is removed and not overwritten. O_TRUNC flag
 # force execve error with fake command (like cat or echo +x)
 # check if file permissions are the same as the terminals output files
+
+#echo "$USER""Users/$USER/file""'$USER'"'$USER'
+#echo '$USER'"$USER"'$USER'
+

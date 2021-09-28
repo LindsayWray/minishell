@@ -55,7 +55,7 @@ char *locate_env_var(char *cmd, bool double_quotes)
     if (cmd[i] == '$')
     {
 		value = expanding(cmd, i);
-        return (locate_env_var(value, double_quotes));
+        return (locate_env_var(value, false));
     }
     return (cmd);
 }
