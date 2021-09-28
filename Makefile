@@ -15,6 +15,7 @@ SRCS :=		srcs/main.c \
 			srcs/utils/ft_putstr_fd.c \
 			srcs/utils/ft_cinstr.c\
 			srcs/utils/ft_isalnum_str.c\
+			srcs/utils/ft_isdigit_str.c\
 			srcs/utils/ft_isalpha.c\
 			srcs/utils/ft_isdigit.c\
 			srcs/utils/ft_split_free.c\
