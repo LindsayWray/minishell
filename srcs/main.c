@@ -66,7 +66,7 @@ void	received_signal(int signal)
 	rl_on_new_line();
 	rl_redisplay();
 	//printf("received signal: %d\n", signal); // for testing
-	clean_all(); //not the environment
+	refresh();
 }
 
 void	prompt_loop(void)
@@ -79,6 +79,8 @@ void	prompt_loop(void)
 	{
 		str = readline("=^..^= ");
 		//printf("***%s***\n", str);
+		if (!str || ft_streql(str, "exit")) // temporary for the tester
+			break ;
 		if (!str)
 			break ;	
 		if (*str)
@@ -95,9 +97,9 @@ void	prompt_loop(void)
 		g_data.cmd_lst = cmd_lst;
 		if (!cmd_lst)
 			continue ;
-		//print_cmd_lst(cmd_lst);
+		print_cmd_lst(cmd_lst);
 		expand(cmd_lst);
-		//print_cmd_lst(cmd_lst);
+		print_cmd_lst(cmd_lst);
 		exec(cmd_lst);
 		free_cmdlst();
 	}
@@ -139,5 +141,6 @@ int main(int argc, char **argv, char **env)
 	//print_env(g_data.env_lst);
 	//printf("\n\033[1m\033[36mBye, come again!\n\033[0m");
 	//system ("leaks minishell");
+	clean_all();
 	return (0);
 }

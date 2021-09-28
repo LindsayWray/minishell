@@ -30,9 +30,10 @@ char		**ft_envlst_to_array(t_env_lst *env_lst);
 t_env_lst	*ft_getenv(char **env);
 t_env_lst	*ft_get_env_var(char *key);
 char		*get_env_value(char *key);
-void		clean_all(void);
+void		refresh(void);
 void		free_cmdlst(void);
 void		lst_clear(t_token **lst);
+void		clean_all(void);
 void		received_signal(int signal);
 void		signal_from_child(int signal);
 

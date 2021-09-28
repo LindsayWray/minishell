@@ -14,6 +14,19 @@ void	lst_clear(t_token **lst)
 	g_data.token = NULL;
 }
 
+void	env_lst_clear(t_env_lst **env)
+{
+    if (*env == NULL)
+        return ;
+	if ((*env)->next)
+		env_lst_clear(&((*env)->next));
+	free ((*env)->key);
+	free ((*env)->value);
+    free (*env);
+	*env = NULL;
+	//g_data.env = NULL;
+}
+
 void	free_cmdlst(void)
 {
 	t_cmd_lst	*temp_next;
@@ -30,11 +43,19 @@ void	free_cmdlst(void)
 	g_data.cmd_lst = NULL;
 }
 
+void	refresh(void)
+{
+	free_cmdlst();
+	free(g_data.pids);
+	if (g_data.token)
+		lst_clear(&g_data.token);
+}
+
 void	clean_all(void)
 {
 	free_cmdlst();
 	free(g_data.pids);
 	if (g_data.token)
 		lst_clear(&g_data.token);
-	//free env;
+	env_lst_clear(&g_data.env_lst);
 }

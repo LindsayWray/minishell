@@ -27,6 +27,13 @@ void	set_default(t_subcmd *subcmd, t_token *token)
 	subcmd->out_file = NULL;
 }
 
+int	invalid_io_file_char(char c)
+{
+	if (c == '|' || c == '<' || c == '>')
+		return (1);
+	return (0);
+}
+
 int	syntax_error(t_token *token_lst, t_cmd_lst *cmd_lst)
 {
 	t_cmd_lst	*lst = cmd_lst;
@@ -39,9 +46,13 @@ int	syntax_error(t_token *token_lst, t_cmd_lst *cmd_lst)
 			export_exists("?", ft_strdup("2"));
 			return (EXIT_FAILURE);
 		}
-		if ((lst->subcmd.in_type == INPUT_REDIRECTION || lst->subcmd.in_type == HEREDOC) && !*lst->subcmd.in_file)
+		if ((lst->subcmd.in_type == INPUT_REDIRECTION || lst->subcmd.in_type == HEREDOC) && (!*lst->subcmd.in_file || invalid_io_file_char(*lst->subcmd.in_file)))
 		{
-			dprintf(STDERR_FILENO, "minishell: syntax error near unexpected token `newline'\n");
+			printf("%s %s\n", lst->subcmd.in_file, "|");
+			if (invalid_io_file_char(*lst->subcmd.in_file))
+				dprintf(STDERR_FILENO, "minishell: syntax error near unexpected token `|'\n");
+			else 
+				dprintf(STDERR_FILENO, "minishell: syntax error near unexpected token `newline'\n");
 			export_exists("?", ft_strdup("2"));
 			return (EXIT_FAILURE);
 		}
