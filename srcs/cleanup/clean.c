@@ -58,4 +58,24 @@ void	clean_all(void)
 	if (g_data.token)
 		lst_clear(&g_data.token);
 	env_lst_clear(&g_data.env_lst);
+	//free env;
 }
+
+// void	free_env(void)
+// {
+// 	t_env_lst	*temp;
+// 	t_env_lst	*env_lst;
+
+// 	env_lst = g_data.env_lst;
+// 	while (env_lst)
+// 	{
+// 		temp = env_lst;
+// 		env_lst = env_lst->next;
+// 		if (temp->key)
+// 			free(temp->key);
+// 		if (temp->value)
+// 			free(temp->value);
+// 		free(temp);
+// 		temp = NULL;
+// 	}
+// }

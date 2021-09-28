@@ -15,6 +15,7 @@ SRCS :=		srcs/main.c \
 			srcs/utils/ft_putstr_fd.c \
 			srcs/utils/ft_cinstr.c\
 			srcs/utils/ft_isalnum_str.c\
+			srcs/utils/ft_isdigit_str.c\
 			srcs/utils/ft_isalpha.c\
 			srcs/utils/ft_isdigit.c\
 			srcs/utils/ft_split_free.c\
@@ -55,14 +56,12 @@ all: dprintf $(NAME)
 
 $(NAME): $(OBJFILES) 
 	gcc -o $@ $^ $(LIBS) -lreadline -L /Users/$(USER)/.brew/opt/readline/lib
-	# /usr/local/opt/readline/lib
-	#
+	#/usr/local/opt/readline/lib
 
 obj/%.o: srcs/%.c $(HEADERFILES)
 	@mkdir -p $(dir $@)
 	gcc -c $(FLAGS) -o $@ $< -I /Users/$(USER)/.brew/opt/readline/include
-	# /usr/local/opt/readline/include
-	#
+	#/usr/local/opt/readline/include
 
 dprintf:
 	@echo "\033[1m\033[32mft_dprintf library generated.\033[39m"
