@@ -1,5 +1,7 @@
 #include "../../includes/minishell.h"
 
+t_data	g_data;// delete this
+
 static int	exit_code_result(void)
 {
 	int exit_code;
