@@ -38,7 +38,7 @@ void	print_env(t_env_lst *env_lst)
 
 void	signal_from_child(int signal)
 {
-	ft_dprintf(STDOUT_FILENO, "child hanlder\n");
+	//ft_dprintf(STDOUT_FILENO, "child hanlder\n");
 	if (signal == SIGINT)
 		ft_dprintf(STDOUT_FILENO, "\n");
 	if (signal == SIGQUIT)
@@ -49,8 +49,7 @@ void	received_signal(int signal)
 {
 	int	i;
 
-	ft_dprintf(STDOUT_FILENO, "parent hanlder\n");
-
+	//ft_dprintf(STDOUT_FILENO, "parent hanlder\n");
 	i = 0;
 	while (g_data.pids && g_data.pids[i] != 0)
 	{
@@ -136,7 +135,7 @@ int main(int argc, char **argv, char **env)
 	termios_p.c_lflag = termios_p.c_lflag & ~ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &termios_p);
 	prompt_loop();
-	ft_dprintf(STDERR_FILENO, "exit\n");
+	//ft_dprintf(STDERR_FILENO, "exit\n");
 	//print_env(g_data.env_lst);
 	//printf("\n\033[1m\033[36mBye, come again!\n\033[0m");
 	//system ("leaks minishell");
