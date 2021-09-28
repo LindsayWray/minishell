@@ -15,8 +15,7 @@ static void ft_unset_del(char *cmd)
         if (ft_streql(cmd, temp->key) == 1)
         {
             free(temp->key);
-            if (temp->value != NULL)
-                free(temp->value);
+            free(temp->value);
             temp2 = temp;
             temp2 = temp2->next;
             if (temp->previous != NULL)
