@@ -20,7 +20,7 @@ int ft_exit(char **cmd, int fd_out)
         // Do something with last exit code
         //the exit code if its > 255
         //then its exit code = exit code % 256
-		// free everything before exit
+		// free everything before exit but free within exit_code_result because you'll need the environment linked list
         exit(exit_code_result());
     }
 	else if (cmd[1])
