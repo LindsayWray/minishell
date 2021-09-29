@@ -23,7 +23,10 @@ int ft_exit(char **cmd, int fd_out)
         //the exit code if its > 255
         //then its exit code = exit code % 256
 		// free everything before exit but free within exit_code_result because you'll need the environment linked list
-        exit(exit_code_result());
+		if (g_data.cmd_lst->next == NULL)
+        	exit(exit_code_result());
+		else
+			return (exit_code_result());
     }
 	else if (cmd[1])
 	{
@@ -38,21 +41,37 @@ int ft_exit(char **cmd, int fd_out)
 			{
 				ft_dprintf(fd_out, "exit\nminishell: exit: %s: numeric argument required\n", cmd[1]);
 				//free everything before exit
-				exit(255);
+				if (g_data.cmd_lst->next == NULL)
+					exit(255);
+				else
+					return (255);
 			}
 		}
 		if (ft_isdigit_str(cmd[1]) == 0)
 		{
 			ft_dprintf(fd_out, "exit\nminishell: exit: %s: numeric argument required\n", cmd[1]);
 			//free everything before exit
-			exit(255);
+			if (g_data.cmd_lst->next == NULL)
+				exit(255);
+			else
+				return (255);			
 		}
 		else
 		{
 			//free everything before exit
-			if (ft_atoi(cmd[1]) > 255)
-				exit(ft_atoi(cmd[1]) % 256);
-			exit(ft_atoi(cmd[1]));
+			if (g_data.cmd_lst->next == NULL)
+			{
+				if (ft_atoi(cmd[1]) > 255)
+					exit(ft_atoi(cmd[1]) % 256);
+				exit(ft_atoi(cmd[1]));
+			}
+			else
+			{
+				if (ft_atoi(cmd[1]) > 255)
+					return (ft_atoi(cmd[1]) % 256);
+				return (ft_atoi(cmd[1]));
+			}
+			
 		}
 	}
     return (0);
