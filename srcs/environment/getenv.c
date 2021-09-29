@@ -45,15 +45,11 @@ t_env_lst   *ft_getenv(char **env)
         key = ft_strdup(temp[0]);
         if (temp[1] != NULL)
             value = ft_strdup(temp[1]);
-        else
-        {
-            value = malloc(sizeof(NULL));
-            value = NULL;
-        }
         env_new = env_lst_new(key, value);
         env_lst_add_back(&env_lst, env_new);
         free(temp[0]);
-        free(temp[1]);
+        if (temp[1] != NULL)
+            free(temp[1]);
         i++;
     }
     set_shell_lvl(env_lst);

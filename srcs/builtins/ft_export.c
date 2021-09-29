@@ -58,7 +58,8 @@ static int ft_export_noarg(int fd_out)
         temp = lst;
         lst = lst->next;
         free(temp->key);
-        free(temp->value);
+        if (temp->value != NULL)
+            free(temp->value);
         free(temp);
     }
     return (0);
