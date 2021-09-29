@@ -4,8 +4,13 @@ t_data  g_data;
 
 static void    ft_cd_change_value(char *path, t_env_lst *temp)
 {
-    free(temp->value);
-    temp->value = path;
+    if (temp->value == NULL)
+        temp->value = path;
+    else
+    {
+        free(temp->value);
+        temp->value = path;
+    }
     return ;
 }
 

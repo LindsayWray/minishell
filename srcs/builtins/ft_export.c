@@ -58,7 +58,8 @@ static int ft_export_noarg(int fd_out)
         temp = lst;
         lst = lst->next;
         free(temp->key);
-        free(temp->value);
+        if (temp->value != NULL)
+            free(temp->value);
         free(temp);
     }
     return (0);
@@ -72,15 +73,15 @@ static int ft_export_eql(char *cmd, int fd_out)
 	(void)fd_out;
     if (cmd[0] == '=')
     {
-        ft_dprintf(STDERR_FILENO, "export: not valid in this context\n");
-        return (2);
+        ft_dprintf(STDERR_FILENO, "export: `%s': not a valid identifier\n", cmd);
+        return (1);
     }
     else
     {
         temp = ft_split(cmd, '=');
         if (temp[1] == NULL)
             temp[1] = ft_strdup("");
-        if (ft_isalpha(temp[0][0]) == 0)
+        if (ft_isalpha(temp[0][0]) == 0 && temp[0][0] != '_')
         {
             ft_dprintf(STDERR_FILENO, "export, not an identifier: %s\n", temp[0]);
             ft_split_free(temp);
@@ -88,9 +89,9 @@ static int ft_export_eql(char *cmd, int fd_out)
         }
         else if (ft_isalnum_str(temp[0]) == 0)
         {
-            ft_dprintf(STDERR_FILENO, "export, not valid in this context: %s\n", temp[0]);
+            ft_dprintf(STDERR_FILENO, "export: `%s=%s': not a valid identifier\n", temp[0], temp[1]);
             ft_split_free(temp);
-            return (2);
+            return (1);
         }
         else if (export_exists(temp[0], temp[1]) == 1)
             ft_split_free(temp);
@@ -114,8 +115,8 @@ static int ft_export_key(char *cmd, int fd_out)
     }
     else if (ft_isalnum_str(cmd) == 0)
     {
-        ft_dprintf(STDERR_FILENO, "export, not valid in this context: %s\n", cmd);
-        return (2);
+        ft_dprintf(STDERR_FILENO, "export: `%s': not a valid identifier\n", cmd);
+        return (1);
     }
     else if (export_exists_key(cmd) == 1)
         return (0);

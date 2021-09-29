@@ -15,7 +15,8 @@ int export_exists(char *key, char *value)
                     return (1);
                 else
                 {
-                    free(temp->value);
+                    if (temp->value != NULL)
+                        free(temp->value);
                     temp->value = ft_strdup(value);
                     return (1);
                 }
@@ -45,16 +46,12 @@ int    ft_export_add(char *key, char *value)
     char        *set_key;
     char        *set_value;
 
+    set_value = NULL;
     set_key = ft_strdup(key);
     if (set_key == NULL)
         return (1);
     if (value != NULL)
         set_value = ft_strdup(value);
-    else
-    {
-        set_value = malloc(sizeof(NULL));
-        set_value = NULL;
-    }
     new = env_lst_new(set_key, set_value);
     env_lst_add_back(&(g_data.env_lst), new);
     return (0);
