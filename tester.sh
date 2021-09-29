@@ -69,10 +69,10 @@ compare_shells 'echo this amazing sentence | cat > outfile
 cat outfile'
 compare_shells '< Makefile | ls > outfile
 cat outfile'
-compare_shells 'echo "$USER""Users/$USER/file""'\$USER'"'\$USER''
-compare_shells 'echo '\$USER'"$USER"'\$USER''
+compare_shells "echo "\$USER""Users/\$USER/file""'$USER'"'\$USER'"
+compare_shells "echo '\$USER'"\$USER"'\$USER'"
 compare_shells 'export 6test=testing'
-compare_shells "echo \$USER'\$PATH'\$USER"
+compare_shells 'echo $USER'\$PATH'$USER'
 compare_shells echo
 compare_shells echo echo
 compare_shells eChO
@@ -162,7 +162,7 @@ compare_shells 'export TEST'
 compare_shells 'export TEST='
 compare_shells 'export TEST=123'
 compare_shells 'export ___TEST=123'
-compare_shells 'export --TEST=123'
+compare_shells '	'
 compare_shells 'export ""=""'
 compare_shells "export ''=''"
 compare_shells 'export "="="="'

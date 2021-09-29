@@ -22,12 +22,18 @@ char *expanding(char *cmd, int i)
 	char	*str;
 	int j;
 	
+	value = NULL;
 	j = i + 1;
-	while (ft_isalpha(cmd[j]) || ft_isdigit(cmd[j]) || cmd[j] == '_' || cmd[j] == '?')
-		j++;
-	str = ft_substr(cmd, i + 1, j - (i + 1));
-	value = ft_strdup(get_env_value(str));
-	free (str);
+	if (cmd[j] == '\0')
+		printf("testing"); //value = ft_strdup("$");
+	else
+	{
+		while (ft_isalpha(cmd[j]) || ft_isdigit(cmd[j]) || cmd[j] == '_' || cmd[j] == '?')
+			j++;
+		str = ft_substr(cmd, i + 1, j - (i + 1));
+		value = ft_strdup(get_env_value(str));
+		free (str);
+	}
 	value = add_string(ft_substr(cmd, 0, i), value);
 	i = j;
 	while (cmd[j] != '\0')
@@ -43,6 +49,8 @@ char *locate_env_var(char *cmd, bool double_quotes)
     char    *value;
 
     i = 0;
+	if (cmd[i + 1] == '\0')
+		return (cmd);
     while (cmd[i] != '$' && cmd[i] != '\0')
     {
 		if (cmd[i] == '"')
