@@ -13,7 +13,7 @@ int	ft_isalnum_str(char *str)
             i++;
         else if (ft_isdigit(str[i]) == 1)
             i++;
-        else if (str[i] == '_')
+        else if (str[i] == '_' || (str[i + 1] == '\0' && str[i] == '+'))
             i++;
         else
             return (0);

@@ -50,8 +50,8 @@ int ft_unset(char **cmd, int fd_out)
     {
         if (ft_isdigit(cmd[i][0]) == 1 || ft_isalnum_str(cmd[i]) == 0)
         {
-            ft_dprintf(fd_out, "unset: %s: invalid parameter name\n", cmd[i]);
-            return (2);
+            ft_dprintf(fd_out, "unset: `%s': not a valid identifier\n", cmd[i]);
+            return (1);
         }
         else
             ft_unset_del(cmd[i]);
