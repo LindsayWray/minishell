@@ -69,9 +69,10 @@ static int ft_export_eql(char *cmd, int fd_out)
     char    **temp;
     int     ret;
 
+	(void)fd_out;
     if (cmd[0] == '=')
     {
-        ft_dprintf(fd_out, "export: not valid in this context\n");
+        ft_dprintf(STDERR_FILENO, "export: not valid in this context\n");
         return (2);
     }
     else
@@ -81,13 +82,13 @@ static int ft_export_eql(char *cmd, int fd_out)
             temp[1] = ft_strdup("");
         if (ft_isalpha(temp[0][0]) == 0)
         {
-            ft_dprintf(fd_out, "export, not an identifier: %s\n", temp[0]);
+            ft_dprintf(STDERR_FILENO, "export, not an identifier: %s\n", temp[0]);
             ft_split_free(temp);
             return (2);
         }
         else if (ft_isalnum_str(temp[0]) == 0)
         {
-            ft_dprintf(fd_out, "export, not valid in this context: %s\n", temp[0]);
+            ft_dprintf(STDERR_FILENO, "export, not valid in this context: %s\n", temp[0]);
             ft_split_free(temp);
             return (2);
         }
@@ -105,14 +106,15 @@ static int ft_export_eql(char *cmd, int fd_out)
 
 static int ft_export_key(char *cmd, int fd_out)
 {
+	(void)fd_out;
     if (ft_isdigit(cmd[0]) == 1)
     {
-        ft_dprintf(fd_out, "export, not an identifier: %s\n", cmd);
+        ft_dprintf(STDERR_FILENO, "export, not an identifier: %s\n", cmd);
         return (2);
     }
     else if (ft_isalnum_str(cmd) == 0)
     {
-        ft_dprintf(fd_out, "export, not valid in this context: %s\n", cmd);
+        ft_dprintf(STDERR_FILENO, "export, not valid in this context: %s\n", cmd);
         return (2);
     }
     else if (export_exists_key(cmd) == 1)

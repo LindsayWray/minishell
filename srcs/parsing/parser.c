@@ -48,7 +48,6 @@ int	syntax_error(t_token *token_lst, t_cmd_lst *cmd_lst)
 		}
 		if ((lst->subcmd.in_type == INPUT_REDIRECTION || lst->subcmd.in_type == HEREDOC) && (!*lst->subcmd.in_file || invalid_io_file_char(*lst->subcmd.in_file)))
 		{
-			printf("%s %s\n", lst->subcmd.in_file, "|");
 			if (invalid_io_file_char(*lst->subcmd.in_file))
 				dprintf(STDERR_FILENO, "minishell: syntax error near unexpected token `|'\n");
 			else 

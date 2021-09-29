@@ -109,11 +109,11 @@ int ft_cd(char **cmd, int fd_out)
 		if (!msg)
 		{
         	if (errno == ENOTDIR)
-        	    ft_dprintf(fd_out, "cd: %s: Not a directory\n", cmd[1]);
+        	    ft_dprintf(STDERR_FILENO, "cd: %s: Not a directory\n", cmd[1]);
         	else if (ft_strlen(cmd[1]) > PATH_MAX)
-        	    ft_dprintf(fd_out, "cd: %s: Path is way too long.\n", cmd[1]);
+        	    ft_dprintf(STDERR_FILENO, "cd: %s: File name too long\n", cmd[1]);
         	else if (errno == ENOENT)
-        	    ft_dprintf(fd_out, "cd: %s: No such file or directory\n", cmd[1]);
+        	    ft_dprintf(STDERR_FILENO, "cd: %s: No such file or directory\n", cmd[1]);
 		}
 		free(oldpwd);
     }

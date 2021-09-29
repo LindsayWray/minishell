@@ -60,7 +60,7 @@ void	received_signal(int signal)
 	if (signal == SIGINT)
 	{
 		export_exists("?", ft_strdup("1"));
-		rl_replace_line("", 1);
+		//rl_replace_line("", 1);
 		ft_dprintf(STDOUT_FILENO, "\n");
 	}
 	rl_on_new_line();
@@ -78,9 +78,9 @@ void	prompt_loop(void)
 	while (true)
 	{
 		str = readline("=^..^= ");
-		//printf("***%s***\n", str);
-		if (!str || ft_streql(str, "exit")) // temporary for the tester
-			break ;
+		// printf("***%s***\n", str);
+		// if (!str || ft_streql(str, "exit")) // temporary for the tester
+		// 	break ;
 		if (!str)
 			break ;	
 		if (*str)
@@ -97,9 +97,9 @@ void	prompt_loop(void)
 		g_data.cmd_lst = cmd_lst;
 		if (!cmd_lst)
 			continue ;
-		print_cmd_lst(cmd_lst);
+		// print_cmd_lst(cmd_lst);
 		expand(cmd_lst);
-		print_cmd_lst(cmd_lst);
+		// print_cmd_lst(cmd_lst);
 		exec(cmd_lst);
 		free_cmdlst();
 	}

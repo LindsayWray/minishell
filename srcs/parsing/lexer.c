@@ -7,7 +7,7 @@ void	new_token(char *str, int i, int start, t_token **token, t_type type)
 	char *content;
 
 	content = ft_substr(str, start, i - start);
-	if (!content || !*content)
+	if ((!content || !*content) && type == WORD)
 		return;
 	if (!lst_add_back(token, lst_new(content, type)))
 		lst_clear(&g_data.token);
