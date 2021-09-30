@@ -7,6 +7,36 @@ void    ft_echo_b(int *n_flag, int *i)
     return ;
 }
 
+int    ft_echois_n_b(char *cmd)
+{
+    int i;
+
+    i = 0;
+    while (cmd[i] != '\0')
+    {
+        if (i == 0 && cmd[i] == '-')
+            i++;
+        else if (cmd[i] == 'n')
+            i++;
+        else
+            return (0);
+    }
+    if (ft_strlen(cmd) < 2)
+        return (0);
+    return (1);
+}
+
+void    ft_echois_n(char **cmd, int *n_flag, int *i)
+{
+    while (cmd[*i] && ft_echois_n_b(cmd[*i]) == 1)
+    {
+        *n_flag = 1;
+        *i = *i + 1;
+    }
+    (void)i;
+    return ;
+}
+
 int ft_echo(char **cmd, int fd_out)
 {
     int i;
@@ -18,10 +48,8 @@ int ft_echo(char **cmd, int fd_out)
         ft_dprintf(fd_out, "\n");
         return (0);
     }
-    if (ft_streql(cmd[1], "-n") == 1)
-        ft_echo_b(&n_flag, &i);
-    else
-        i = 1;
+    i = 1;
+    ft_echois_n(cmd, &n_flag, &i);
     while (cmd[i])
     {
         ft_dprintf(fd_out, "%s", cmd[i]);
