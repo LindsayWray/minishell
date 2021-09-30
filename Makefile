@@ -55,14 +55,14 @@ LIBS = srcs/utils/dprintf/libftdprintf.a
 all: dprintf $(NAME)
 
 $(NAME): $(OBJFILES) 
-	gcc -o $@ $^ $(LIBS) -lreadline 
+	gcc -o $@ $^ $(LIBS) -lreadline -L `brew --prefix readline`/lib
 	#-L /usr/local/opt/readline/lib
 	# /Users/$(USER)/.brew/opt/readline/lib
 	#/usr/local/opt/readline/lib
 
 obj/%.o: srcs/%.c $(HEADERFILES)
 	@mkdir -p $(dir $@)
-	gcc -c $(FLAGS) -o $@ $<  
+	gcc -c $(FLAGS) -o $@ $< -I `brew --prefix readline`/include
 	# -I /usr/local/opt/readline/include
 	# /Users/$(USER)/.brew/opt/readline/include
 	#/usr/local/opt/readline/include

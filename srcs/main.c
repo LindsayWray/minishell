@@ -60,7 +60,7 @@ void	received_signal(int signal)
 	if (signal == SIGINT)
 	{
 		export_exists("?", ft_strdup("1"));
-		//rl_replace_line("", 1);
+		rl_replace_line("", 1);
 		ft_dprintf(STDOUT_FILENO, "\n");
 	}
 	rl_on_new_line();
@@ -140,7 +140,7 @@ int main(int argc, char **argv, char **env)
 	//ft_dprintf(STDERR_FILENO, "exit\n");
 	//print_env(g_data.env_lst);
 	//printf("\n\033[1m\033[36mBye, come again!\n\033[0m");
-	//system ("leaks minishell");
 	clean_all();
+	//system ("leaks minishell");
 	return (0);
 }

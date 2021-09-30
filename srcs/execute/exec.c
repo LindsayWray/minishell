@@ -17,7 +17,11 @@ void	wait_for_childprocesses(int *pids, int len)
 		if (WIFEXITED(stat_loc))
 			exit_status = ft_itoa(WEXITSTATUS(stat_loc));
 		if (WIFSIGNALED(stat_loc))
+		{
 			exit_status = ft_itoa(128 + WTERMSIG(stat_loc));
+			if (WTERMSIG(stat_loc) == SIGSEGV)
+				ft_dprintf(STDERR_FILENO, "Segmentation fault: %d\n", SIGSEGV);
+		}
 		export_exists("?", exit_status);
 		j++;
 	}
