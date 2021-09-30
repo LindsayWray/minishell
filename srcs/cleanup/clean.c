@@ -24,8 +24,23 @@ void	env_lst_clear(t_env_lst **env)
 	free ((*env)->value);
     free (*env);
 	*env = NULL;
-	//g_data.env = NULL;
 }
+
+// void	env_lst_clear(void)
+// {
+// 	t_env_lst	*next;
+
+// 	while (g_data.env_lst)
+// 	{
+// 		printf("say hello\n");
+// 		printf("%s\n",(g_data.env_lst)->key);
+// 		next = g_data.env_lst->next;
+// 		free(g_data.env_lst->key);
+// 		free(g_data.env_lst->value);
+// 		free(g_data.env_lst);
+// 		g_data.env_lst = next;
+// 	}
+// }
 
 void	free_cmdlst(void)
 {
@@ -58,23 +73,5 @@ void	clean_all(void)
 	if (g_data.token)
 		lst_clear(&g_data.token);
 	env_lst_clear(&g_data.env_lst);
+	g_data.env_lst = NULL;
 }
-
-// void	free_env(void)
-// {
-// 	t_env_lst	*temp;
-// 	t_env_lst	*env_lst;
-
-// 	env_lst = g_data.env_lst;
-// 	while (env_lst)
-// 	{
-// 		temp = env_lst;
-// 		env_lst = env_lst->next;
-// 		if (temp->key)
-// 			free(temp->key);
-// 		if (temp->value)
-// 			free(temp->value);
-// 		free(temp);
-// 		temp = NULL;
-// 	}
-// }

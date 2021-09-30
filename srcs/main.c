@@ -38,7 +38,6 @@ void	print_env(t_env_lst *env_lst)
 
 void	signal_from_child(int signal)
 {
-	//ft_dprintf(STDOUT_FILENO, "child hanlder\n");
 	if (signal == SIGINT)
 		ft_dprintf(STDOUT_FILENO, "\n");
 	if (signal == SIGQUIT)
@@ -49,7 +48,6 @@ void	received_signal(int signal)
 {
 	int	i;
 
-	//ft_dprintf(STDOUT_FILENO, "parent hanlder\n");
 	i = 0;
 	while (g_data.pids && g_data.pids[i] != 0)
 	{
@@ -65,7 +63,6 @@ void	received_signal(int signal)
 	}
 	rl_on_new_line();
 	rl_redisplay();
-	//printf("received signal: %d\n", signal); // for testing
 	refresh();
 }
 
@@ -78,13 +75,10 @@ void	prompt_loop(void)
 	while (true)
 	{
 		str = readline("=^..^= ");
-		// printf("***%s***\n", str);
-		// if (!str || ft_streql(str, "exit")) // temporary for the tester
-		// 	break ;
 		if (!str)
 			break ;	
 		if (*str)
-			add_history(str); // an empty line should not be added to the history
+			add_history(str);
 		token = lexer(str);
 		free (str);
 		// t_token *token_list = token;
@@ -108,39 +102,27 @@ void	prompt_loop(void)
 
 int main(int argc, char **argv, char **env)
 {
+	struct termios termios_p;
+
 	(void)argv;
+	if (argc != 1)
+	{
+		ft_dprintf(STDERR_FILENO, "Minishell should run without arguments\n");
+		return (EXIT_FAILURE);
+	}
 	signal(SIGINT, received_signal);
 	signal(SIGQUIT, received_signal); 
 	g_data.env_lst = ft_getenv(env);
-
-	//********** FOR TESTER
-	if (argc >= 3 && ft_streql(argv[1], "-c"))
-	{
-		t_cmd_lst *cmd_lst = parser(lexer(argv[2]));
-		expand(cmd_lst);
-		exec(cmd_lst);
-		exit(ft_atoi(get_env_value("?")));
-	}
-	//********** FOR TESTER
-
-
-	if (argc != 1)
-	{
-		printf("Minishell should run without arguments\n"); // send to stderr
-		return (EXIT_FAILURE);
-	}
-
-	// if (isatty(STDIN_FILENO))
-	// 	printf("\n\033[1m\033[36mWelcome to Isaac's and Lindsay's minishell!\n\033[0m");
-	struct termios termios_p;
+	if (isatty(STDIN_FILENO))
+		printf("\n\033[1m\033[36mWelcome to Isaac's and Lindsay's minishell!\n\033[0m");
 	tcgetattr(STDIN_FILENO, &termios_p);
 	termios_p.c_lflag = termios_p.c_lflag & ~ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &termios_p);
 	prompt_loop();
-	//ft_dprintf(STDERR_FILENO, "exit\n");
-	//print_env(g_data.env_lst);
-	//printf("\n\033[1m\033[36mBye, come again!\n\033[0m");
+	ft_dprintf(STDERR_FILENO, "exit\n");
+	if (isatty(STDIN_FILENO))
+		printf("\n\033[1m\033[36mBye, come again!\n\033[0m");
 	clean_all();
-	//system ("leaks minishell");
+	//system ("leaks minishell | grep 'leaked bytes'");
 	return (0);
 }

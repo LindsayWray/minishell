@@ -88,11 +88,7 @@ pid_t	run_command_in_childprocess(int in_fd, int out_fd, t_cmd_lst *cmd_lst, int
 		close (p);
 		path = get_path(*cmd_lst->subcmd.cmd);
 		if (execve(path, cmd_lst->subcmd.cmd, ft_envlst_to_array(g_data.env_lst)) == -1)
-		{
-			clean_all();
-			free (path);
 			exit (EXIT_FAILURE);
-		}
 	}
 	return (pid);
 }
