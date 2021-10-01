@@ -29,8 +29,8 @@ void	received_signal(int signal)
 	}
 	if (signal == SIGINT)
 	{
-		export_exists("?", ft_strdup("1"));
-		//rl_replace_line("", 1);
+		export_exists("?", "1");
+		rl_replace_line("", 1);
 		ft_dprintf(STDOUT_FILENO, "\n");
 	}
 	rl_on_new_line();

@@ -4,13 +4,13 @@ t_data	g_data;
 
 void	new_token(char *str, int i, int start, t_token **token, t_type type)
 {
-	char *content;
+	char	*content;
 
 	content = ft_substr(str, start, i - start);
 	if ((!content || !*content) && type == WORD)
-		return;
+		return ;
 	if (!lst_add_back(token, lst_new(content, type)))
-		lst_clear(&g_data.token);
+		system_error("Malloc Error");
 }
 
 void	handle_redirections(char *str, int *i, t_token **token)
@@ -21,11 +21,11 @@ void	handle_redirections(char *str, int *i, t_token **token)
 	if (str[*i] == '<')
 		type = INPUT_REDIRECTION;
 	if (str[*i] == '<' && str[(*i) + 1] == '<')
-			type = HEREDOC;
+		type = HEREDOC;
 	if (str[*i] == '>')
 		type = OUTPUT_REDIRECTION;
 	if (str[*i] == '>' && str[(*i) + 1] == '>')
-			type = APPEND;
+		type = APPEND;
 	(*i)++;
 	if (type == HEREDOC || type == APPEND)
 		(*i)++;
@@ -39,22 +39,23 @@ void	handle_redirections(char *str, int *i, t_token **token)
 
 t_token	*lexer(char *str)
 {
-	int i;
-	int start;
+	int	i;
+	int	start;
 
 	g_data.token = NULL;
 	i = 0;
 	while (str[i] != '\0')
 	{
 		start = i;
-		while (str[i] != '|' && str[i] != '<' && str[i] != '>' && !is_whitespace(str[i]) && str[i] != '\0')
+		while (str[i] != '|' && str[i] != '<' && str[i] != '>'
+			&& !is_whitespace(str[i]) && str[i] != '\0')
 			skip_over_quotes(str, &i);
-		if (start != i) // this condition prevents empty tokens
+		if (start != i)
 			new_token(str, i, start, &g_data.token, WORD);
 		if (str[i] == '|')
 		{
 			if (!lst_add_back(&g_data.token, lst_new(NULL, PIPE)))
-				lst_clear(&g_data.token); //add error message
+				system_error("Malloc Error");
 		}
 		if (str[i] == '<' || str[i] == '>')
 			handle_redirections(str, &i, &g_data.token);

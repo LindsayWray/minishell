@@ -27,47 +27,6 @@ void	set_default(t_subcmd *subcmd, t_token *token)
 	subcmd->out_file = NULL;
 }
 
-int	invalid_io_file_char(char c)
-{
-	if (c == '|' || c == '<' || c == '>')
-		return (1);
-	return (0);
-}
-
-int	set_syntax_error(char *msg)
-{
-	dprintf(STDERR_FILENO, "minishell: syntax error near unexpected token `%s'\n", msg);
-	export_exists("?", ft_strdup("2"));
-	return (EXIT_FAILURE);
-}
-
-int	syntax_error(t_token *token_lst, t_cmd_lst *cmd_lst)
-{
-	t_cmd_lst	*lst = cmd_lst;
-
-	while (lst)
-	{
-		if ((!*lst->subcmd.cmd && lst->subcmd.in_type == VOID && lst->subcmd.out_type == VOID) || lst_last(token_lst)->type == PIPE)
-			return (set_syntax_error("|"));
-		if ((lst->subcmd.in_type == INPUT_REDIRECTION || lst->subcmd.in_type == HEREDOC) && (!*lst->subcmd.in_file || invalid_io_file_char(*lst->subcmd.in_file)))
-		{
-			if (invalid_io_file_char(*lst->subcmd.in_file))
-				return (set_syntax_error(lst->subcmd.in_file));
-			else
-				return (set_syntax_error("newline"));
-		}
-		if ((lst->subcmd.out_type == OUTPUT_REDIRECTION || lst->subcmd.out_type == APPEND) && (!*lst->subcmd.out_file || invalid_io_file_char(*lst->subcmd.out_file)))
-		{
-			if (invalid_io_file_char(*lst->subcmd.out_file))
-				return (set_syntax_error(lst->subcmd.out_file));
-			else
-				return (set_syntax_error("newline"));
-		}
-		lst = lst->next;
-	}
-	return (EXIT_SUCCESS);
-}
-
 void	give_subcmd_content(t_subcmd *subcmd, t_token *token, int *i)
 {
 	if (token->type == WORD)
@@ -91,8 +50,8 @@ t_cmd_lst	*parser(t_token *token_lst)
 {
 	t_subcmd	subcmd;
 	t_cmd_lst	*cmd_lst;
-	int i;
 	t_token		*token;
+	int			i;
 
 	token = token_lst;
 	cmd_lst = NULL;
@@ -110,12 +69,12 @@ t_cmd_lst	*parser(t_token *token_lst)
 		if (token)
 			token = token->next;
 	}
-	if (syntax_error(token_lst, cmd_lst))
+	token = token_lst;
+	if (syntax_error(token, cmd_lst))
 	{
-		free_cmdlst();
+		free_cmdlst(cmd_lst);
 		cmd_lst = NULL;
 	}
 	lst_clear(&token_lst);
-	//g_data.token = NULL;
 	return (cmd_lst);
 }

@@ -39,12 +39,6 @@ void	prompt_loop(void)
 			add_history(str);
 		token = lexer(str);
 		free (str);
-		// t_token *token_list = token;
-		// while(token_list)
-		// {
-		// 	printf("TOKEN:  %s\n", token_list->content);
-		// 	token_list = token_list->next;
-		// }
 		cmd_lst = parser(token);
 		//system ("leaks minishell");
 		g_data.cmd_lst = cmd_lst;
@@ -52,9 +46,10 @@ void	prompt_loop(void)
 			continue ;
 		// print_cmd_lst(cmd_lst);
 		expand(cmd_lst);
-		// print_cmd_lst(cmd_lst);
+		//print_cmd_lst(cmd_lst);
 		exec(cmd_lst);
-		free_cmdlst();
+		free_cmdlst(cmd_lst);
+		g_data.cmd_lst = NULL;
 	}
 	return ;
 }
@@ -82,6 +77,6 @@ int main(int argc, char **argv, char **env)
 	// if (isatty(STDIN_FILENO))
 	// 	printf("\n\033[1m\033[36mBye, come again!\n\033[0m");
 	clean_all();
-	system ("leaks minishell | grep 'leaked bytes'");
+	system ("leaks minishell");
 	return (0);
 }

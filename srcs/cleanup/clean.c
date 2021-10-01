@@ -26,25 +26,27 @@ void	env_lst_clear(t_env_lst **env)
 	*env = NULL;
 }
 
-void	free_cmdlst(void)
+void	free_cmdlst(t_cmd_lst *cmd_lst)
 {
 	t_cmd_lst	*temp_next;
 	
-	while (g_data.cmd_lst)
+	while (cmd_lst)
 	{
-		free (g_data.cmd_lst->subcmd.in_file);
-		free (g_data.cmd_lst->subcmd.out_file);
-		ft_free_array(g_data.cmd_lst->subcmd.cmd);
-		temp_next = g_data.cmd_lst->next;
-		free (g_data.cmd_lst);
-		g_data.cmd_lst = temp_next;
+		free (cmd_lst->subcmd.in_file);
+		free (cmd_lst->subcmd.out_file);
+		ft_free_array(cmd_lst->subcmd.cmd);
+		temp_next = cmd_lst->next;
+		free (cmd_lst);
+		cmd_lst = temp_next;
 	}
-	g_data.cmd_lst = NULL;
+	cmd_lst = NULL;
 }
 
 void	refresh(void)
 {
-	free_cmdlst();
+	if (g_data.cmd_lst)
+		free_cmdlst(g_data.cmd_lst);
+	g_data.cmd_lst = NULL;
 	free(g_data.pids);
 	if (g_data.token)
 		lst_clear(&g_data.token);
@@ -52,11 +54,13 @@ void	refresh(void)
 
 void	clean_all(void)
 {
-	free_cmdlst();
+	if (g_data.cmd_lst)
+		free_cmdlst(g_data.cmd_lst);
+	g_data.cmd_lst = NULL;
 	free(g_data.pids);
 	if (g_data.token)
 		lst_clear(&g_data.token);
 	env_lst_clear(&g_data.env_lst);
 	g_data.env_lst = NULL;
-	//rl_clear_history();
+	rl_clear_history();
 }
