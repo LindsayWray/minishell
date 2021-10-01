@@ -115,7 +115,7 @@ t_cmd_lst	*parser(t_token *token_lst)
 		free_cmdlst();
 		cmd_lst = NULL;
 	}
-	lst_clear(&token);
-	g_data.token = NULL;
+	lst_clear(&token_lst);
+	//g_data.token = NULL;
 	return (cmd_lst);
 }

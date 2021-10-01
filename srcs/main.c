@@ -24,18 +24,6 @@ void	print_cmd_lst(t_cmd_lst *cmd_lst)
 	}
 }
 
-void	print_env(t_env_lst *env_lst)
-{
-	printf("*********ENV LIST *********\n");
-	while (env_lst)
-	{
-		printf("%s=%s\n", env_lst->key, env_lst->value);
-		env_lst = env_lst->next;
-	}
-	printf("***************************\n");
-	return ;
-}
-
 void	prompt_loop(void)
 {
 	char	*str;
@@ -84,16 +72,16 @@ int main(int argc, char **argv, char **env)
 	signal(SIGINT, received_signal);
 	signal(SIGQUIT, received_signal); 
 	g_data.env_lst = ft_getenv(env);
-	if (isatty(STDIN_FILENO))
-		printf("\n\033[1m\033[36mWelcome to Isaac's and Lindsay's minishell!\n\033[0m");
+	// if (isatty(STDIN_FILENO))
+	// 	printf("\n\033[1m\033[36mWelcome to Isaac's and Lindsay's minishell!\n\033[0m");
 	tcgetattr(STDIN_FILENO, &termios_p);
 	termios_p.c_lflag = termios_p.c_lflag & ~ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &termios_p);
 	prompt_loop();
 	ft_dprintf(STDERR_FILENO, "exit\n");
-	if (isatty(STDIN_FILENO))
-		printf("\n\033[1m\033[36mBye, come again!\n\033[0m");
+	// if (isatty(STDIN_FILENO))
+	// 	printf("\n\033[1m\033[36mBye, come again!\n\033[0m");
 	clean_all();
-	//system ("leaks minishell | grep 'leaked bytes'");
+	system ("leaks minishell | grep 'leaked bytes'");
 	return (0);
 }

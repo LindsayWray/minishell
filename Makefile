@@ -18,7 +18,6 @@ SRCS :=		srcs/main.c \
 			srcs/utils/ft_isdigit_str.c\
 			srcs/utils/ft_isalpha.c\
 			srcs/utils/ft_isdigit.c\
-			srcs/utils/ft_split_free.c\
 			srcs/utils/ft_itoa.c \
 			srcs/utils/ft_strcmp.c\
 			srcs/utils/ft_atoi.c\
@@ -41,6 +40,7 @@ SRCS :=		srcs/main.c \
 			srcs/builtins/ft_exit.c\
 			srcs/expander/expand.c \
 			srcs/expander/quote_handler.c \
+			srcs/expander/complex_cmd.c \
 			srcs/environment/envlst_to_array.c \
 			srcs/environment/get_env_var.c\
 			srcs/environment/getenv.c \
@@ -56,11 +56,13 @@ LIBS = srcs/utils/dprintf/libftdprintf.a
 all: dprintf $(NAME)
 
 $(NAME): $(OBJFILES) 
-	gcc -o $@ $^ $(LIBS) -lreadline -L `brew --prefix readline`/lib
+	gcc -o $@ $^ $(LIBS) -lreadline 
+	#-L `brew --prefix readline`/lib
 
 obj/%.o: srcs/%.c $(HEADERFILES)
 	@mkdir -p $(dir $@)
-	gcc -c $(FLAGS) -o $@ $< -I `brew --prefix readline`/include
+	gcc -c $(FLAGS) -o $@ $< 
+	#-I `brew --prefix readline`/include
 
 dprintf:
 	@echo "\033[1m\033[32mft_dprintf library generated.\033[39m"

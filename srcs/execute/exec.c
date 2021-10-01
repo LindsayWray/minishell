@@ -23,6 +23,7 @@ void	wait_for_childprocesses(int *pids, int len)
 				ft_dprintf(STDERR_FILENO, "Segmentation fault: %d\n", SIGSEGV);
 		}
 		export_exists("?", exit_status);
+		free (exit_status);
 		j++;
 	}
 	signal(SIGINT, received_signal);

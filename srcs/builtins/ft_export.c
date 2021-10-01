@@ -79,26 +79,26 @@ static int ft_export_eql(char *cmd, int fd_out)
     else
     {
         temp = ft_split(cmd, '=');
-        if (temp[1] == NULL)
+        if (temp[1] == NULL)    
             temp[1] = ft_strdup("");
         if (ft_isalpha(temp[0][0]) == 0 && temp[0][0] != '_')
         {
             ft_dprintf(STDERR_FILENO, "export, not an identifier: %s\n", temp[0]);
-            ft_split_free(temp);
+            ft_free_array(temp);
             return (2);
         }
         else if (ft_isalnum_str(temp[0]) == 0)
         {
             ft_dprintf(STDERR_FILENO, "export: `%s=%s': not a valid identifier\n", temp[0], temp[1]);
-            ft_split_free(temp);
+            ft_free_array(temp);
             return (1);
         }
         else if (export_exists(temp[0], temp[1]) == 1)
-            ft_split_free(temp);
+            ft_free_array(temp);
         else
         {
             ret = ft_export_add(temp[0], temp[1]);
-			ft_split_free(temp);
+			ft_free_array(temp);
             return (ret);
         }
     }

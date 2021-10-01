@@ -26,6 +26,7 @@ void		expand(t_cmd_lst *cmd_lst);
 void	    skip_over_quotes(char * str, int *i);
 char		*add_string(char *str1, char *str2);
 char		*quote_handler(char *cmd);
+char 		**complex_cmd(char **cmd);
 char		**ft_envlst_to_array(t_env_lst *env_lst);
 t_env_lst	*ft_getenv(char **env);
 t_env_lst	*ft_get_env_var(char *key);
@@ -36,8 +37,8 @@ void		lst_clear(t_token **lst);
 void		clean_all(void);
 void		received_signal(int signal);
 void		signal_from_child(int signal);
+void		signal_from_heredoc(int signal);
 void		received_signal(int signal);
-
 
 //builtins
 int         ft_export(char **cmd, int fd_out);

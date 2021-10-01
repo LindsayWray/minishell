@@ -23,16 +23,6 @@ int	get_input(char *input_file)
 	return (input_fd);
 }
 
-void	signal_from_heredoc(int signal)
-{
-
-	//ft_dprintf(STDOUT_FILENO, "heredoc handler\n");
-	if (signal == SIGINT)
-		exit (signal);
-	// if (signal == SIGQUIT)
-	// 	ft_dprintf(STDOUT_FILENO, "Quit: %d\n", signal);
-}
-
 int	read_input_heredoc(char *delimiter)
 {
 	char	*line;
@@ -43,7 +33,6 @@ int	read_input_heredoc(char *delimiter)
 	input_fd = open("/tmp/heredoc", O_CREAT | O_RDWR | O_TRUNC , 0644);
 	if (input_fd == -1)
 	system_error("input file does not exist");
-	//signal(SIGQUIT, signal_from_heredoc);
 	pid = fork();
 	if (pid == -1)
 		system_error("Fork Error");
@@ -68,7 +57,6 @@ int	read_input_heredoc(char *delimiter)
 	}
 	signal(SIGINT, signal_from_child);
 	wait (0);
-	//signal(SIGQUIT, received_signal);
 	return (input_fd);
 }
 

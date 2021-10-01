@@ -58,5 +58,5 @@ void	clean_all(void)
 		lst_clear(&g_data.token);
 	env_lst_clear(&g_data.env_lst);
 	g_data.env_lst = NULL;
-	rl_clear_history();
+	//rl_clear_history();
 }

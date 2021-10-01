@@ -71,7 +71,6 @@ compare_shells '< Makefile | ls > outfile
 cat outfile'
 compare_shells "echo "\$USER""Users/\$USER/file""'$USER'"'\$USER'"
 compare_shells "echo '\$USER'"\$USER"'\$USER'"
-compare_shells 'export 6test=testing'
 compare_shells 'echo $USER'\$PATH'$USER'
 compare_shells echo
 compare_shells echo echo
@@ -102,7 +101,7 @@ compare_shells 'echo               text "$USER"            "$USER"text'
 compare_shells "echo ''''''''''\$USER''''''''''"
 compare_shells 'echo """"""""$USER""""""""'
 compare_shells echo \$USER'$USER'text oui oui     oui  oui \$USER oui      \$USER ''
-compare_shells echo \$USER '' \$USER \$USER '' \$USER '' \$USER -n \$USER
+compare_shells echo \$USER '' \$PATH \$USER '' \$USER '' \$USER -n \$USER
 compare_shells echo "\$USER""\$USER""\$USER"
 compare_shells echo text"\$USER"test
 compare_shells echo '$USER'
@@ -110,16 +109,14 @@ compare_shells echo \$USER " "
 compare_shells echo "\$USER""Users/\$USER/file""'\$USER'"'$USER'
 compare_shells echo "\$USER\$USER\$USER"
 compare_shells echo '$USER'"\$USER"'$USER'
-compare_shells echo '"$USER"''$USER'"""\$USER"
+compare_shells echo '"$USER"''$PATH'"""\$USER"
 compare_shells echo " \$USER  "'$PWD'
 compare_shells echo " \$USER  \$ "'$PWD'
 compare_shells echo \$USER=4
 compare_shells echo \$USER=lwray!
 compare_shells echo \$USER
 compare_shells echo \$?
-compare_shells echo \$USER213
-compare_shells echo \$USER \$USER9999 \$USER8888 \$USER7777
-compare_shells echo \$USER \$USER9999 \$USER8888 \$USER7777 "\$USER"
+compare_shells echo \$PATH213
 compare_shells echo "\$USER=12\$USER"
 compare_shells echo \$PWD/file
 compare_shells echo "\$PWD/file"
@@ -180,17 +177,13 @@ compare_shells 'export TEST'
 compare_shells 'export ""=""'
 compare_shells 'export TES=T=""'
 compare_shells 'export TE+S=T=""'
-compare_shells 'export TES\\\\T=123'
 compare_shells 'export TES.T=123'
-compare_shells 'export TES\\\$T=123'
-compare_shells 'export TES\\\\T'
 compare_shells 'export TES.T=123'
 compare_shells 'export TES+T=123'
 compare_shells 'export TES=T=123'
 compare_shells 'export TES}T=123'
 compare_shells 'export TES{T=123'
 compare_shells 'export TES-T=123'
-compare_shells 'export -TEST=123'
 compare_shells 'export _TEST=123'
 compare_shells 'export TES_T=123'
 compare_shells 'export TEST_=123'
@@ -200,7 +193,6 @@ compare_shells 'export TES@T=123'
 compare_shells 'export TES!T=123'
 compare_shells 'export TES$?T=123'
 compare_shells 'export =============123'
-compare_shells 'export +++++++=123'
 compare_shells 'export ________=123'
 compare_shells 'export export'
 compare_shells 'export echo'
@@ -222,7 +214,6 @@ compare_shells 'unset OLDPWD '
 compare_shells 'unset PATH '
 compare_shells 'unset PATH '
 compare_shells 'unset PATH '
-compare_shells 'unset TES\\\\T'
 compare_shells 'unset TES;T'
 compare_shells 'unset TES.T'
 compare_shells 'unset TES+T'
@@ -230,7 +221,6 @@ compare_shells 'unset TES=T'
 compare_shells 'unset TES}T'
 compare_shells 'unset TES{T'
 compare_shells 'unset TES-T'
-compare_shells 'unset -TEST'
 compare_shells 'unset _TEST'
 compare_shells 'unset TES_T'
 compare_shells 'unset TEST_'
@@ -291,8 +281,6 @@ compare_shells '||||||||'
 compare_shells '            '
 compare_shells 'cat wouaf wouaf'
 compare_shells '>'
-compare_shells '>>>>>>>>'
-compare_shells '<<<<<<<<<'
 compare_shells '> > > >'
 compare_shells '>> >> >> >>'
 compare_shells '<<'
@@ -306,26 +294,50 @@ compare_shells '.echo.'
 compare_shells '>echo>'
 compare_shells '<echo<'
 compare_shells '>>echo>>'
-compare_shells 'echo'
-compare_shells '|echo|'
 compare_shells 'echo -n'
 compare_shells 'echo -n'
 compare_shells 'echo'
 compare_shells 'echo something'
 compare_shells 'rm -f something'
 compare_shells 'cat something'
-compare_shells '| echo -n oui'
-compare_shells 'echo -n oui'
-compare_shells 'trying to destroy your minishell'
 compare_shells 'echo hhhhhhh > out
 echo ii > out
 cat out
 ls -l out'
 
+echo touch file
+
+compare_shells 'env | grep "_="'
+compare_shells 'env | grep "SHLVL"'
+compare_shells 'echo oui | cat -e'
+compare_shells 'echo oui | echo non | echo something | grep oui'
+compare_shells 'echo oui | echo non | echo something | grep non'
+compare_shells 'echo oui | echo non | echo something | grep something'
+compare_shells 'cd .. | echo "something"'
+compare_shells 'cd .. | echo "something"'
+compare_shells 'cd / | echo "something"'
+compare_shells 'cd .. | pwd'
+compare_shells 'ifconfig | grep ":"'
+compare_shells 'ifconfig | grep nothing'
+compare_shells 'whoami | grep $USER'
+compare_shells 'whoami | grep $USER > file' 	 	
+compare_shells 'whoami | cat -e | cat -e > file '
+compare_shells 'cat Makefile | grep "FLAGS"'
+compare_shells 'cat Makefile | cat -e | cat -e'
+compare_shells 'cat Makefile | grep "FLAGS" | grep "FLAGS" | cat -e'
+compare_shells 'export TEST=123 | cat -e | cat -e'
+compare_shells 'unset TEST | cat -e'
+compare_shells 'echo test | cat -e | cat -e | cat -e'
+compare_shells 'whereis ls | cat -e | cat -e > test'
+compare_shells 'echo test | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e'
+compare_shells 'ls -la | grep "."'
+compare_shells 'whereis grep > file '
+compare_shells 'whereis grep > file'
+compare_shells 'ls -la > file'
+compare_shells 'ls -la > file '
+
 printf "Total OK: $BOLDGREEN%s$RESET\n" "$total_ok"
 printf "Total KO: $BOLDRED%s$RESET\n" "$total_ko"
-
-
 
 
 # check if old file content is removed and not overwritten. O_TRUNC flag

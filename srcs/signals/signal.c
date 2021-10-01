@@ -2,6 +2,12 @@
 
 t_data	g_data;
 
+void	signal_from_heredoc(int signal)
+{
+	if (signal == SIGINT)
+		exit (signal);
+}
+
 void	signal_from_child(int signal)
 {
 	if (signal == SIGINT)
@@ -24,7 +30,7 @@ void	received_signal(int signal)
 	if (signal == SIGINT)
 	{
 		export_exists("?", ft_strdup("1"));
-		rl_replace_line("", 1);
+		//rl_replace_line("", 1);
 		ft_dprintf(STDOUT_FILENO, "\n");
 	}
 	rl_on_new_line();

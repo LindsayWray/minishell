@@ -41,7 +41,8 @@ static void ft_unset_del(char *cmd)
 int ft_unset(char **cmd, int fd_out)
 {
     int i;
-
+    
+    (void)fd_out;
     i = 0;
     while (cmd[i] != NULL)
         i++;
@@ -50,7 +51,7 @@ int ft_unset(char **cmd, int fd_out)
     {
         if (ft_isdigit(cmd[i][0]) == 1 || ft_isalnum_str(cmd[i]) == 0)
         {
-            ft_dprintf(fd_out, "unset: `%s': not a valid identifier\n", cmd[i]);
+            ft_dprintf(STDERR_FILENO, "unset: `%s': not a valid identifier\n", cmd[i]);
             return (1);
         }
         else
