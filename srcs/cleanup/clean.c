@@ -26,22 +26,6 @@ void	env_lst_clear(t_env_lst **env)
 	*env = NULL;
 }
 
-// void	env_lst_clear(void)
-// {
-// 	t_env_lst	*next;
-
-// 	while (g_data.env_lst)
-// 	{
-// 		printf("say hello\n");
-// 		printf("%s\n",(g_data.env_lst)->key);
-// 		next = g_data.env_lst->next;
-// 		free(g_data.env_lst->key);
-// 		free(g_data.env_lst->value);
-// 		free(g_data.env_lst);
-// 		g_data.env_lst = next;
-// 	}
-// }
-
 void	free_cmdlst(void)
 {
 	t_cmd_lst	*temp_next;
@@ -74,4 +58,5 @@ void	clean_all(void)
 		lst_clear(&g_data.token);
 	env_lst_clear(&g_data.env_lst);
 	g_data.env_lst = NULL;
+	rl_clear_history();
 }

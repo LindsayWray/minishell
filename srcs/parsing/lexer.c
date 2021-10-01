@@ -32,7 +32,7 @@ void	handle_redirections(char *str, int *i, t_token **token)
 	while (is_whitespace(str[*i]))
 		(*i)++;
 	start = *i;
-	while (!is_whitespace(str[*i]) && str[*i] != '\0') // && str[*i] != '|') // perhaps not catch it here, it can prevent showing an error message
+	while (!is_whitespace(str[*i]) && str[*i] != '\0')
 		(*i)++;
 	new_token(str, *i, start, token, type);
 }

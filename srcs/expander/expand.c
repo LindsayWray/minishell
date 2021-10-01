@@ -24,16 +24,11 @@ char *expanding(char *cmd, int i)
 	
 	value = NULL;
 	j = i + 1;
-	if (cmd[j] == '\0')
-		printf("testing"); //value = ft_strdup("$");
-	else
-	{
-		while (ft_isalpha(cmd[j]) || ft_isdigit(cmd[j]) || cmd[j] == '_' || cmd[j] == '?')
-			j++;
-		str = ft_substr(cmd, i + 1, j - (i + 1));
-		value = ft_strdup(get_env_value(str));
-		free (str);
-	}
+	while (ft_isalpha(cmd[j]) || ft_isdigit(cmd[j]) || cmd[j] == '_' || cmd[j] == '?')
+		j++;
+	str = ft_substr(cmd, i + 1, j - (i + 1));
+	value = ft_strdup(get_env_value(str));
+	free (str);
 	value = add_string(ft_substr(cmd, 0, i), value);
 	i = j;
 	while (cmd[j] != '\0')
@@ -94,7 +89,6 @@ char **insert_str_in_array(char **cmd, char *str1, char *str2, int insert)
 			new_cmd[i] = ft_strdup(cmd[j]);
 			j++;
 		}
-		//printf("str: %s\n", new_cmd[i]);
 		i++;
 	}
 	new_cmd[i] = NULL;
@@ -123,9 +117,7 @@ char **complex_cmd(char **cmd)
 			if (str[j] == ' ')
 			{
 				char *str1 = ft_substr(str, 0, j);
-				//printf("str1: %s\n", str1);
 				char *str2 = ft_substr(str, j + 1, (ft_strlen(str) - j));
-				//printf("str2: %s\n", str2);
 				cmd = insert_str_in_array(cmd, str1, str2, i);
 				break;
 			}

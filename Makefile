@@ -44,6 +44,7 @@ SRCS :=		srcs/main.c \
 			srcs/environment/envlst_to_array.c \
 			srcs/environment/get_env_var.c\
 			srcs/environment/getenv.c \
+			srcs/signals/signal.c \
 			srcs/cleanup/clean.c \
 			srcs/cleanup/error_handler.c
 
@@ -56,16 +57,10 @@ all: dprintf $(NAME)
 
 $(NAME): $(OBJFILES) 
 	gcc -o $@ $^ $(LIBS) -lreadline -L `brew --prefix readline`/lib
-	#-L /usr/local/opt/readline/lib
-	# /Users/$(USER)/.brew/opt/readline/lib
-	#/usr/local/opt/readline/lib
 
 obj/%.o: srcs/%.c $(HEADERFILES)
 	@mkdir -p $(dir $@)
 	gcc -c $(FLAGS) -o $@ $< -I `brew --prefix readline`/include
-	# -I /usr/local/opt/readline/include
-	# /Users/$(USER)/.brew/opt/readline/include
-	#/usr/local/opt/readline/include
 
 dprintf:
 	@echo "\033[1m\033[32mft_dprintf library generated.\033[39m"

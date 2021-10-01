@@ -36,36 +36,6 @@ void	print_env(t_env_lst *env_lst)
 	return ;
 }
 
-void	signal_from_child(int signal)
-{
-	if (signal == SIGINT)
-		ft_dprintf(STDOUT_FILENO, "\n");
-	if (signal == SIGQUIT)
-		ft_dprintf(STDOUT_FILENO, "Quit: %d\n", signal);
-}
-
-void	received_signal(int signal)
-{
-	int	i;
-
-	i = 0;
-	while (g_data.pids && g_data.pids[i] != 0)
-	{
-		printf("%d\n", i);
-		kill(g_data.pids[i], signal);
-		i++;
-	}
-	if (signal == SIGINT)
-	{
-		export_exists("?", ft_strdup("1"));
-		rl_replace_line("", 1);
-		ft_dprintf(STDOUT_FILENO, "\n");
-	}
-	rl_on_new_line();
-	rl_redisplay();
-	refresh();
-}
-
 void	prompt_loop(void)
 {
 	char	*str;
@@ -88,6 +58,7 @@ void	prompt_loop(void)
 		// 	token_list = token_list->next;
 		// }
 		cmd_lst = parser(token);
+		//system ("leaks minishell");
 		g_data.cmd_lst = cmd_lst;
 		if (!cmd_lst)
 			continue ;
