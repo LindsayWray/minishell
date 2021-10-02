@@ -31,7 +31,7 @@ static char	letter_handler(unsigned long remainder)
 
 static char	*sort_hex(char *str)
 {
-	ssize_t i;
+	ssize_t	i;
 	char	*hex;
 
 	i = 0;
@@ -49,7 +49,7 @@ static char	*sort_hex(char *str)
 	return (hex);
 }
 
-char		*ft_hexgen_long(unsigned long number)
+char	*ft_hexgen_long(unsigned long number)
 {
 	unsigned long	copy;
 	unsigned long	remainder;

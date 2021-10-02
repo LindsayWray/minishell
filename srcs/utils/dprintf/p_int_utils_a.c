@@ -84,8 +84,7 @@ t_vars	int_num_dot_num_c(t_data *data, t_vars vars)
 	vars.str_width = vars.min_width - vars.str_width;
 	while (vars.i < vars.str_width)
 	{
-		vars.spaces = data->zeroes == true && vars.negative_prec == true ? \
-		ft_chrjoin(vars.spaces, '0') : ft_chrjoin(vars.spaces, ' ');
+		p_int_util_a(&vars, data);
 		vars.i++;
 	}
 	if (data->left == true)

@@ -19,9 +19,9 @@ static int	check_minus(const char *format, size_t i)
 	return (i);
 }
 
-void		check_zeroes(const char *format, t_data *data)
+void	check_zeroes(const char *format, t_data *data)
 {
-	size_t i;
+	size_t	i;
 
 	i = data->i;
 	while (format[i] == '0')

@@ -12,7 +12,7 @@
 
 #include "ft_dprintf.h"
 
-static	t_vars	int_dn_vars(char *str, t_vars vars, t_data *data, va_list args)
+static t_vars	int_dn_vars(char *str, t_vars vars, t_data *data, va_list args)
 {
 	vars = vars_init(vars);
 	vars.precision = ft_atoi(str + data->i_dot_num.i);
@@ -23,13 +23,13 @@ static	t_vars	int_dn_vars(char *str, t_vars vars, t_data *data, va_list args)
 	return (vars);
 }
 
-void			p_int_dot_num(const char *format, t_data *data, va_list args)
+void	p_int_dot_num(const char *format, t_data *data, va_list args)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;
-	vars = int_dn_vars((char*)format, vars, data, args);
+	vars = int_dn_vars((char *)format, vars, data, args);
 	if (vars.str == NULL)
 		return (print_fail(data, vars));
 	vars.str_width = ft_strlen(vars.str);
@@ -51,7 +51,7 @@ void			p_int_dot_num(const char *format, t_data *data, va_list args)
 	return ;
 }
 
-t_vars			int_star_vars(t_vars vars, va_list args)
+t_vars	int_star_vars(t_vars vars, va_list args)
 {
 	vars.number = va_arg(args, int);
 	vars = is_int_negative(vars);
@@ -60,7 +60,7 @@ t_vars			int_star_vars(t_vars vars, va_list args)
 	return (vars);
 }
 
-t_vars			int_ds_vars(t_vars vars, va_list args)
+t_vars	int_ds_vars(t_vars vars, va_list args)
 {
 	vars = vars_init(vars);
 	vars.precision = va_arg(args, int);
@@ -71,9 +71,9 @@ t_vars			int_ds_vars(t_vars vars, va_list args)
 	return (vars);
 }
 
-char			*seek_last_number(t_vars vars)
+char	*seek_last_number(t_vars vars)
 {
-	size_t char_count;
+	size_t	char_count;
 
 	if (vars.str == NULL)
 		return (NULL);

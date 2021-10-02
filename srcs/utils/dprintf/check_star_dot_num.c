@@ -14,7 +14,7 @@
 
 void	check_star_dot_num(const char *format, t_data *data)
 {
-	size_t i;
+	size_t	i;
 
 	i = data->i;
 	if (format[i] == '*' && format[i + 1] == '.' && ft_isdigit(format[i + 2]))

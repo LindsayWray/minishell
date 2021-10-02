@@ -83,7 +83,7 @@ t_vars	ptr_double_mwidth(t_data *data, t_vars vars)
 
 void	p_ptr_mwidth(const char *format, t_data *data, va_list args)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;

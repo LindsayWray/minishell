@@ -12,7 +12,7 @@
 
 #include "ft_dprintf.h"
 
-t_vars		vars_init(t_vars vars)
+t_vars	vars_init(t_vars vars)
 {
 	vars.ptr_trigger = 0;
 	vars.is_negative = false;
@@ -30,7 +30,7 @@ t_vars		vars_init(t_vars vars)
 	return (vars);
 }
 
-int			type_check(const char *format, size_t end)
+int	type_check(const char *format, size_t end)
 {
 	if (format[end] == 'c')
 		return (1);
@@ -51,7 +51,7 @@ int			type_check(const char *format, size_t end)
 	return (0);
 }
 
-void		switch_negative(int *mwidth, t_data *data)
+void	switch_negative(int *mwidth, t_data *data)
 {
 	if (*mwidth < 0)
 	{
@@ -62,7 +62,7 @@ void		switch_negative(int *mwidth, t_data *data)
 	return ;
 }
 
-void		switch_unegative(int *mwidth, t_data *data)
+void	switch_unegative(int *mwidth, t_data *data)
 {
 	if (*mwidth < 0)
 	{
@@ -72,7 +72,7 @@ void		switch_unegative(int *mwidth, t_data *data)
 	return ;
 }
 
-void		print_fail(t_data *data, t_vars vars)
+void	print_fail(t_data *data, t_vars vars)
 {
 	data->result = -1;
 	if (vars.spaces != NULL)

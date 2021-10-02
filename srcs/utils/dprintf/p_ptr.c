@@ -12,13 +12,13 @@
 
 #include "ft_dprintf.h"
 
-static	void	p_ptr_nds(const char *format, t_data *data, va_list args)
+static void	p_ptr_nds(const char *format, t_data *data, va_list args)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;
-	vars = ptr_nds_vars((char*)format, vars, data, args);
+	vars = ptr_nds_vars((char *)format, vars, data, args);
 	if (vars.str == NULL || vars.ptr == NULL)
 		return (print_fail(data, vars));
 	vars.str_width = ft_strlen(vars.str);
@@ -34,13 +34,13 @@ static	void	p_ptr_nds(const char *format, t_data *data, va_list args)
 	return ;
 }
 
-static	void	p_ptr_sdn(const char *format, t_data *data, va_list args)
+static void	p_ptr_sdn(const char *format, t_data *data, va_list args)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;
-	vars = ptr_sdn_vars((char*)format, vars, data, args);
+	vars = ptr_sdn_vars((char *)format, vars, data, args);
 	if (vars.str == NULL || vars.ptr == NULL)
 		return (print_fail(data, vars));
 	vars.str_width = ft_strlen(vars.str);
@@ -56,9 +56,9 @@ static	void	p_ptr_sdn(const char *format, t_data *data, va_list args)
 	return ;
 }
 
-static	void	p_ptr_sds(t_data *data, va_list args)
+static void	p_ptr_sds(t_data *data, va_list args)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;
@@ -79,7 +79,7 @@ static	void	p_ptr_sds(t_data *data, va_list args)
 	return ;
 }
 
-static	void	check_ptr(const char *format, t_data *data, va_list args)
+static void	check_ptr(const char *format, t_data *data, va_list args)
 {
 	if (data->mwidth == true)
 		p_ptr_mwidth(format, data, args);
@@ -102,9 +102,9 @@ static	void	check_ptr(const char *format, t_data *data, va_list args)
 	return ;
 }
 
-void			p_ptr(const char *format, t_data *data, va_list args)
+void	p_ptr(const char *format, t_data *data, va_list args)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = false;
 	vars.i = 0;

@@ -31,9 +31,9 @@ static	void	p_c_mwidth_result(t_vars vars, t_data *data)
 	return ;
 }
 
-void		p_c_mwidth(const char *format, t_data *data, va_list args)
+void	p_c_mwidth(const char *format, t_data *data, va_list args)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	vars.i = 0;
 	vars = vars_init(vars);
@@ -45,8 +45,7 @@ void		p_c_mwidth(const char *format, t_data *data, va_list args)
 	vars.spaces = ft_strdup("");
 	while (vars.i < vars.min_width - 1)
 	{
-		vars.spaces = (data->zeroes == true && data->left == false) \
-		? ft_chrjoin(vars.spaces, '0') : ft_chrjoin(vars.spaces, ' ');
+		p_char_util_a(&vars, data);
 		vars.i++;
 	}
 	if (data->left == true)
@@ -58,9 +57,9 @@ void		p_c_mwidth(const char *format, t_data *data, va_list args)
 	return ;
 }
 
-void		p_c_star(t_data *data, va_list args)
+void	p_c_star(t_data *data, va_list args)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	vars.i = 0;
 	vars = vars_init(vars);
@@ -74,8 +73,7 @@ void		p_c_star(t_data *data, va_list args)
 	vars.spaces = ft_strdup("");
 	while (vars.i < vars.min_width - 1)
 	{
-		vars.spaces = (data->zeroes == true && data->left == false) \
-		? ft_chrjoin(vars.spaces, '0') : ft_chrjoin(vars.spaces, ' ');
+		p_char_util_a(&vars, data);
 		vars.i++;
 	}
 	if (data->left == true)
@@ -87,7 +85,7 @@ void		p_c_star(t_data *data, va_list args)
 	return ;
 }
 
-void		p_c_dot_star(t_data *data, va_list args)
+void	p_c_dot_star(t_data *data, va_list args)
 {
 	char	c;
 
@@ -100,9 +98,9 @@ void		p_c_dot_star(t_data *data, va_list args)
 	return ;
 }
 
-int			p_c_if_none(int result, va_list args, int fd)
+int	p_c_if_none(int result, va_list args, int fd)
 {
-	char c;
+	char	c;
 
 	c = va_arg(args, int);
 	result = print_char(c, fd);

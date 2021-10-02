@@ -56,8 +56,7 @@ void	str_mwidth(t_vars vars, t_data *data)
 	vars.spaces = ft_strdup("");
 	while (vars.i < vars.str_width)
 	{
-		vars.spaces = data->zeroes == true && data->left == false \
-		? ft_chrjoin(vars.spaces, '0') : ft_chrjoin(vars.spaces, ' ');
+		p_char_util_a(&vars, data);
 		vars.i++;
 	}
 	if (data->left == true)

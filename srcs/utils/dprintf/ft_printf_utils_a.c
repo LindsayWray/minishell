@@ -12,7 +12,7 @@
 
 #include "ft_dprintf.h"
 
-int			print_str(char *s, int fd)
+int	print_str(char *s, int fd)
 {
 	ssize_t	ret;
 
@@ -22,7 +22,7 @@ int			print_str(char *s, int fd)
 	return ((int)ret);
 }
 
-int			print_char(char c, int fd)
+int	print_char(char c, int fd)
 {
 	ssize_t	ret;
 
@@ -47,7 +47,7 @@ static void	free_set_null(char *s1, char *s2)
 	s2 = NULL;
 }
 
-char		*smart_join(char *s1, char *s2)
+char	*smart_join(char *s1, char *s2)
 {
 	char	*temp;
 	size_t	i;

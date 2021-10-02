@@ -14,7 +14,7 @@
 
 void	p_str_star_dot(t_data *data, va_list args)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;
@@ -29,7 +29,7 @@ void	p_str_star_dot(t_data *data, va_list args)
 		vars.spaces = ft_chrjoin(vars.spaces, ' ');
 		vars.i++;
 	}
-	vars.str = ft_strdup(va_arg(args, char*));
+	vars.str = ft_strdup(va_arg(args, char *));
 	if (vars.str == NULL)
 		vars.str = ft_strdup("(null)");
 	if (vars.str == NULL)
@@ -41,7 +41,7 @@ void	p_str_star_dot(t_data *data, va_list args)
 
 void	p_str_star_dot_num(const char *format, t_data *data, va_list args)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;
@@ -49,7 +49,7 @@ void	p_str_star_dot_num(const char *format, t_data *data, va_list args)
 	vars.min_width = va_arg(args, int);
 	switch_negative(&vars.min_width, data);
 	vars.precision = ft_atoi(format + data->i_star_dot_num.i);
-	vars.str = ft_strdup(va_arg(args, char*));
+	vars.str = ft_strdup(va_arg(args, char *));
 	if (vars.str == NULL)
 		vars.str = ft_strdup("(null)");
 	if (vars.str == NULL)
@@ -73,7 +73,7 @@ void	p_str_num_dot_num(const char *format, t_data *data, va_list args)
 	vars = vars_init(vars);
 	vars.min_width = ft_atoi(format + data->i_num_dot_num.i);
 	vars.precision = ft_atoi(format + data->i_num_dot_num.j);
-	vars.str = ft_strdup(va_arg(args, char*));
+	vars.str = ft_strdup(va_arg(args, char *));
 	if (vars.str == NULL)
 		vars.str = ft_strdup("(null)");
 	if (vars.str == NULL)
@@ -90,7 +90,7 @@ void	p_str_num_dot_num(const char *format, t_data *data, va_list args)
 
 void	p_str_num_dot_star(const char *format, t_data *data, va_list args)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;
@@ -99,7 +99,7 @@ void	p_str_num_dot_star(const char *format, t_data *data, va_list args)
 	vars.precision = va_arg(args, int);
 	if (vars.precision < 0)
 		vars.negative_prec = true;
-	vars.str = ft_strdup(va_arg(args, char*));
+	vars.str = ft_strdup(va_arg(args, char *));
 	if (vars.str == NULL)
 		vars.str = ft_strdup("(null)");
 	if (vars.str == NULL)
@@ -116,7 +116,7 @@ void	p_str_num_dot_star(const char *format, t_data *data, va_list args)
 
 void	p_str_star_dot_star(t_data *data, va_list args)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;
@@ -126,7 +126,7 @@ void	p_str_star_dot_star(t_data *data, va_list args)
 	vars.precision = va_arg(args, int);
 	if (vars.precision < 0)
 		vars.negative_prec = true;
-	vars.str = ft_strdup(va_arg(args, char*));
+	vars.str = ft_strdup(va_arg(args, char *));
 	if (vars.str == NULL)
 		vars.str = ft_strdup("(null)");
 	if (vars.str == NULL)

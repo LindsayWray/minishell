@@ -14,12 +14,12 @@
 
 static void	p_str_mwidth(const char *format, t_data *data, va_list args)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;
 	vars = vars_init(vars);
-	vars.str = ft_strdup(va_arg(args, char*));
+	vars.str = ft_strdup(va_arg(args, char *));
 	if (vars.str == NULL)
 		vars.str = ft_strdup("(null)");
 	if (vars.str == NULL)
@@ -46,7 +46,7 @@ static void	p_str_star(t_data *data, va_list args)
 		vars.min_width = vars.min_width * -1;
 		data->left = true;
 	}
-	vars.str = ft_strdup(va_arg(args, char*));
+	vars.str = ft_strdup(va_arg(args, char *));
 	if (vars.str == NULL)
 		vars.str = ft_strdup("(null)");
 	if (vars.str == NULL)
@@ -66,7 +66,7 @@ static void	p_str_dot_star(t_data *data, va_list args)
 
 	data->format_detected = true;
 	max_size = va_arg(args, int);
-	str = ft_strdup(va_arg(args, char*));
+	str = ft_strdup(va_arg(args, char *));
 	if (str == NULL)
 		str = ft_strdup("(null)");
 	if (str == NULL)
@@ -102,7 +102,7 @@ static	void	check_str(const char *format, t_data *data, va_list args)
 	return ;
 }
 
-void			p_str(const char *format, t_data *data, va_list args)
+void	p_str(const char *format, t_data *data, va_list args)
 {
 	char	*str;
 
@@ -120,7 +120,7 @@ void			p_str(const char *format, t_data *data, va_list args)
 		p_str_dot(data, args);
 	else if (data->format_detected == false)
 	{
-		str = ft_strdup(va_arg(args, char*));
+		str = ft_strdup(va_arg(args, char *));
 		if (str == NULL)
 			str = ft_strdup("(null)");
 		data->result = print_and_free(str, data->result, data->fd);

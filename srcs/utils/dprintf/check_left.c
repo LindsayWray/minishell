@@ -21,9 +21,9 @@ static int	check_left_zeroes(const char *format, size_t i)
 	return (i);
 }
 
-void		check_left(const char *format, t_data *data)
+void	check_left(const char *format, t_data *data)
 {
-	size_t i;
+	size_t	i;
 
 	i = data->i;
 	while (format[i] == '-')
