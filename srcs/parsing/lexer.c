@@ -1,12 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   lexer.c                                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: lwray <lwray@student.codam.nl>               +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/10/02 18:18:47 by lwray         #+#    #+#                 */
+/*   Updated: 2021/10/02 18:18:49 by lwray         ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 t_data	g_data;
 
-void	new_token(char *str, int i, int start, t_token **token, t_type type)
+void	new_token(char *content, t_token **token, t_type type)
 {
-	char	*content;
-
-	content = ft_substr(str, start, i - start);
 	if ((!content || !*content) && type == WORD)
 		return ;
 	if (!lst_add_back(token, lst_new(content, type)))
@@ -34,7 +43,7 @@ void	handle_redirections(char *str, int *i, t_token **token)
 	start = *i;
 	while (!is_whitespace(str[*i]) && str[*i] != '\0')
 		(*i)++;
-	new_token(str, *i, start, token, type);
+	new_token(ft_substr(str, start, (*i) - start), token, type);
 }
 
 t_token	*lexer(char *str)
@@ -51,7 +60,7 @@ t_token	*lexer(char *str)
 			&& !is_whitespace(str[i]) && str[i] != '\0')
 			skip_over_quotes(str, &i);
 		if (start != i)
-			new_token(str, i, start, &g_data.token, WORD);
+			new_token(ft_substr(str, start, i - start), &g_data.token, WORD);
 		if (str[i] == '|')
 		{
 			if (!lst_add_back(&g_data.token, lst_new(NULL, PIPE)))

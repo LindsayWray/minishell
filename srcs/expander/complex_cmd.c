@@ -1,31 +1,48 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   complex_cmd.c                                      :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: lwray <lwray@student.codam.nl>               +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/10/02 18:18:09 by lwray         #+#    #+#                 */
+/*   Updated: 2021/10/02 18:18:11 by lwray         ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
-char **insert_str_in_array(char **cmd, char *str1, char *str2, int insert)
+static int	arr_len(char **cmd)
 {
-	char **new_cmd;
-	int count;
-	int i;
+	int	len;
 
-	count = 0;
-	while (cmd[count])
-		count++;
-	new_cmd = malloc((count + 2) * sizeof(char *));
+	len = 0;
+	while (cmd[len])
+		len++;
+	return (len);
+}
+
+char	**insert_str_in_array(char **cmd, char *str1, char *str2, int insert)
+{
+	char	**new_cmd;
+	int		len;
+	int		i;
+	int		j;
+
+	len = arr_len(cmd);
+	new_cmd = malloc((len + 2) * sizeof(char *));
 	i = 0;
-	int j = 0;
-	while (i != count + 1)
+	j = 0;
+	while (i != len + 1)
 	{
 		if (i == insert)
-		{
 			new_cmd[i] = str1;
-			j++;
-		}
 		else if (i == insert + 1)
 			new_cmd[i] = str2;
 		else
-		{
 			new_cmd[i] = ft_strdup(cmd[j]);
+		if (i != insert + 1)
 			j++;
-		}
 		i++;
 	}
 	new_cmd[i] = NULL;
@@ -33,11 +50,31 @@ char **insert_str_in_array(char **cmd, char *str1, char *str2, int insert)
 	return (new_cmd);
 }
 
-char **complex_cmd(char **cmd)
+static int	divide_str(char ***cmd, char *str, int *j, int i)
 {
-	char *str;
-	int i;
-	int j;
+	char	*str1;
+	char	*str2;
+
+	if (str[*j] == '"' || str[*j] == '\'')
+	{
+		skip_over_quotes(str, j);
+		return (0);
+	}
+	if (str[*j] == ' ')
+	{
+		str1 = ft_substr(str, 0, *j);
+		str2 = ft_substr(str, (*j) + 1, (ft_strlen(str) - (*j)));
+		*cmd = insert_str_in_array(*cmd, str1, str2, i);
+		return (1);
+	}
+	return (0);
+}
+
+char	**complex_cmd(char **cmd)
+{
+	char	*str;
+	int		i;
+	int		j;
 
 	i = 0;
 	while (cmd[i])
@@ -46,18 +83,8 @@ char **complex_cmd(char **cmd)
 		j = 0;
 		while (str[j])
 		{
-			if (str[j] == '"' || str[j] == '\'')
-			{
-				skip_over_quotes(str, &j);
-				continue;
-			}
-			if (str[j] == ' ')
-			{
-				char *str1 = ft_substr(str, 0, j);
-				char *str2 = ft_substr(str, j + 1, (ft_strlen(str) - j));
-				cmd = insert_str_in_array(cmd, str1, str2, i);
-				break;
-			}
+			if (divide_str(&cmd, str, &j, i))
+				break ;
 			j++;
 		}
 		i++;

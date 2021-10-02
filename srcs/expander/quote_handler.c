@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   quote_handler.c                                    :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: lwray <lwray@student.codam.nl>               +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/10/02 18:18:31 by lwray         #+#    #+#                 */
+/*   Updated: 2021/10/02 18:18:34 by lwray         ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 void	skip_over_quotes(char *str, int *i)
@@ -27,14 +39,14 @@ char	*quote_handler(char *cmd)
 	i = 0;
 	start = i;
 	str = ft_strdup("");
-	while(cmd[i])
+	while (cmd[i])
 	{
 		if (cmd[i] == '"' || cmd[i] == '\'')
 		{
 			j = i;
 			skip_over_quotes(cmd, &i);
 			str = add_string(str, ft_substr(cmd, start, j - start));
-			str = add_string(str,ft_substr(cmd, j + 1, i - j - 2));
+			str = add_string(str, ft_substr(cmd, j + 1, i - j - 2));
 			start = i;
 			continue ;
 		}

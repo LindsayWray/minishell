@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   expand.c                                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: lwray <lwray@student.codam.nl>               +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/10/02 18:18:23 by lwray         #+#    #+#                 */
+/*   Updated: 2021/10/02 18:18:26 by lwray         ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
-t_data  g_data;
+t_data	g_data;
 
-char *add_string(char *str1, char *str2)
+char	*add_string(char *str1, char *str2)
 {
 	char	*joined_str;
 
@@ -16,22 +28,19 @@ char *add_string(char *str1, char *str2)
 	return (str1);
 }
 
-char *expanding(char *cmd, int i)
+char	*expanding(char *cmd, int i)
 {
 	char	*value;
 	char	*str;
-	int j;
-	
+	int		j;
+
 	value = NULL;
 	j = i + 1;
-	while (ft_isalpha(cmd[j]) || ft_isdigit(cmd[j]) || cmd[j] == '_' || cmd[j] == '?')
+	while (ft_isalnum(cmd[j]) || cmd[j] == '_' || cmd[j] == '?')
 	{
-		if (cmd[j] == '?')
-		{
-			j++;
-			break;
-		}
 		j++;
+		if (cmd[j - 1] == '?')
+			break ;
 	}
 	str = ft_substr(cmd, i + 1, j - (i + 1));
 	value = ft_strdup(get_env_value(str));
@@ -45,32 +54,32 @@ char *expanding(char *cmd, int i)
 	return (value);
 }
 
-char *locate_env_var(char *cmd, bool double_quotes)
+char	*locate_env_var(char *cmd, bool double_quotes)
 {
-    int i;
-    char    *value;
+	int		i;
+	char	*value;
 
-    i = 0;
+	i = 0;
 	if (cmd[i + 1] == '\0')
 		return (cmd);
-    while (cmd[i] != '$' && cmd[i] != '\0')
-    {
+	while (cmd[i] != '$' && cmd[i] != '\0')
+	{
 		if (cmd[i] == '"')
 			double_quotes = !double_quotes;
 		if (cmd[i] == '\'' && double_quotes == false)
-            skip_over_quotes(cmd, &i);
+			skip_over_quotes(cmd, &i);
 		else
 			i++;
-    }
-    if (cmd[i] == '$')
-    {
+	}
+	if (cmd[i] == '$')
+	{
 		value = expanding(cmd, i);
-        return (locate_env_var(value, false));
-    }
-    return (cmd);
+		return (locate_env_var(value, false));
+	}
+	return (cmd);
 }
 
-void    expand(t_cmd_lst *cmd_lst)
+void	expand(t_cmd_lst *cmd_lst)
 {
 	char	*expanded_str;
 	int		i;

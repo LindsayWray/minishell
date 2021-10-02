@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   syntax_error.c                                     :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: lwray <lwray@student.codam.nl>               +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/10/02 18:19:04 by lwray         #+#    #+#                 */
+/*   Updated: 2021/10/02 18:19:06 by lwray         ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 int	invalid_io_file_char(char c)
@@ -17,6 +29,15 @@ int	set_syntax_error(char *msg)
 	return (EXIT_FAILURE);
 }
 
+int	file_check(char *file)
+{
+	if (invalid_io_file_char(*file))
+		return (set_syntax_error(file));
+	else if (!*file)
+		return (set_syntax_error("newline"));
+	return (EXIT_SUCCESS);
+}
+
 int	syntax_error(t_token *token_lst, t_cmd_lst *cmd_lst)
 {
 	t_cmd_lst	*lst;
@@ -29,23 +50,13 @@ int	syntax_error(t_token *token_lst, t_cmd_lst *cmd_lst)
 			|| lst_last(token_lst)->type == PIPE)
 			return (set_syntax_error("|"));
 		if ((lst->subcmd.in_type == INPUT_REDIRECTION
-				|| lst->subcmd.in_type == HEREDOC) && (!*lst->subcmd.in_file
-				|| invalid_io_file_char(*lst->subcmd.in_file)))
-		{
-			if (invalid_io_file_char(*lst->subcmd.in_file))
-				return (set_syntax_error(lst->subcmd.in_file));
-			else
-				return (set_syntax_error("newline"));
-		}
+				|| lst->subcmd.in_type == HEREDOC)
+			&& file_check(lst->subcmd.in_file))
+			return (EXIT_FAILURE);
 		if ((lst->subcmd.out_type == OUTPUT_REDIRECTION
-				|| lst->subcmd.out_type == APPEND) && (!*lst->subcmd.out_file
-				|| invalid_io_file_char(*lst->subcmd.out_file)))
-		{
-			if (invalid_io_file_char(*lst->subcmd.out_file))
-				return (set_syntax_error(lst->subcmd.out_file));
-			else
-				return (set_syntax_error("newline"));
-		}
+				|| lst->subcmd.out_type == APPEND)
+			&& file_check(lst->subcmd.out_file))
+			return (EXIT_FAILURE);
 		lst = lst->next;
 	}
 	return (EXIT_SUCCESS);

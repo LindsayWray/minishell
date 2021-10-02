@@ -1,5 +1,7 @@
 #ifndef TYPES_H
 # define TYPES_H
+# define BLUE "\033[1m\033[36m"
+# define RESET "\033[0m"
 # define IS_A_DIRECTORY 126
 # define COMMAND_NOT_FOUND 127
 

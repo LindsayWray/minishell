@@ -1,35 +1,47 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   clean.c                                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: lwray <lwray@student.codam.nl>               +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/10/02 18:23:40 by lwray         #+#    #+#                 */
+/*   Updated: 2021/10/02 18:23:43 by lwray         ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 t_data	g_data;
 
 void	lst_clear(t_token **lst)
 {
-    if (*lst == NULL)
-        return ;
+	if (*lst == NULL)
+		return ;
 	if ((*lst)->next)
 		lst_clear(&((*lst)->next));
 	free ((*lst)->content);
-    free (*lst);
+	free (*lst);
 	*lst = NULL;
 	g_data.token = NULL;
 }
 
 void	env_lst_clear(t_env_lst **env)
 {
-    if (*env == NULL)
-        return ;
+	if (*env == NULL)
+		return ;
 	if ((*env)->next)
 		env_lst_clear(&((*env)->next));
 	free ((*env)->key);
 	free ((*env)->value);
-    free (*env);
+	free (*env);
 	*env = NULL;
 }
 
 void	free_cmdlst(t_cmd_lst *cmd_lst)
 {
 	t_cmd_lst	*temp_next;
-	
+
 	while (cmd_lst)
 	{
 		free (cmd_lst->subcmd.in_file);

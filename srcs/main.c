@@ -1,52 +1,48 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   main.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: lwray <lwray@student.codam.nl>               +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/10/02 18:26:54 by lwray         #+#    #+#                 */
+/*   Updated: 2021/10/02 18:26:56 by lwray         ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 t_data	g_data;
 
-void	print_cmd_lst(t_cmd_lst *cmd_lst)
+void	terminal_settings(void)
 {
-	while (cmd_lst)
-	{
-		printf("\n***COMMAND***\n");
-		printf("in_type: %d\n", cmd_lst->subcmd.in_type);
-		if (cmd_lst->subcmd.in_type != VOID)
-			printf("infile: %s\n", cmd_lst->subcmd.in_file);
-		printf("out_type: %d\n", cmd_lst->subcmd.out_type);
-		if (cmd_lst->subcmd.out_type != VOID)
-			printf("outfile: %s\n", cmd_lst->subcmd.out_file);
-		int i = 0;
-		while (cmd_lst->subcmd.cmd[i])
-		{
-			printf("%s,", cmd_lst->subcmd.cmd[i]);
-			i++;
-		}
-		cmd_lst = cmd_lst->next;
-		printf("\n************\n\n");
-	}
+	struct termios	termios_p;
+
+	tcgetattr(STDIN_FILENO, &termios_p);
+	termios_p.c_lflag = termios_p.c_lflag & ~ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &termios_p);
 }
 
 void	prompt_loop(void)
 {
-	char	*str;
-	t_token	*token;
+	char		*str;
+	t_token		*token;
 	t_cmd_lst	*cmd_lst;
 
 	while (true)
 	{
 		str = readline("=^..^= ");
 		if (!str)
-			break ;	
+			break ;
 		if (*str)
 			add_history(str);
 		token = lexer(str);
 		free (str);
 		cmd_lst = parser(token);
-		//system ("leaks minishell");
 		g_data.cmd_lst = cmd_lst;
 		if (!cmd_lst)
 			continue ;
-		// print_cmd_lst(cmd_lst);
 		expand(cmd_lst);
-		//print_cmd_lst(cmd_lst);
 		exec(cmd_lst);
 		free_cmdlst(cmd_lst);
 		g_data.cmd_lst = NULL;
@@ -54,10 +50,8 @@ void	prompt_loop(void)
 	return ;
 }
 
-int main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
-	struct termios termios_p;
-
 	(void)argv;
 	if (argc != 1)
 	{
@@ -65,18 +59,17 @@ int main(int argc, char **argv, char **env)
 		return (EXIT_FAILURE);
 	}
 	signal(SIGINT, received_signal);
-	signal(SIGQUIT, received_signal); 
+	signal(SIGQUIT, received_signal);
 	g_data.env_lst = ft_getenv(env);
-	// if (isatty(STDIN_FILENO))
-	// 	printf("\n\033[1m\033[36mWelcome to Isaac's and Lindsay's minishell!\n\033[0m");
-	tcgetattr(STDIN_FILENO, &termios_p);
-	termios_p.c_lflag = termios_p.c_lflag & ~ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCSANOW, &termios_p);
+	if (isatty(STDIN_FILENO))
+		printf("\n%sWelcome to Isaac's and Lindsay's minishell!\n%s",
+			BLUE, RESET);
+	terminal_settings();
 	prompt_loop();
 	ft_dprintf(STDERR_FILENO, "exit\n");
-	// if (isatty(STDIN_FILENO))
-	// 	printf("\n\033[1m\033[36mBye, come again!\n\033[0m");
 	clean_all();
+	if (isatty(STDIN_FILENO))
+		printf("\n%sBye, come again!\n%s", BLUE, RESET);
 	system ("leaks minishell");
 	return (0);
 }
