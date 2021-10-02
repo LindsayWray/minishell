@@ -44,12 +44,18 @@ void		received_signal(int signal);
 
 //builtins
 int         ft_export(char **cmd, int fd_out);
+t_env_lst   *sort_env_lst(t_env_lst *lst);
+int	        ft_export_noarg(int fd_out);
+int	        ft_export_eql(char *cmd, int fd_out);
 int         export_exists(char *key, char *value);
 int         export_exists_key(char *key);
 int 		ft_export_add(char *key, char *value);
 int         ft_unset(char **cmd, int fd_out);
 int         ft_env(char **cmd, int fd_out);
 int         ft_cd(char **cmd, int fd_out);
+void        ft_cd_a(char **cmd);
+void	    ft_cd_b(int *ret, int *msg, int fd_out);
+void        ft_cd_c(char **cmd, char *oldpwd, int msg, int *ret);
 int         ft_pwd(char **cmd, int fd_out);
 int         ft_echo(char **cmd, int fd_out);
 int         ft_exit(char **cmd, int fd_out);

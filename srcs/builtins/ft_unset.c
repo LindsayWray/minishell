@@ -2,10 +2,32 @@
 
 t_data	g_data;
 
+static void	ft_unset_del_a(t_env_lst *temp, int *first)
+{
+	t_env_lst	*temp2;
+
+	free(temp->key);
+	if (temp->value != NULL)
+		free(temp->value);
+	temp2 = temp;
+	temp2 = temp2->next;
+	if (temp->previous != NULL)
+		temp->previous->next = temp2;
+	else
+		*first = 1;
+	if (temp2 != NULL)
+	{
+		if (temp2->next != NULL)
+			temp2->previous = temp->previous;
+	}
+	free(temp);
+	if (*first == 1)
+		g_data.env_lst = temp2;
+}
+
 static void	ft_unset_del(char *cmd)
 {
 	t_env_lst	*temp;
-	t_env_lst	*temp2;
 	int			first;
 
 	temp = g_data.env_lst;
@@ -14,23 +36,7 @@ static void	ft_unset_del(char *cmd)
 	{
 		if (ft_streql(cmd, temp->key) == 1)
 		{
-			free(temp->key);
-			if (temp->value != NULL)
-				free(temp->value);
-			temp2 = temp;
-			temp2 = temp2->next;
-			if (temp->previous != NULL)
-				temp->previous->next = temp2;
-			else
-				first = 1;
-			if (temp2 != NULL)
-			{
-				if (temp2->next != NULL)
-					temp2->previous = temp->previous;
-			}
-			free(temp);
-			if (first == 1)
-				g_data.env_lst = temp2;
+			ft_unset_del_a(temp, &first);
 			return ;
 		}
 		temp = temp->next;

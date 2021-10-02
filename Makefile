@@ -18,7 +18,9 @@ SRCS :=		srcs/main.c \
 			srcs/expander/expand.c		srcs/expander/complex_cmd.c	srcs/expander/quote_handler.c\
 			srcs/environment/getenv.c	srcs/environment/get_env_var.c srcs/environment/envlst_to_array.c\
 			srcs/signals/signal.c\
-			srcs/cleanup/clean.c srcs/cleanup/error_handler.c
+			srcs/cleanup/clean.c srcs/cleanup/error_handler.c\
+			srcs/builtins/ft_cd_utils_a.c\
+			srcs/builtins/ft_export_utils_b.c\
 
 FLAGS := -Wall -Wextra -Werror
 OBJFILES := $(SRCS:srcs/%.c=obj/%.o)

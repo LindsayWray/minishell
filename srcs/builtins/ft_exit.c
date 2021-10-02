@@ -15,6 +15,53 @@ static int	exit_code_result(void)
 	return (exit_code);
 }
 
+int	ft_exit_a(char **cmd, int fd_out)
+{
+	if (ft_isdigit_str(cmd[1]) == 1)
+	{
+		ft_dprintf(fd_out, "exit\nminishell: exit: too many arguments\n");
+		return (1);
+	}
+	else
+	{
+		ft_dprintf(fd_out, \
+		"exit\nminishell: exit: %s: numeric argument required\n", cmd[1]);
+		//free everything before exit
+		if (g_data.cmd_lst->next == NULL)
+			exit(255);
+		else
+			return (255);
+	}
+}
+
+int	ft_exit_b(char **cmd, int fd_out)
+{
+	ft_dprintf(fd_out, \
+	"exit\nminishell: exit: %s: numeric argument required\n", cmd[1]);
+	//free everything before exit
+	if (g_data.cmd_lst->next == NULL)
+		exit(255);
+	else
+		return (255);
+}
+
+int	ft_exit_c(char **cmd)
+{
+	//free everything before exit
+	if (g_data.cmd_lst->next == NULL)
+	{
+		if (ft_atoi(cmd[1]) > 255)
+			exit(ft_atoi(cmd[1]) % 256);
+		exit(ft_atoi(cmd[1]));
+	}
+	else
+	{
+		if (ft_atoi(cmd[1]) > 255)
+			return (ft_atoi(cmd[1]) % 256);
+		return (ft_atoi(cmd[1]));
+	}
+}
+
 int	ft_exit(char **cmd, int fd_out)
 {
 	if (!cmd[1])
@@ -33,49 +80,11 @@ int	ft_exit(char **cmd, int fd_out)
 	else if (cmd[1])
 	{
 		if (cmd[2])
-		{
-			if (ft_isdigit_str(cmd[1]) == 1)
-			{
-				ft_dprintf(fd_out, "exit\nminishell: exit: too many arguments\n");
-				return (1);
-			}
-			else
-			{
-				ft_dprintf(fd_out, \
-				"exit\nminishell: exit: %s: numeric argument required\n", cmd[1]);
-				//free everything before exit
-				if (g_data.cmd_lst->next == NULL)
-					exit(255);
-				else
-					return (255);
-			}
-		}
+			return (ft_exit_a(cmd, fd_out));
 		if (ft_isdigit_str(cmd[1]) == 0)
-		{
-			ft_dprintf(fd_out, \
-			"exit\nminishell: exit: %s: numeric argument required\n", cmd[1]);
-			//free everything before exit
-			if (g_data.cmd_lst->next == NULL)
-				exit(255);
-			else
-				return (255);
-		}
+			return (ft_exit_b(cmd, fd_out));
 		else
-		{
-			//free everything before exit
-			if (g_data.cmd_lst->next == NULL)
-			{
-				if (ft_atoi(cmd[1]) > 255)
-					exit(ft_atoi(cmd[1]) % 256);
-				exit(ft_atoi(cmd[1]));
-			}
-			else
-			{
-				if (ft_atoi(cmd[1]) > 255)
-					return (ft_atoi(cmd[1]) % 256);
-				return (ft_atoi(cmd[1]));
-			}
-		}
+			return (ft_exit_c(cmd));
 	}
 	return (0);
 }
