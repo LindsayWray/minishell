@@ -14,7 +14,7 @@
 
 static void	check_dot_num_b(const char *format, t_data *data)
 {
-	size_t i;
+	size_t	i;
 
 	i = data->i + 1;
 	data->i_dot_num.i = i;
@@ -26,9 +26,9 @@ static void	check_dot_num_b(const char *format, t_data *data)
 	return ;
 }
 
-void			check_dot_num(const char *format, t_data *data)
+void	check_dot_num(const char *format, t_data *data)
 {
-	size_t i;
+	size_t	i;
 
 	i = data->i;
 	if (format[i] == '.')

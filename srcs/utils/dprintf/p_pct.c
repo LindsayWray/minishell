@@ -12,9 +12,9 @@
 
 #include "ft_dprintf.h"
 
-static	void	p_pct_mwidth(char *format, t_data *data, va_list args, int star)
+static void	p_pct_mwidth(char *format, t_data *data, va_list args, int star)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;
@@ -26,8 +26,7 @@ static	void	p_pct_mwidth(char *format, t_data *data, va_list args, int star)
 	vars.spaces = ft_strdup("");
 	while (vars.i < vars.min_width - 1)
 	{
-		vars.spaces = (data->zeroes == true && data->left == false) \
-		? ft_chrjoin(vars.spaces, '0') : ft_chrjoin(vars.spaces, ' ');
+		p_char_util_a(&vars, data);
 		vars.i++;
 	}
 	if (data->left == true)
@@ -38,9 +37,9 @@ static	void	p_pct_mwidth(char *format, t_data *data, va_list args, int star)
 	return ;
 }
 
-static	void	p_pct_star(t_data *data, va_list args, int star)
+static void	p_pct_star(t_data *data, va_list args, int star)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;
@@ -53,8 +52,7 @@ static	void	p_pct_star(t_data *data, va_list args, int star)
 	vars.spaces = ft_strdup("");
 	while (vars.i < vars.min_width - 1)
 	{
-		vars.spaces = (data->zeroes == true && data->left == false) \
-		? ft_chrjoin(vars.spaces, '0') : ft_chrjoin(vars.spaces, ' ');
+		p_char_util_a(&vars, data);
 		vars.i++;
 	}
 	if (data->left == true)
@@ -65,16 +63,16 @@ static	void	p_pct_star(t_data *data, va_list args, int star)
 	return ;
 }
 
-static	void	p_pct_ds(va_list args)
+static void	p_pct_ds(va_list args)
 {
 	va_arg(args, int);
 	return ;
 }
 
-static	void	p_check_pct(const char *format, t_data *data, va_list args)
+static void	p_check_pct(const char *format, t_data *data, va_list args)
 {
 	if (data->mwidth == true)
-		p_pct_mwidth((char*)format, data, args, 0);
+		p_pct_mwidth((char *)format, data, args, 0);
 	else if (data->star == true)
 		p_pct_star(data, args, 0);
 	else if (data->dot_star == true)
@@ -82,17 +80,17 @@ static	void	p_check_pct(const char *format, t_data *data, va_list args)
 	else if (data->num_dot == true)
 	{
 		data->i_mwidth.i = data->i_num_dot.i;
-		p_pct_mwidth((char*)format, data, args, 0);
+		p_pct_mwidth((char *)format, data, args, 0);
 	}
 	else if (data->num_dot_num == true)
 	{
 		data->i_mwidth.i = data->i_num_dot_num.i;
-		p_pct_mwidth((char*)format, data, args, 0);
+		p_pct_mwidth((char *)format, data, args, 0);
 	}
 	return ;
 }
 
-void			p_pct(const char *format, t_data *data, va_list args)
+void	p_pct(const char *format, t_data *data, va_list args)
 {
 	data->format_detected = false;
 	p_check_pct(format, data, args);
@@ -103,7 +101,7 @@ void			p_pct(const char *format, t_data *data, va_list args)
 	else if (data->num_dot_star == true)
 	{
 		data->i_mwidth.i = data->i_num_dot_star.i;
-		p_pct_mwidth((char*)format, data, args, 1);
+		p_pct_mwidth((char *)format, data, args, 1);
 	}
 	else if (data->star_dot_star == true)
 		p_pct_star(data, args, 1);

@@ -12,6 +12,24 @@
 
 #include "ft_dprintf.h"
 
+void	p_int_util_a(t_vars *vars, t_data *data)
+{
+	if (data->zeroes == true && vars->negative_prec == true)
+		vars->spaces = ft_chrjoin(vars->spaces, '0');
+	else
+		vars->spaces = ft_chrjoin(vars->spaces, ' ');
+	return ;
+}
+
+void	p_int_util_b(t_vars *vars)
+{
+	if (vars->is_negative == false)
+		vars->str_width = ft_strlen(vars->str);
+	else
+		vars->str_width = ft_strlen(vars->str) + 1;
+	return ;
+}
+
 t_vars	int_mw_vars(const char *format, t_data *data, t_vars vars, va_list args)
 {
 	vars = vars_init(vars);
@@ -20,8 +38,7 @@ t_vars	int_mw_vars(const char *format, t_data *data, t_vars vars, va_list args)
 	vars.str = ft_itoa(vars.number);
 	vars.str = seek_last_number(vars);
 	vars.min_width = ft_atoi(format + data->i_mwidth.i);
-	vars.str_width = vars.is_negative == false \
-	? ft_strlen(vars.str) : ft_strlen(vars.str) + 1;
+	p_int_util_b(&vars);
 	return (vars);
 }
 

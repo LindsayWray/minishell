@@ -12,7 +12,7 @@
 
 #include "ft_dprintf.h"
 
-static int		ft_itoa_spaces(unsigned n)
+static int	ft_itoa_spaces(unsigned int n)
 {
 	unsigned int	spaces;
 
@@ -25,21 +25,21 @@ static int		ft_itoa_spaces(unsigned n)
 	return (spaces);
 }
 
-static	char	ft_itoa_op(unsigned int *n)
+static char	ft_itoa_op(unsigned int *n)
 {
-	char c;
+	char	c;
 
 	c = (*n % 10) + '0';
 	*n = *n / 10;
 	return (c);
 }
 
-static	char	*ft_itoa_process(unsigned int n, unsigned int spaces)
+static char	*ft_itoa_process(unsigned int n, unsigned int spaces)
 {
 	char			*result;
 	unsigned int	space_t;
 
-	result = (char*)malloc(sizeof(char) * (spaces + 1));
+	result = (char *)malloc(sizeof(char) * (spaces + 1));
 	if (result == NULL)
 		return (NULL);
 	space_t = spaces - 1;
@@ -54,7 +54,7 @@ static	char	*ft_itoa_process(unsigned int n, unsigned int spaces)
 	return (result);
 }
 
-char			*ft_itoa_unsigned(unsigned int n)
+char	*ft_itoa_unsigned(unsigned int n)
 {
 	unsigned int	spaces;
 	unsigned int	temp;

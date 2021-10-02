@@ -26,7 +26,7 @@ void	p_str_num_dot(const char *format, t_data *data, va_list args)
 		vars.spaces = ft_chrjoin(vars.spaces, ' ');
 		vars.i++;
 	}
-	vars.str = ft_strdup(va_arg(args, char*));
+	vars.str = ft_strdup(va_arg(args, char *));
 	if (vars.str == NULL)
 		vars.str = ft_strdup("(null)");
 	if (vars.str == NULL)
@@ -47,7 +47,7 @@ void	p_str_dot_num(const char *format, t_data *data, va_list args)
 
 	data->format_detected = true;
 	max_size = ft_atoi(format + data->i_dot_num.i);
-	str = ft_strdup(va_arg(args, char*));
+	str = ft_strdup(va_arg(args, char *));
 	if (str == NULL)
 		str = ft_strdup("(null)");
 	if (str == NULL)
@@ -73,7 +73,7 @@ void	p_str_dot(t_data *data, va_list args)
 
 	data->format_detected = true;
 	max_size = 0;
-	str = ft_strdup(va_arg(args, char*));
+	str = ft_strdup(va_arg(args, char *));
 	if (str == NULL)
 		str = ft_strdup("(null)");
 	if (str == NULL)

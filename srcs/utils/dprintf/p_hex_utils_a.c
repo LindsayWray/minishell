@@ -14,7 +14,7 @@
 
 void	p_hex_ndn(const char *format, t_data *data, va_list args, int cap)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;
@@ -39,7 +39,7 @@ void	p_hex_ndn(const char *format, t_data *data, va_list args, int cap)
 
 void	p_hex_nds(const char *format, t_data *data, va_list args, int cap)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;
@@ -64,7 +64,7 @@ void	p_hex_nds(const char *format, t_data *data, va_list args, int cap)
 
 void	p_hex_sdn(const char *format, t_data *data, va_list args, int cap)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;
@@ -91,7 +91,7 @@ void	p_hex_sdn(const char *format, t_data *data, va_list args, int cap)
 
 void	p_hex_sds(t_data *data, va_list args, int cap)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;
@@ -120,7 +120,7 @@ void	p_hex_sds(t_data *data, va_list args, int cap)
 
 void	p_hex_sd(t_data *data, va_list args, int cap)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;

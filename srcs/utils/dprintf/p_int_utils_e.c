@@ -34,7 +34,8 @@ t_vars	int_sds_vars(t_vars vars, t_data *data, va_list args)
 	return (vars);
 }
 
-t_vars	int_sdn_vars(const char *format, t_vars vars, t_data *data, va_list args)
+t_vars	int_sdn_vars(const char *format, t_vars vars, \
+t_data *data, va_list args)
 {
 	vars.precision = ft_atoi(format + data->i_star_dot_num.i);
 	vars.number = va_arg(args, int);

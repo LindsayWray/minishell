@@ -73,7 +73,7 @@ t_vars	ptr_ds_vars(t_vars vars, va_list args)
 
 void	p_ptr_star_dot(t_data *data, va_list args)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;
@@ -88,8 +88,7 @@ void	p_ptr_star_dot(t_data *data, va_list args)
 		vars.str = ft_hexgen_long(vars.ulnumber);
 	if (vars.str == NULL || vars.ptr == NULL)
 		return (print_fail(data, vars));
-	vars.str_width = vars.ulnumber == 0 \
-	? ft_strlen(vars.ptr) : ft_strlen(vars.str) + 2;
+	p_ptr_util_a(&vars);
 	if (vars.str_width < vars.min_width)
 		vars = ptr_mwidth(data, vars);
 	else

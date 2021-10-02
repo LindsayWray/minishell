@@ -12,7 +12,7 @@
 
 #include "ft_dprintf.h"
 
-int		print_and_free(char *str, int result, int fd)
+int	print_and_free(char *str, int result, int fd)
 {
 	result = print_str(str, fd);
 	free(str);

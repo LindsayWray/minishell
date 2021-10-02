@@ -14,7 +14,7 @@
 
 static void	p_int_num_dot(const char *format, t_data *data, va_list args)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;
@@ -42,7 +42,7 @@ static void	p_int_num_dot(const char *format, t_data *data, va_list args)
 
 static void	p_int_star_dot(t_data *data, va_list args)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;
@@ -68,7 +68,7 @@ static void	p_int_star_dot(t_data *data, va_list args)
 
 static void	p_int_dot(t_data *data, va_list args)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;
@@ -103,7 +103,7 @@ static	void	check_int(const char *format, t_data *data, va_list args)
 	return ;
 }
 
-void			p_int(const char *format, t_data *data, va_list args)
+void	p_int(const char *format, t_data *data, va_list args)
 {
 	char	*str;
 

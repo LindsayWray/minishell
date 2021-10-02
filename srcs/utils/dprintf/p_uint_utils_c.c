@@ -43,7 +43,7 @@ void	p_uint_star(t_data *data, va_list args)
 
 void	p_uint_dot_star(t_data *data, va_list args)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;
@@ -72,7 +72,7 @@ void	p_uint_dot_star(t_data *data, va_list args)
 
 void	p_uint_dot_num(const char *format, t_data *data, va_list args)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;

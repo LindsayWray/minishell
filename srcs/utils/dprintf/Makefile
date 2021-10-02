@@ -41,7 +41,8 @@ SRC = 	ft_atoi.c\
 		ft_printf_utils_c.c\
 		ft_dprintf.c\
 		p_char.c\
-		p_char_utils.c\
+		p_char_utils_a.c\
+		p_char_utils_b.c\
 		p_hex.c\
 		p_hex_utils_a.c\
 		p_hex_utils_b.c\
@@ -60,6 +61,7 @@ SRC = 	ft_atoi.c\
 		p_ptr_utils_b.c\
 		p_ptr_utils_c.c\
 		p_ptr_utils_d.c\
+		p_ptr_utils_e.c\
 		p_str.c\
 		p_str_utils_a.c\
 		p_str_utils_b.c\

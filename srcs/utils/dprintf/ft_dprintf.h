@@ -16,18 +16,19 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-typedef	enum
+typedef enum e_bool
 {
-	false, true
+	false,
+	true
 }	t_bool;
 
-typedef	struct	s_locate
+typedef struct s_locate
 {
-	size_t i;
-	size_t j;
+	size_t	i;
+	size_t	j;
 }				t_index;
 
-typedef	struct	s_flags
+typedef struct s_flags
 {
 	t_bool	left;
 	t_bool	zeroes;
@@ -57,7 +58,7 @@ typedef	struct	s_flags
 	t_bool	format_detected;
 }				t_data;
 
-typedef	struct	s_vars
+typedef struct s_vars
 {
 	char			*str;
 	char			*spaces;
@@ -134,6 +135,7 @@ int				p_c_if_none(int result, va_list args, int fd);
 void			p_char(const char *format, t_data *data, va_list args);
 void			p_c_star(t_data *data, va_list args);
 void			p_c_mwidth(const char *format, t_data *data, va_list args);
+void			p_char_util_a(t_vars *vars, t_data *data);
 t_vars			int_mwidth(t_data *data, t_vars vars);
 t_vars			int_dot_num(t_vars vars);
 t_vars			int_num_dot(t_data *data, t_vars vars);
@@ -154,6 +156,8 @@ t_vars vars, va_list args);
 t_vars			int_sd_vars(t_vars vars, va_list args);
 t_vars			int_ndn_a_vars(t_vars vars);
 void			p_int(const char *format, t_data *data, va_list args);
+void			p_int_util_a(t_vars *vars, t_data *data);
+void			p_int_util_b(t_vars *vars);
 void			p_int_num_dot_num(const char *format, \
 t_data *data, va_list args);
 void			p_int_num_dot_star(const char *format, \
@@ -221,14 +225,18 @@ t_vars			ptr_dot_num(t_vars vars);
 t_vars			ptr_mwidth(t_data *data, t_vars vars);
 t_vars			ptr_mwidth_if(t_vars vars, t_data *data);
 void			p_ptr(const char *format, t_data *data, va_list args);
+void			p_ptr_util_a(t_vars *vars);
 void			p_ptr_mwidth(const char *format, t_data *data, va_list args);
 void			p_ptr_star(t_data *data, va_list args);
 void			p_ptr_num_dot(const char *format, t_data *data, va_list args);
 void			p_ptr_star_dot(t_data *data, va_list args);
 void			p_ptr_ndn(const char *format, t_data *data, va_list args);
-t_vars			ptr_ndn_vars(char *str, t_vars vars, t_data *data, va_list args);
-t_vars			ptr_nds_vars(char *str, t_vars vars, t_data *data, va_list args);
-t_vars			ptr_sdn_vars(char *str, t_vars vars, t_data *data, va_list args);
+t_vars			ptr_ndn_vars(char *str, t_vars vars, t_data *data, \
+va_list args);
+t_vars			ptr_nds_vars(char *str, t_vars vars, t_data *data, \
+va_list args);
+t_vars			ptr_sdn_vars(char *str, t_vars vars, t_data *data, \
+va_list args);
 t_vars			ptr_sds_vars(t_vars vars, t_data *data, va_list args);
 t_vars			ptr_ds_vars(t_vars vars, va_list args);
 void			p_ptr_dot_star(t_data *data, va_list args);

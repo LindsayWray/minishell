@@ -14,7 +14,7 @@
 
 static void	p_c_num_dot(const char *format, t_data *data, va_list args)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	vars.i = 0;
 	vars = vars_init(vars);
@@ -25,8 +25,7 @@ static void	p_c_num_dot(const char *format, t_data *data, va_list args)
 	vars.spaces = ft_strdup("");
 	while (vars.i < vars.min_width - 1)
 	{
-		vars.spaces = (data->zeroes == true && data->left == false) \
-		? ft_chrjoin(vars.spaces, '0') : ft_chrjoin(vars.spaces, ' ');
+		p_char_util_a(&vars, data);
 		vars.i++;
 	}
 	if (data->left == true)
@@ -54,8 +53,7 @@ static void	p_c_star_dot(t_data *data, va_list args)
 	vars.spaces = ft_strdup("");
 	while (vars.i < vars.min_width - 1)
 	{
-		vars.spaces = (data->zeroes == true && data->left == false) \
-		? ft_chrjoin(vars.spaces, '0') : ft_chrjoin(vars.spaces, ' ');
+		p_char_util_a(&vars, data);
 		vars.i++;
 	}
 	if (data->left == true)
@@ -83,8 +81,7 @@ static void	p_c_num_dot_star(const char *format, t_data *data, va_list args)
 	vars.spaces = ft_strdup("");
 	while (vars.i < vars.min_width - 1)
 	{
-		vars.spaces = (data->zeroes == true && data->left == false) \
-		? ft_chrjoin(vars.spaces, '0') : ft_chrjoin(vars.spaces, ' ');
+		p_char_util_a(&vars, data);
 		vars.i++;
 	}
 	if (data->left == true)
@@ -112,8 +109,7 @@ static void	p_c_star_dot_star(t_data *data, va_list args)
 	vars.spaces = ft_strdup("");
 	while (vars.i < vars.min_width - 1)
 	{
-		vars.spaces = (data->zeroes == true && data->left == false) \
-		? ft_chrjoin(vars.spaces, '0') : ft_chrjoin(vars.spaces, ' ');
+		p_char_util_a(&vars, data);
 		vars.i++;
 	}
 	if (data->left == true)
@@ -127,7 +123,7 @@ static void	p_c_star_dot_star(t_data *data, va_list args)
 	return ;
 }
 
-void			p_char(const char *format, t_data *data, va_list args)
+void	p_char(const char *format, t_data *data, va_list args)
 {
 	if (data->mwidth == true)
 		p_c_mwidth(format, data, args);

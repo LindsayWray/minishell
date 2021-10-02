@@ -86,8 +86,7 @@ void	p_int_star(t_data *data, va_list args)
 	vars = int_star_vars(vars, args);
 	if (vars.str == NULL)
 		return (print_fail(data, vars));
-	vars.str_width = vars.is_negative == false \
-	? ft_strlen(vars.str) : ft_strlen(vars.str) + 1;
+	p_int_util_b(&vars);
 	if (vars.str_width < vars.min_width)
 	{
 		vars.spaces = ft_strdup("");
@@ -105,7 +104,7 @@ void	p_int_star(t_data *data, va_list args)
 
 void	p_int_dot_star(t_data *data, va_list args)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;

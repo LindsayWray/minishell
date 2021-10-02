@@ -14,7 +14,7 @@
 
 void	p_hex_mwidth(const char *format, t_data *data, va_list args, int cap)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;
@@ -65,7 +65,7 @@ void	p_hex_star(t_data *data, va_list args, int cap)
 
 void	p_hex_ds(t_data *data, va_list args, int cap)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;
@@ -94,7 +94,7 @@ void	p_hex_ds(t_data *data, va_list args, int cap)
 
 void	p_hex_dn(const char *format, t_data *data, va_list args, int cap)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;
@@ -121,7 +121,7 @@ void	p_hex_dn(const char *format, t_data *data, va_list args, int cap)
 
 void	p_hex_nd(const char *format, t_data *data, va_list args, int cap)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;

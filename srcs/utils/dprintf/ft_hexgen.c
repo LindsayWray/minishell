@@ -48,7 +48,7 @@ static char	letter_handler(int remainder)
 
 static char	*sort_hex(char *str)
 {
-	ssize_t i;
+	ssize_t	i;
 	char	*hex;
 
 	i = 0;
@@ -66,7 +66,7 @@ static char	*sort_hex(char *str)
 	return (hex);
 }
 
-char		*ft_hexgen(unsigned int number, int capital)
+char	*ft_hexgen(unsigned int number, int capital)
 {
 	unsigned int	copy;
 	int				remainder;

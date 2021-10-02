@@ -14,7 +14,7 @@
 
 static void	p_hex_sd(t_data *data, va_list args, int cap)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;
@@ -40,7 +40,7 @@ static void	p_hex_sd(t_data *data, va_list args, int cap)
 
 static void	p_hex_dot(t_data *data, va_list args, int cap)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;
@@ -76,7 +76,7 @@ static	void	check_a(const char *format, t_data *data, va_list args, int cap)
 	return ;
 }
 
-void			p_hex(const char *format, t_data *data, va_list args, int cap)
+void	p_hex(const char *format, t_data *data, va_list args, int cap)
 {
 	char	*str;
 

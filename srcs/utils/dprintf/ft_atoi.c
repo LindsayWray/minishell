@@ -12,10 +12,10 @@
 
 static	int	ft_blanks(const char *num)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while (num[i] == ' ' || num[i] == '\t' || num[i] == '\r' || num[i]\
+	while (num[i] == ' ' || num[i] == '\t' || num[i] == '\r' || num[i] \
 	== '\v' || num[i] == '\f' || num[i] == '\n' || num[i] == '\b')
 		i++;
 	return (i);
@@ -23,7 +23,7 @@ static	int	ft_blanks(const char *num)
 
 static	int	ft_atoi_signcheck(char sign)
 {
-	int sign_num;
+	int	sign_num;
 
 	sign_num = 1;
 	if (sign == '-')
@@ -31,7 +31,15 @@ static	int	ft_atoi_signcheck(char sign)
 	return (sign_num);
 }
 
-int			ft_atoi(const char *num)
+static int	check_two(int sign)
+{
+	if (sign == -1)
+		return (0);
+	else
+		return (-1);
+}
+
+int	ft_atoi(const char *num)
 {
 	int		i;
 	int		sign;
@@ -50,7 +58,7 @@ int			ft_atoi(const char *num)
 		if (result >= 922337203685477580)
 		{
 			if ((sign == -1 && num[i] >= '9') || (sign == 1 && num[i] >= '8'))
-				return ((sign == -1) ? 0 : -1);
+				return (check_two(sign));
 			result = (result * 10) + (num[i] - '0');
 			return ((int)result * sign);
 		}

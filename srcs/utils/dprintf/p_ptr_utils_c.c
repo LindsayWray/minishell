@@ -14,7 +14,7 @@
 
 void	p_ptr_dot(t_data *data, va_list args)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;
@@ -39,7 +39,7 @@ void	p_ptr_dot(t_data *data, va_list args)
 
 void	p_ptr_dot_num(const char *format, t_data *data, va_list args)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;
@@ -66,7 +66,7 @@ void	p_ptr_dot_num(const char *format, t_data *data, va_list args)
 
 void	p_ptr_dot_star(t_data *data, va_list args)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	data->format_detected = true;
 	vars.i = 0;

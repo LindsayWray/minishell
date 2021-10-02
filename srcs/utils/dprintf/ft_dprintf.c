@@ -14,7 +14,7 @@
 
 static void	check_varied(const char *format, t_data *data)
 {
-	size_t j;
+	size_t	j;
 
 	j = data->i;
 	if (j == data->i && data->dot == false)
@@ -42,12 +42,14 @@ static void	check_varied(const char *format, t_data *data)
 
 static void	flag_work_a(const char *format, t_data *data, va_list args)
 {
-	size_t i;
+	size_t	i;
 
 	i = data->i;
-	if (data->left == false && data->check_combo == false && data->zeroes == false)
+	if (data->left == false && data->check_combo \
+	== false && data->zeroes == false)
 		check_left(format, data);
-	if (data->zeroes == false && data->check_combo == false && data->left == false)
+	if (data->zeroes == false && data->check_combo \
+	== false && data->left == false)
 		check_zeroes(format, data);
 	if (data->check_combo == false && data->mwidth == false)
 		check_varied(format, data);
@@ -74,7 +76,7 @@ static void	flag_work(const char *format, va_list args, t_data *data)
 	return ;
 }
 
-static int		printf_workspace(const char *format, va_list args, t_data *data)
+static int	printf_workspace(const char *format, va_list args, t_data *data)
 {
 	int		result;
 
@@ -97,13 +99,14 @@ static int		printf_workspace(const char *format, va_list args, t_data *data)
 	return (result);
 }
 
-int				ft_dprintf(int fd, const char *format, ...)
+int	ft_dprintf(int fd, const char *format, ...)
 {
 	int		result;
 	va_list	args;
 	t_data	*data;
 
-	if ((data = malloc(sizeof(t_data))) == NULL)
+	data = malloc(sizeof(t_data));
+	if (data == NULL)
 		return (-1);
 	data->i = 0;
 	data->fd = fd;

@@ -14,7 +14,7 @@
 
 void	check_num_dot_num(const char *format, t_data *data)
 {
-	size_t i;
+	size_t	i;
 
 	i = data->i;
 	if (!ft_isdigit(format[i]))

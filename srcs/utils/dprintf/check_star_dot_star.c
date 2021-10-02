@@ -14,7 +14,7 @@
 
 void	check_star_dot_star(char const *format, t_data *data)
 {
-	size_t i;
+	size_t	i;
 
 	i = data->i;
 	if (format[i] == '*' && format[i + 1] == '.' && format[i + 2] == '*')

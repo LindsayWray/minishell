@@ -24,7 +24,7 @@ static	char	*ft_chrrjoin_loop(char *result, char *str, size_t i, size_t j)
 	return (result);
 }
 
-char			*ft_chrrjoin(int c, char *str)
+char	*ft_chrrjoin(int c, char *str)
 {
 	char	*result;
 	size_t	i;
