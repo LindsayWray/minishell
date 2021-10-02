@@ -15,7 +15,20 @@ char	*get_path(char *command)
 	struct	stat buf;
 
 	if (lstat(command, &buf) == 0)
-		return (ft_strdup(command)); //means it already is the full path
+	{
+		if (ft_streql(command, ".."))
+		{
+			command_not_found_error(command);
+			free (command);
+			exit (COMMAND_NOT_FOUND);
+		}
+		if (buf.st_mode & S_IFDIR)
+		{
+			ft_dprintf(STDERR_FILENO, "minishell: %s: is a directory\n", command);
+			exit(IS_A_DIRECTORY);
+		}
+		return (ft_strdup(command));
+	}
 	paths = ft_split(get_env_value("PATH"), ':');
 	command = ft_strjoin("/", command);
 	i = 0;
@@ -31,7 +44,7 @@ char	*get_path(char *command)
 		free (path);
 		i++;
 	}
-	command_not_found_error(command + 1); //to skip the prev. added '/'
+	command_not_found_error(command + 1);
 	free (command);
 	ft_free_array(paths);
 	exit (COMMAND_NOT_FOUND);

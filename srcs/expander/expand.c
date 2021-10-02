@@ -25,7 +25,14 @@ char *expanding(char *cmd, int i)
 	value = NULL;
 	j = i + 1;
 	while (ft_isalpha(cmd[j]) || ft_isdigit(cmd[j]) || cmd[j] == '_' || cmd[j] == '?')
+	{
+		if (cmd[j] == '?')
+		{
+			j++;
+			break;
+		}
 		j++;
+	}
 	str = ft_substr(cmd, i + 1, j - (i + 1));
 	value = ft_strdup(get_env_value(str));
 	free (str);

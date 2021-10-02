@@ -118,7 +118,10 @@ int ft_cd(char **cmd, int fd_out)
         	else if (ft_strlen(cmd[1]) > PATH_MAX)
         	    ft_dprintf(STDERR_FILENO, "cd: %s: File name too long\n", cmd[1]);
         	else if (errno == ENOENT)
+			{
         	    ft_dprintf(STDERR_FILENO, "cd: %s: No such file or directory\n", cmd[1]);
+				ret = 1;
+			}
 		}
 		free(oldpwd);
     }

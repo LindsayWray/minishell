@@ -1,5 +1,6 @@
 #ifndef TYPES_H
 # define TYPES_H
+# define IS_A_DIRECTORY 126
 # define COMMAND_NOT_FOUND 127
 
 typedef enum s_type

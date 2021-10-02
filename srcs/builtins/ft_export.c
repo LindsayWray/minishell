@@ -54,7 +54,7 @@ static int ft_export_noarg(int fd_out)
         if (lst->value == NULL)
             ft_dprintf(fd_out, "declare -x %s\n", lst->key);
         else
-            ft_dprintf(fd_out, "declare -x %s=%s\n", lst->key, lst->value);
+            ft_dprintf(fd_out, "declare -x %s=\"%s\"\n", lst->key, lst->value);
         temp = lst;
         lst = lst->next;
         free(temp->key);
@@ -79,13 +79,11 @@ static int ft_export_eql(char *cmd, int fd_out)
     else
     {
         temp = ft_split(cmd, '=');
-        if (temp[1] == NULL)    
-            temp[1] = ft_strdup("");
         if (ft_isalpha(temp[0][0]) == 0 && temp[0][0] != '_')
         {
-            ft_dprintf(STDERR_FILENO, "export, not an identifier: %s\n", temp[0]);
+            ft_dprintf(STDERR_FILENO, "export: `%s': not a valid identifier\n", temp[0]);
             ft_free_array(temp);
-            return (2);
+            return (1);
         }
         else if (ft_isalnum_str(temp[0]) == 0)
         {
@@ -110,8 +108,8 @@ static int ft_export_key(char *cmd, int fd_out)
 	(void)fd_out;
     if (ft_isdigit(cmd[0]) == 1)
     {
-        ft_dprintf(STDERR_FILENO, "export, not an identifier: %s\n", cmd);
-        return (2);
+        ft_dprintf(STDERR_FILENO, "export: `%s': not a valid identifier\n", cmd);
+        return (1);
     }
     else if (ft_isalnum_str(cmd) == 0)
     {

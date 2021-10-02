@@ -23,6 +23,7 @@ void		exec(t_cmd_lst *cmd_lst);
 char		*get_path(char *command);
 int		    set_redirection(int *input_fd, int *output_fd, t_subcmd subcmd);
 void		dup_fd(int input_fd, int output_fd);
+int			invalid_io_file_char(char c);
 void		expand(t_cmd_lst *cmd_lst);
 void	    skip_over_quotes(char * str, int *i);
 char		*add_string(char *str1, char *str2);
