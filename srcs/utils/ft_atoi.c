@@ -31,6 +31,14 @@ static	int	ft_atoi_signcheck(char sign)
 	return (sign_num);
 }
 
+static int	check_two(int sign)
+{
+	if (sign == -1)
+		return (0);
+	else
+		return (-1);
+}
+
 int	ft_atoi(const char *num)
 {
 	int		i;
@@ -50,7 +58,7 @@ int	ft_atoi(const char *num)
 		if (result >= 922337203685477580)
 		{
 			if ((sign == -1 && num[i] >= '9') || (sign == 1 && num[i] >= '8'))
-				return ((sign == -1) ? 0 : -1);
+				return (check_two(sign));
 			result = (result * 10) + (num[i] - '0');
 			return ((int)result * sign);
 		}
