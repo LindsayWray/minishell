@@ -12,6 +12,7 @@ SRCS :=		srcs/main.c \
 			srcs/utils/ft_strcmp.c		srcs/utils/is_whitespace.c\
 			srcs/parsing/lexer.c		srcs/parsing/parser.c		srcs/parsing/syntax_error.c\
 			srcs/execute/exec.c			srcs/execute/path.c			srcs/execute/redirection.c\
+			srcs/execute/wait.c			srcs/execute/heredoc.c\
 			srcs/builtins/ft_export.c	srcs/builtins/ft_unset.c	srcs/builtins/ft_env.c\
 			srcs/builtins/ft_cd.c		srcs/builtins/ft_pwd.c		srcs/builtins/ft_export_utils_a.c\
 			srcs/builtins/ft_echo.c		srcs/builtins/ft_exit.c\

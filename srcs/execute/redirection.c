@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   redirection.c                                      :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: lwray <lwray@student.codam.nl>               +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/10/02 20:32:17 by lwray         #+#    #+#                 */
+/*   Updated: 2021/10/02 20:32:18 by lwray         ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 int	get_output(char *output_file, t_type type)
@@ -23,43 +35,6 @@ int	get_input(char *input_file)
 	return (input_fd);
 }
 
-int	read_input_heredoc(char *delimiter)
-{
-	char	*line;
-	int		input_fd;
-	pid_t	pid;
-
-	line = NULL;
-	input_fd = open("/tmp/heredoc", O_CREAT | O_RDWR | O_TRUNC , 0644);
-	if (input_fd == -1)
-	system_error("input file does not exist");
-	pid = fork();
-	if (pid == -1)
-		system_error("Fork Error");
-	if (pid == 0)
-	{
-		signal(SIGINT, signal_from_heredoc);
-		while (true)
-		{
-			line = readline("> ");
-			if (line == NULL || ft_streql(line, delimiter))
-			{
-				free (line);
-				close (input_fd);
-				input_fd = get_input("/tmp/heredoc");
-				unlink ("/tmp/heredoc");
-				break;
-			}
-			ft_putstr_fd (line, input_fd);
-			ft_putstr_fd ("\n", input_fd);
-			free (line);
-		}
-	}
-	signal(SIGINT, signal_from_child);
-	wait (0);
-	return (input_fd);
-}
-
 int	set_redirection(int *input_fd, int *output_fd, t_subcmd subcmd)
 {
 	if (subcmd.in_type == INPUT_REDIRECTION)
@@ -70,9 +45,9 @@ int	set_redirection(int *input_fd, int *output_fd, t_subcmd subcmd)
 	}
 	if (subcmd.in_type == HEREDOC)
 		*input_fd = read_input_heredoc(subcmd.in_file);
-    if (subcmd.out_type == OUTPUT_REDIRECTION || subcmd.out_type == APPEND)
+	if (subcmd.out_type == OUTPUT_REDIRECTION || subcmd.out_type == APPEND)
 	{
-        *output_fd = get_output(subcmd.out_file, subcmd.out_type);
+		*output_fd = get_output(subcmd.out_file, subcmd.out_type);
 		if (*output_fd == -1)
 			return (EXIT_FAILURE);
 	}
