@@ -48,7 +48,7 @@ char	*get_path(char *command)
 	int			i;
 	struct stat	buf;
 
-	if (lstat(command, &buf) == 0)
+	if (lstat(command, &buf) == 0 && ft_strchr(command, '/'))
 		return (absolute_path(command, buf));
 	paths = ft_split(get_env_value("PATH"), ':');
 	command = ft_strjoin("/", command);

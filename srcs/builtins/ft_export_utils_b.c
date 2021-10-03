@@ -28,7 +28,6 @@ static int	ft_export_eql_c(char **temp)
 int	ft_export_eql(char *cmd, int fd_out)
 {
 	char	**temp;
-	int		ret;
 
 	(void)fd_out;
 	if (cmd[0] == '=')

@@ -244,6 +244,9 @@ compare_shells 'cd .. | pwd'
 compare_shells 'ifconfig | grep ":"'
 compare_shells 'ifconfig | grep nothing'
 compare_shells 'whoami | grep $USER'
+
+mkdir tmp
+
 compare_shells 'whoami | grep $USER > tmp/file'
 compare_shells 'whoami | cat -e | cat -e > tmp/file '
 compare_shells 'cat Makefile | grep "FLAGS"'
@@ -286,8 +289,6 @@ echo ii > out
 cat out
 ls -l out'
 
-echo touch file
-
 compare_shells 'env | grep "SHLVL"'
 compare_shells 'echo oui | cat -e'
 compare_shells 'echo oui | echo non | echo something | grep oui'
@@ -298,18 +299,18 @@ compare_shells 'cd / | echo "something"'
 compare_shells 'ifconfig | grep ":"'
 compare_shells 'ifconfig | grep nothing'
 compare_shells 'whoami | grep $USER'
-compare_shells 'whoami | grep $USER > file' 	 	
-compare_shells 'whoami | cat -e | cat -e > file '
+compare_shells 'whoami | grep $USER > tmp/file' 	 	
+compare_shells 'whoami | cat -e | cat -e > tmp/file '
 compare_shells 'cat Makefile | grep "FLAGS"'
 compare_shells 'cat Makefile | cat -e | cat -e'
 compare_shells 'cat Makefile | grep "FLAGS" | grep "FLAGS" | cat -e'
 compare_shells 'export TEST=123 | cat -e | cat -e'
 compare_shells 'unset TEST | cat -e'
 compare_shells 'ls -la | grep "."'
-compare_shells 'whereis grep > file '
-compare_shells 'whereis grep > file'
-compare_shells 'ls -la > file'
-compare_shells 'ls -la > file '
+compare_shells 'whereis grep > tmp/file '
+compare_shells 'whereis grep > tmp/file'
+compare_shells 'ls -la > tmp/file'
+compare_shells 'ls -la > tmp/file '
 
 printf "Total OK: $BOLDGREEN%s$RESET\n" "$total_ok"
 printf "Total KO: $BOLDRED%s$RESET\n" "$total_ko"

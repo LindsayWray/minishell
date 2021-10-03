@@ -48,11 +48,13 @@ void	give_subcmd_content(t_subcmd *subcmd, t_token *token, int *i)
 	}
 	if (token->type == INPUT_REDIRECTION || token->type == HEREDOC)
 	{
+		free (subcmd->in_file);
 		subcmd->in_type = token->type;
 		subcmd->in_file = ft_strdup(token->content);
 	}
 	if (token->type == OUTPUT_REDIRECTION || token->type == APPEND)
 	{
+		free (subcmd->out_file);
 		subcmd->out_type = token->type;
 		subcmd->out_file = ft_strdup(token->content);
 	}

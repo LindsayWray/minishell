@@ -9,7 +9,7 @@ SRCS :=		srcs/main.c \
 			srcs/utils/ft_isalnum_str.c	srcs/utils/ft_isdigit_str.c	srcs/utils/ft_isalpha.c\
 			srcs/utils/ft_isdigit.c		srcs/utils/ft_itoa.c		srcs/utils/ft_shiftstr_left.c\
 			srcs/utils/ft_atoi.c		srcs/utils/ft_free_array.c	srcs/utils/ft_shiftstr_right.c\
-			srcs/utils/ft_strcmp.c		srcs/utils/is_whitespace.c\
+			srcs/utils/ft_strcmp.c		srcs/utils/ft_strchr.c		srcs/utils/is_whitespace.c\
 			srcs/parsing/lexer.c		srcs/parsing/parser.c		srcs/parsing/syntax_error.c\
 			srcs/execute/exec.c			srcs/execute/path.c			srcs/execute/redirection.c\
 			srcs/execute/wait.c			srcs/execute/heredoc.c\

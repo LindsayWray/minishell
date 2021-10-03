@@ -53,6 +53,7 @@ int			ft_strcmp(char *s1, char *s2);
 int			ft_atoi(const char *num);
 void		*ft_free_array(char **str_array);
 bool		is_whitespace(char c);
+char		*ft_strchr(char *s, char c);
 int			ft_dprintf(int fd, const char *format, ...);
 
 void		system_error(char *msg);
