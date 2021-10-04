@@ -66,6 +66,8 @@ int	ft_cd(char **cmd, int fd_out)
 	char		*oldpwd;
 	int			msg;
 
+	if (ft_cd_d() == 1)
+		return (0);
 	msg = 0;
 	oldpwd = ft_get_path();
 	if (cmd[1] != NULL)

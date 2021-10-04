@@ -1,5 +1,7 @@
 #include "../../includes/minishell.h"
 
+t_data	g_data;
+
 void	ft_cd_a(char **cmd)
 {
 	char	*temp_str;
@@ -61,4 +63,18 @@ void	ft_cd_c(char **cmd, char *oldpwd, int msg, int *ret)
 	}
 	free(oldpwd);
 	return ;
+}
+
+int	ft_cd_d(void)
+{
+	t_cmd_lst	*temp;
+
+	temp = g_data.cmd_lst;
+	while (temp)
+	{
+		if (ft_streql(temp->subcmd.cmd[0], "pwd") == 1)
+			return (1);
+		temp = temp->next;
+	}
+	return (0);
 }

@@ -22,6 +22,7 @@ SRCS :=		srcs/main.c \
 			srcs/cleanup/clean.c srcs/cleanup/error_handler.c\
 			srcs/builtins/ft_cd_utils_a.c\
 			srcs/builtins/ft_export_utils_b.c\
+			srcs/builtins/ft_exit_utils_a.c
 
 FLAGS := -Wall -Wextra -Werror
 OBJFILES := $(SRCS:srcs/%.c=obj/%.o)

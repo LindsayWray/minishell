@@ -71,7 +71,9 @@ int         ft_cd(char **cmd, int fd_out);
 void        ft_cd_a(char **cmd);
 void	    ft_cd_b(int *ret, int *msg, int fd_out);
 void        ft_cd_c(char **cmd, char *oldpwd, int msg, int *ret);
+int 	    ft_cd_d(void);
 int         ft_pwd(char **cmd, int fd_out);
 int         ft_echo(char **cmd, int fd_out);
 int         ft_exit(char **cmd, int fd_out);
+int         ft_exit_negative(int exit_code);
 #endif
