@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   utils.h                                            :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: lwray <lwray@student.codam.nl>               +#+                     */
+/*   By: idonado <idonado@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/10/02 20:52:45 by lwray         #+#    #+#                 */
-/*   Updated: 2021/10/02 20:52:47 by lwray         ########   odam.nl         */
+/*   Created: 2021/10/04 14:35:32 by idonado       #+#    #+#                 */
+/*   Updated: 2021/10/04 14:35:32 by idonado       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
