@@ -71,6 +71,5 @@ int	main(int argc, char **argv, char **env)
 	clean_all();
 	if (isatty(STDIN_FILENO))
 		printf("\n%sBye, come again!\n%s", BLUE, RESET);
-	system ("leaks minishell");
 	return (0);
 }

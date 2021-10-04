@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_dprintf.h"
+
 void	check_num_dot_star(const char *format, t_data *data)
 {
 	size_t	i;
