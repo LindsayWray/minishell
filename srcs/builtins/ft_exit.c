@@ -12,6 +12,8 @@ static int	exit_code_result(void)
 		exit_code = 0;
 	if (exit_code > 255)
 		exit_code = exit_code % 256;
+	else if (exit_code < 0)
+		exit_code = ft_exit_negative(exit_code);
 	return (exit_code);
 }
 
@@ -47,18 +49,25 @@ int	ft_exit_b(char **cmd, int fd_out)
 
 int	ft_exit_c(char **cmd)
 {
+	int	exit_code;
+
+	exit_code = ft_atoi(cmd[1]);
 	//free everything before exit
 	if (g_data.cmd_lst->next == NULL)
 	{
-		if (ft_atoi(cmd[1]) > 255)
-			exit(ft_atoi(cmd[1]) % 256);
-		exit(ft_atoi(cmd[1]));
+		if (exit_code > 255)
+			exit(exit_code % 256);
+		else if (exit_code < 0)
+			exit_code = ft_exit_negative(exit_code);
+		exit(exit_code);
 	}
 	else
 	{
-		if (ft_atoi(cmd[1]) > 255)
-			return (ft_atoi(cmd[1]) % 256);
-		return (ft_atoi(cmd[1]));
+		if (exit_code > 255)
+			return (exit_code % 256);
+		else if (exit_code < 0)
+			exit_code = ft_exit_negative(exit_code);
+		return (exit_code);
 	}
 }
 
