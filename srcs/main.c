@@ -31,6 +31,7 @@ void	prompt_loop(void)
 
 	while (true)
 	{
+		str = NULL;
 		str = readline("=^..^= ");
 		if (!str)
 			break ;
