@@ -6,7 +6,7 @@
 /*   By: lwray <lwray@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/02 20:36:08 by lwray         #+#    #+#                 */
-/*   Updated: 2021/10/02 20:36:09 by lwray         ########   odam.nl         */
+/*   Updated: 2021/10/06 18:37:56 by idonado       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,5 @@ t_env_lst	*ft_getenv(char **env)
 		i++;
 	}
 	set_shell_lvl(env_lst);
-	env_new = env_lst_new(ft_strdup("?"), ft_strdup("0"));
-	env_lst_add_back(&env_lst, env_new);
 	return (env_lst);
 }

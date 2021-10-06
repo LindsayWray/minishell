@@ -6,7 +6,7 @@
 /*   By: idonado <idonado@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/04 14:37:33 by idonado       #+#    #+#                 */
-/*   Updated: 2021/10/04 14:37:33 by idonado       ########   odam.nl         */
+/*   Updated: 2021/10/06 18:37:03 by idonado       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int	main(int argc, char **argv, char **env)
 	signal(SIGINT, received_signal);
 	signal(SIGQUIT, received_signal);
 	g_data.env_lst = ft_getenv(env);
+	if (export_exists("?", "0") == 0)
+		ft_export_add("?", "0");
 	if (isatty(STDIN_FILENO))
 		printf("\n%sWelcome to Isaac's and Lindsay's minishell!\n%s",
 			BLUE, RESET);

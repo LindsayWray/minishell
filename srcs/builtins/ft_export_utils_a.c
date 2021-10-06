@@ -6,7 +6,7 @@
 /*   By: idonado <idonado@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/04 14:34:46 by idonado       #+#    #+#                 */
-/*   Updated: 2021/10/04 14:34:46 by idonado       ########   odam.nl         */
+/*   Updated: 2021/10/06 18:17:31 by idonado       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,13 @@ int	export_exists(char *key, char *value)
 	{
 		if (ft_streql(key, temp->key))
 		{
-			if (value[0] == '\0' && temp->value != NULL)
-				return (1);
-			else
-			{
-				if (temp->value != NULL)
-					free(temp->value);
+			if (temp->value != NULL)
+				free(temp->value);
+			if (value != NULL)
 				temp->value = ft_strdup(value);
-				return (1);
-			}
+			else
+				temp->value = ft_strdup("");
+			return (1);
 		}
 		temp = temp->next;
 	}
