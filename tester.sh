@@ -110,6 +110,7 @@ compare_shells echo "\$USER""Users/\$USER/file""'\$USER'"'$USER'
 compare_shells echo "\$USER\$USER\$USER"
 compare_shells echo '$USER'"\$USER"'$USER'
 compare_shells echo '"$USER"''$PATH'"""\$USER"
+compare_shells echo "-n \$USER\$USER2222\$USER333\$USER44\$USER2222\$USER"
 compare_shells echo " \$USER  "'$PWD'
 compare_shells echo " \$USER  \$ "'$PWD'
 compare_shells echo \$USER=4
@@ -151,9 +152,10 @@ compare_shells cd more fake
 compare_shells cd '/' 
 compare_shells 'export | grep " PWD"'
 compare_shells 'export $? '
-compare_shells 'export TEST'
-compare_shells 'export TEST='
-compare_shells 'export TEST=123'
+compare_shells 'export TEST
+export TEST='
+compare_shells 'export TEST=123
+export TEST='
 compare_shells 'export ___TEST=123'
 compare_shells '	'
 compare_shells 'export ""=""'
@@ -311,6 +313,12 @@ compare_shells 'whereis grep > tmp/file '
 compare_shells 'whereis grep > tmp/file'
 compare_shells 'ls -la > tmp/file'
 compare_shells 'ls -la > tmp/file '
+compare_shells 'export TEST="ls -a -l"
+$TEST
+$TEST -r'
+compare_shells 'export TEST2="echo hello world"
+$TEST2
+$TEST2 and hello universe'
 
 printf "Total OK: $BOLDGREEN%s$RESET\n" "$total_ok"
 printf "Total KO: $BOLDRED%s$RESET\n" "$total_ko"

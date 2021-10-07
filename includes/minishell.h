@@ -40,6 +40,7 @@ int			get_input(char *input_file);
 void		dup_fd(int input_fd, int output_fd);
 int			invalid_io_file_char(char c);
 void		expand(t_cmd_lst *cmd_lst);
+int			arr_len(char **cmd);
 void		skip_over_quotes(char *str, int *i);
 char		*add_string(char *str1, char *str2);
 char		*quote_handler(char *cmd);

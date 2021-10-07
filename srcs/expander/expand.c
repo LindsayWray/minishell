@@ -14,20 +14,6 @@
 
 t_data	g_data;
 
-char	*add_string(char *str1, char *str2)
-{
-	char	*joined_str;
-
-	if (str2)
-	{
-		joined_str = ft_strjoin(str1, str2);
-		free (str1);
-		free (str2);
-		return (joined_str);
-	}
-	return (str1);
-}
-
 char	*expanding(char *cmd, int i)
 {
 	char	*value;
@@ -60,8 +46,6 @@ char	*locate_env_var(char *cmd, bool double_quotes)
 	char	*value;
 
 	i = 0;
-	if (cmd[i + 1] == '\0')
-		return (cmd);
 	while (cmd[i] != '$' && cmd[i] != '\0')
 	{
 		if (cmd[i] == '"')
@@ -73,10 +57,55 @@ char	*locate_env_var(char *cmd, bool double_quotes)
 	}
 	if (cmd[i] == '$')
 	{
+		if (cmd[i + 1] == '\0')
+			return (cmd);
 		value = expanding(cmd, i);
 		return (locate_env_var(value, false));
 	}
 	return (cmd);
+}
+
+char	**replace_array(int count, char **cmd)
+{
+	char	**new_cmd;
+	int		i;
+	int		j;
+
+	new_cmd = malloc((count + 1) * sizeof(char *));
+	i = 0;
+	j = 0;
+	while (cmd[i])
+	{
+		if (*cmd[i])
+		{
+			new_cmd[j] = cmd[i];
+			j++;
+		}
+		else
+			free (cmd[i]);
+		i++;
+	}
+	new_cmd[j] = NULL;
+	free(cmd);
+	return (new_cmd);
+}
+
+char	**remove_empty_strings(char **cmd)
+{
+	int		i;
+	int		count;
+
+	i = 0;
+	count = 0;
+	while (cmd[i])
+	{
+		if (*cmd[i])
+			count++;
+		i++;
+	}
+	if (arr_len(cmd) == count)
+		return (cmd);
+	return (replace_array(count, cmd));
 }
 
 void	expand(t_cmd_lst *cmd_lst)
@@ -90,11 +119,11 @@ void	expand(t_cmd_lst *cmd_lst)
 		while (cmd_lst->subcmd.cmd[i])
 		{
 			expanded_str = locate_env_var(cmd_lst->subcmd.cmd[i], false);
-			if (!ft_streql(expanded_str, cmd_lst->subcmd.cmd[i]))
-				cmd_lst->subcmd.cmd[i] = expanded_str;
+			cmd_lst->subcmd.cmd[i] = expanded_str;
 			i++;
 		}
 		cmd_lst->subcmd.cmd = complex_cmd(cmd_lst->subcmd.cmd);
+		cmd_lst->subcmd.cmd = remove_empty_strings(cmd_lst->subcmd.cmd);
 		i = 0;
 		while (cmd_lst->subcmd.cmd[i])
 		{

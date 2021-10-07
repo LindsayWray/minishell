@@ -12,6 +12,20 @@
 
 #include "../../includes/minishell.h"
 
+char	*add_string(char *str1, char *str2)
+{
+	char	*joined_str;
+
+	if (str2)
+	{
+		joined_str = ft_strjoin(str1, str2);
+		free (str1);
+		free (str2);
+		return (joined_str);
+	}
+	return (str1);
+}
+
 void	skip_over_quotes(char *str, int *i)
 {
 	if (str[*i] == '"')

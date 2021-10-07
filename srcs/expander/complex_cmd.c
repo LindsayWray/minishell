@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-static int	arr_len(char **cmd)
+int	arr_len(char **cmd)
 {
 	int	len;
 

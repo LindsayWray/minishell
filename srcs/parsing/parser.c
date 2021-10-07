@@ -41,6 +41,8 @@ void	set_default(t_subcmd *subcmd, t_token *token)
 
 void	give_subcmd_content(t_subcmd *subcmd, t_token *token, int *i)
 {
+	int	fd;
+
 	if (token->type == WORD)
 	{
 		subcmd->cmd[*i] = ft_strdup(token->content);
@@ -54,7 +56,12 @@ void	give_subcmd_content(t_subcmd *subcmd, t_token *token, int *i)
 	}
 	if (token->type == OUTPUT_REDIRECTION || token->type == APPEND)
 	{
-		free (subcmd->out_file);
+		if (subcmd->out_file)
+		{
+			fd = open(subcmd->out_file, O_WRONLY | O_CREAT, 0644);
+			close(fd);
+			free (subcmd->out_file);
+		}
 		subcmd->out_type = token->type;
 		subcmd->out_file = ft_strdup(token->content);
 	}

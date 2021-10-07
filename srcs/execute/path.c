@@ -21,12 +21,6 @@ static void	command_not_found_error(char *command)
 
 static char	*absolute_path(char *command, struct stat buf)
 {
-	if (ft_streql(command, ".."))
-	{
-		command_not_found_error(command);
-		free (command);
-		exit (COMMAND_NOT_FOUND);
-	}
 	if (buf.st_mode & S_IFDIR)
 	{
 		ft_dprintf(STDERR_FILENO, "minishell: %s: is a directory\n", command);
@@ -41,6 +35,16 @@ static void	free_cmd_and_paths(char *command, char **paths)
 	ft_free_array(paths);
 }
 
+void	check_double_points(char *command)
+{
+	if (ft_streql(command, ".."))
+	{
+		command_not_found_error(command);
+		free (command);
+		exit (COMMAND_NOT_FOUND);
+	}
+}
+
 char	*get_path(char *command)
 {
 	char		**paths;
@@ -50,6 +54,7 @@ char	*get_path(char *command)
 
 	if (lstat(command, &buf) == 0 && ft_strchr(command, '/'))
 		return (absolute_path(command, buf));
+	check_double_points(command);
 	paths = ft_split(get_env_value("PATH"), ':');
 	command = ft_strjoin("/", command);
 	i = 0;
