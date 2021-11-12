@@ -1,0 +1,57 @@
+echo "$USER""Users/$USER/file""'$USER'"'$USER'
+echo "-n -n -n"-n testing
+echo "-nnnn" testing
+echo """"""""$USER""""""""
+echo '""""""""$USER""""""""'
+echo ''''''''''\$USER''''''''''
+echo '"$USER"''$PATH'"""$USER"
+echo "-n $USER$USER2222$USER333$PWD44$USER2222$USER"
+echo $USER $FAKE $FAKE $USER   #only a single space
+echo test|cat|echo more>out
+echo $
+
+
+cd .. | pwd
+cd .. | echo "hello world"  #still in the same dir?
+cd fake | echo hello world  #display both error and echo
+cd fake > out			#error only in terminal
+
+export
+export TEST
+export TEST=
+export TEST=testing
+export TEST=moretesting
+unset TEST
+unset TEST
+unset
+export TEST="ls -a -l"
+	$TEST -r
+export TEST=""
+	$TEST
+
+echo test | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e
+
+
+echo hello world > out
+echo test > out
+cat out
+ls -l out       #same file permissions?
+whoami | grep $USER > testfile     #filled?
+<file1 <file2 <file3 | ls    		#must give error if nonexistend
+echo this > file1 > file2 > file3  #all files made?
+>out2 cat < out                    #out2 filled with content out?
+< infile cat | < infile2 sort
+
+exit status signals sigint(130) and sigquit(131)
+exit status command not found (127)
+
+exit -1000   (24)
+exit 1000    (232)
+exit 100 | echo test
+	exitstatus 0
+echo test | exit 100
+	exitstatus 100
+exit 100test
+	exit with errormsg and exitstatus 255
+
+<< eof cat | grep hello
